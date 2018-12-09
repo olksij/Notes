@@ -1,0 +1,122 @@
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 31px;  /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+  
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+  
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+  
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+}
+
+
+#nav-bar{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 67px;
+    width: 100%;
+    box-shadow: 0px 1px 10px #00000010;
+}
+
+.nav-bar-button{
+    width: 48px;
+    height: 48px;
+    position: fixed;
+    border-radius: 28px;
+
+    animation: nav-bar-button-h-false linear 0.3s;
+    background-color: white;
+}
+
+
+#menu-button{
+    top: 9px;
+    left: 9px;
+}
+
+#add-button{
+    top: 9px;
+    right: 9px; 
+}
+
+.nav-bar-button:hover{
+    animation: nav-bar-button-h-true linear 0.3s;
+    background-color: #f0f0f0;
+}
+
+@keyframes nav-bar-button-h-false{
+    from{background-color: #f0f0f0}
+    to{background-color: #ffffff}
+}
+@keyframes nav-bar-button-h-true{
+    from{background-color: #ffffff}
+    to{background-color: #f0f0f0}
+}
+
+#menu-icon{
+    width: 24px;
+    height: 24px;
+    position: relative;
+    top: 12px;
+    left: 12px;
+}
+
+#LogoType{
+    height: 64px;
+    width: 130px;
+    left: 64px;
+    top: 0px;
+    position: fixed;
+}
+#LogoImage{
+    position: fixed;
+    top:12px;
+    left:64px;
+    height: 42px;
+}
+
+#LogoText{
+    position: fixed;
+    top:24px;
+    left:120px;
+    height: 18px;
+}
+
+#AddIcon{
+    width: 31px;
+    height: 31px;
+    position: relative;
+    top: 8.5px;
+    left: 8px;
+}
+
+#ComingSoon{
+    position: relative;
+    top: 35%;
+    height: 30px;
+}
+
+#content{
+    top: 67px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: #3E83F410;
+    text-align: center;
+    position: fixed;
+}

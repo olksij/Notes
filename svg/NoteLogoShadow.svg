@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 192 192">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clip-NoteLogoShadow);
+      }
+
+      .cls-2 {
+        fill: #4285f3;
+      }
+
+      .cls-3 {
+        opacity: 0.03;
+      }
+
+      .cls-4 {
+        fill: #fff;
+      }
+
+      .cls-5 {
+        fill: #c4d9fc;
+      }
+    </style>
+    <clipPath id="clip-NoteLogoShadow">
+      <rect width="192" height="192"/>
+    </clipPath>
+  </defs>
+  <g id="NoteLogoShadow" class="cls-1">
+    <g id="Group_18" data-name="Group 18">
+      <circle id="Ellipse_14" data-name="Ellipse 14" class="cls-2" cx="96" cy="96" r="96"/>
+      <path id="Rectangle_5" data-name="Rectangle 5" class="cls-3" d="M96,0h0a96,96,0,0,1,96,96v0a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0v0A96,96,0,0,1,96,0Z" transform="translate(95.765 -40) rotate(45)"/>
+      <g id="Group_14" data-name="Group 14" transform="translate(-62.764 95.853) rotate(-45)">
+        <path id="pen" class="cls-4" d="M82.137,18.747c-1.577,1.577-3.107,3.107-3.154,4.637-.139,1.484,1.438,3.014,2.922,4.452,2.226,2.319,4.406,4.405,4.313,6.678S83.76,39.151,81.4,41.47l-19.155,19.2-6.586-6.585L75.366,34.421l-4.452-4.452-3.849,3.8L49.673,16.38,64.745,1.356a4.619,4.619,0,0,1,6.539,0L82.137,12.208A4.617,4.617,0,0,1,82.137,18.747ZM0,66.094l44.338-44.38L61.73,39.1,17.392,83.484H0V66.094Z" transform="translate(111.192 52.159) rotate(45)"/>
+        <path id="Path_32" data-name="Path 32" class="cls-5" d="M1.336,0h51.44V6.843H1.336L-2.086,3.421Z" transform="translate(66.227 107.78)"/>
+      </g>
+    </g>
+  </g>
+</svg>

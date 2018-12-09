@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 192 192">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clip-NoteLogoOutline);
+      }
+
+      .cls-2 {
+        fill: #4285f3;
+      }
+
+      .cls-3 {
+        fill: #fff;
+      }
+
+      .cls-4 {
+        fill: #c4d9fc;
+      }
+    </style>
+    <clipPath id="clip-NoteLogoOutline">
+      <rect width="192" height="192"/>
+    </clipPath>
+  </defs>
+  <g id="NoteLogoOutline" class="cls-1">
+    <g id="Group_21" data-name="Group 21">
+      <g id="Group_19" data-name="Group 19">
+        <circle id="Ellipse_14" data-name="Ellipse 14" class="cls-2" cx="96" cy="96" r="96"/>
+        <path id="Path_11" data-name="Path 11" class="cls-3" d="M77.5,0A77.5,77.5,0,1,1,0,77.5,77.5,77.5,0,0,1,77.5,0Z" transform="translate(19 19)"/>
+        <g id="Group_14" data-name="Group 14" transform="translate(-55.764 95.782) rotate(-45)">
+          <path id="pen" class="cls-2" d="M75.292,17.184c-1.445,1.445-2.848,2.848-2.891,4.251-.128,1.36,1.318,2.763,2.678,4.081,2.041,2.125,4.039,4.038,3.954,6.121s-2.253,4.251-4.421,6.376l-17.558,17.6-6.037-6.036L69.085,31.552,65,27.472l-3.528,3.485L45.533,15.015,59.35,1.243a4.234,4.234,0,0,1,5.994,0l9.948,9.947A4.233,4.233,0,0,1,75.292,17.184ZM0,60.586,40.643,19.9,56.586,35.846,15.943,76.527H0V60.586Z" transform="translate(106.272 52.159) rotate(45)"/>
+          <path id="Path_32" data-name="Path 32" class="cls-4" d="M1.051,0H48.2V6.273H1.051L-2.086,3.136Z" transform="translate(65.229 103.145)"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
