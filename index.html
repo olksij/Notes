@@ -3,19 +3,21 @@
 <head>
     <meta charset="utf-8" />
     <title>Notes</title>
+    <link id="favicon" rel="shortcut icon" href="NoteLogo.ico">
     <meta name="Description" content="Alex Besida WebPage">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <script src="main.js"></script>
     <script src="firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
     <script>firebase.initializeApp(config);</script>
 </head>
-<body onload="Hello()">
-    <link id="favicon" rel="shortcut icon" href="NoteLogo.ico">
-
+<body onload="LoadGNotes()">
     <div id="nav-bar"></div>
     <div id="menu-button" class="nav-bar-button">
         <img src="svg/MenuIcon.svg" id="menu-icon"></img>
@@ -24,12 +26,10 @@
         <img id=logoimage src="svg/NoteLogo.svg" alt="Logo"></img>
         <img id=logotext src="svg/Notes.svg" alt="Text"></img>
     </div>
-    <div id="add-button" class="nav-bar-button">
-        <img src="svg/AddIcon.svg" id="AddIcon" alt="icon"></img>
+    <div id="add-button" class="nav-bar-button" onclick="CreateNote()">
+        <img src="svg/AddIcon.svg" id="AddIcon" alt="icon" ></img>
     </div>
-
-    <div id="content">
-        <img id=comingsoon src="svg/ComingSoon.svg" alt="Text"></img>
+    <div id="notes">
     </div>
 
 </body>

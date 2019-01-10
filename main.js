@@ -1,22 +1,24 @@
-function Hello(){
-    // Initialize Cloud Firestore through Firebase
-    var db = firebase.firestore();
 
-    // Disable deprecated features
-    db.settings({
-    timestampsInSnapshots: true
+function LoadGNotes(){
+    var db = firebase.firestore(); db.settings({timestampsInSnapshots: true});
+
+    db.collection("gnotes").doc('notes1-0').collection('notes').get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            console.log(doc.id,doc.data());
+        });
     });
 
-    var UsersRef = db.collection('users').doc('alan.mathison@email.com');
-    UsersRef.set({
-        first: "Alan",
-        last: "Turing",
-        born: 1912
-    })
-    .then(function() {
-        console.log("Document written with ID");
-    })
-    .catch(function() {
-        console.error("Error adding document");
-    });  
+
+}
+
+function CreateNote(){
+    AddNote("Hello")
+}
+
+function AddNote(notetext){
+    var db = firebase.firestore(); db.settings({timestampsInSnapshots: true});
+
+    db.collection("gnotes").doc('notes1-0').collection('notes').add({
+        title: notetext
+    });
 }
