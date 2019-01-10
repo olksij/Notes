@@ -2,7 +2,7 @@
 function LoadGNotes(){
     var db = firebase.firestore(); db.settings({timestampsInSnapshots: true});
 
-    db.collection("gnotes").doc('notes1-0').collection('notes').get().then((querySnapshot) => {
+    db.collection("gnotes").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
             console.log(doc.id,doc.data());
         });
@@ -18,7 +18,12 @@ function CreateNote(){
 function AddNote(notetext){
     var db = firebase.firestore(); db.settings({timestampsInSnapshots: true});
 
-    db.collection("gnotes").doc('notes1-0').collection('notes').add({
-        title: notetext
+    db.collection("gnotes").add({
+        title: notetext,
+        date: new Date().getDate()+"."+new Date().getMonth()+"."+new Date().getFullYear(),
+        time: new Date().getHours()+":"+new Date().getMinutes(),
+        version: app_info.version,
+        versionReleased: app_info.version_released,
+        added: "guest"
     });
 }
