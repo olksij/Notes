@@ -9,9 +9,9 @@ var firebase_config = {
 };
 
 var app_info = {
-    version: "0.1",
+    version: "0.2",
     type: "alpha",
     developer: "Alex Besida",
     link: "@AlexBesida",
-    version_released: "10.01.2019"
+    version_released: "11.01.2019"
 };

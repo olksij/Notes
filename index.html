@@ -7,8 +7,10 @@
     <meta name="Description" content="Notes App">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="create.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="font.css" />
     <script src="main.js"></script>
-    <script src="firebase.js"></script>
+    <script src="initialize.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.0.0/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-auth.js"></script>
@@ -28,6 +30,14 @@
         <img src="svg/AddIcon.svg" id="AddIcon" alt="icon" ></img>
     </div>
     <div id="notes">
+    </div>
+
+    <div id="add-note-shadow">
+        <div id="add-note-card">
+            <p id="add-note-p">Add new Global note</p>
+            <input id="add-note-title"></input>
+            <div id="add-note-accept-button" onclick="CreateNote()"><p id="add-note-accept-p">Create!</p></div>
+        </div>
     </div>
 
 </body>

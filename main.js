@@ -12,7 +12,8 @@ function LoadGNotes(){
 }
 
 function CreateNote(){
-    AddNote("Hello")
+    var title = document.getElementById("add-note-title").value;
+    AddNote(title)
 }
 
 function AddNote(notetext){
@@ -20,7 +21,7 @@ function AddNote(notetext){
 
     db.collection("gnotes").add({
         title: notetext,
-        date: new Date().getDate()+"."+new Date().getMonth()+"."+new Date().getFullYear(),
+        date: new Date().getDate()+"."+(new Date().getMonth()+1)+"."+new Date().getFullYear(),
         time: new Date().getHours()+":"+new Date().getMinutes(),
         version: app_info.version,
         versionReleased: app_info.version_released,
