@@ -9,7 +9,7 @@ var firebase_config = {
 };
 
 var app_info = {
-    version: "0.2.3", //Major Version, Minor Version, Bug fixes.
+    version: "0.2.4", //Major Version, Minor Version, Bug fixes.
     type: "alpha",
     developer: "Alex Besida",
     link: "@AlexBesida",
