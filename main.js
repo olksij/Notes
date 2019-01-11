@@ -8,11 +8,13 @@ function LoadGNotes(){
         });
     });
 
+    document.getElementById("add-note-shadow").style.visibility = "hidden";
 
 }
 
 function CreateNote(){
     var title = document.getElementById("add-note-title").value;
+    document.getElementById("add-note-shadow").style.visibility = "hidden";
     AddNote(title)
 }
 
@@ -27,4 +29,8 @@ function AddNote(notetext){
         versionReleased: app_info.version_released,
         added: "guest"
     });
+}
+
+function DialogCreateNote(){
+    document.getElementById("add-note-shadow").style.visibility = "visible";
 }
