@@ -1,0 +1,39 @@
+input:focus {
+    outline-width: 0;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #3e83f4aa;
+    vertical-align: top;
+}
+::-moz-placeholder { /* Firefox 19+ */
+    color: #3e83f4aa;
+    vertical-align: top;
+}
+:-ms-input-placeholder { /* IE 10+ */
+    color: #3e83f4aa;
+    vertical-align: top;
+}
+:-moz-placeholder { /* Firefox 18- */
+    color: #3e83f4aa;
+    vertical-align: top;
+}
+
+input{
+    border-radius:5px;
+    border-style: solid;
+    font-size: 14px;
+    font-family: 'gsans-regular';
+    padding-left:8px;
+    border: #00000000;
+    background: var(--main-shadow-color);
+    transition: 0.3s;
+    text-align: left;
+    left: 20px;
+    position: absolute;
+    color: var(--main-color);
+}
+
+.FluxAppTextbox{
+    height: 30px;
+}

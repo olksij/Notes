@@ -1,3 +1,28 @@
+function Start() {
+    var x = document.getElementById("SvgAddIcon");
+    x.style.fill = "var(--main-color)";
+    LoadGNotes();
+}
+
+function AddButtonHover() {
+    var x = document.getElementById("SvgAddIcon");
+    x.style.fill = "white";
+}
+
+function AddButtonUnHover() {
+    var x = document.getElementById("SvgAddIcon");
+    x.style.fill = "var(--main-color)";
+}
+
+function AddNoteHover() {
+    var x = document.getElementById("add-note-accept-p");
+    x.style.color = "white";
+}
+
+function AddNoteUnHover() {
+    var x = document.getElementById("add-note-accept-p");
+    x.style.color = "var(--main-color)";
+}
 
 function LoadGNotes(){
     var db = firebase.firestore(); db.settings({timestampsInSnapshots: true});
@@ -8,21 +33,23 @@ function LoadGNotes(){
         });
     });
 
-    document.getElementById("add-note-shadow").style.visibility = "hidden";
+    document.getElementById("add-note-window").style.visibility = "hidden";
 
 }
 
 function CreateNote(){
     var title = document.getElementById("add-note-title").value;
-    document.getElementById("add-note-shadow").style.visibility = "hidden";
-    AddNote(title)
+    var description = document.getElementById("add-note-description").value;
+    document.getElementById("add-note-window").style.visibility = "hidden"
+    AddNote(title, description)
 }
 
-function AddNote(notetext){
-    var db = firebase.firestore(); db.settings({timestampsInSnapshots: true});
+function AddNote(title, description){
+    var db = firebase.firestore();
 
     db.collection("gnotes").add({
-        title: notetext,
+        title: title,
+        description: description,
         date: new Date().getDate()+"."+(new Date().getMonth()+1)+"."+new Date().getFullYear(),
         time: new Date().getHours()+":"+new Date().getMinutes(),
         version: app_info.version,
@@ -32,5 +59,6 @@ function AddNote(notetext){
 }
 
 function DialogCreateNote(){
-    document.getElementById("add-note-shadow").style.visibility = "visible";
+    document.getElementById("add-note-window").style.visibility = "visible";
 }
+

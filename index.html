@@ -1,42 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <title>Notes</title>
-    <link id="favicon" rel="shortcut icon" href="NoteLogo.ico">
-    <meta name="Description" content="Notes App">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="create.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="font.css" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Flux Notes</title>
+    <link rel="icon" href="Assets/AppIcon.ico">
+    <meta name="viewport" content=" width=device- classth, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="desktop.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="FluxUI/title.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="fonts.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="FluxUI/buttons.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="FluxUI/window.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="FluxUI/inputs.css">
     <script src="main.js"></script>
     <script src="initialize.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.0.0/firebase.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-firestore.js"></script>
-    <script>firebase.initializeApp(firebase_config);</script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
+    <script>
+    var config = {
+        apiKey: "AIzaSyD5e1BRr6QliCZrUGUyS2HmaS98RoEMhjU",
+        authDomain: "flux-notes.firebaseapp.com",
+        databaseURL: "https://flux-notes.firebaseio.com",
+        projectId: "flux-notes",
+        storageBucket: "flux-notes.appspot.com",
+        messagingSenderId: "423307191915"
+    };
+    firebase.initializeApp(config);
+    </script>
 </head>
-<body onload="LoadGNotes()">
-    <div id="nav-bar"></div>
-    <div id="menu-button" class="nav-bar-button">
-        <img src="svg/MenuIcon.svg" id="menu-icon" alt="Image"></img>
+<body onload="Start()">
+    <div id="TopBar">
+            <div id="FluxAppTitle">
+                <img src="Assets/AppIconWhite.svg" class="FluxAppTitleImg"/>
+                <p class="FluxAppTitleP">Notes</p>
+            </div>
+            <div class="FluxAppButton" onmouseover="AddButtonHover()" onmouseout="AddButtonUnHover()" onclick="DialogCreateNote()">
+                <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg" id="SvgAddIcon" class="FluxAppButtonIcon">
+                    <path d="M21 10.5C21 11.3284 20.3284 12 19.5 12H13C12.4477 12 12 12.4477 12 13V19.5C12 20.3284 11.3284 21 10.5 21V21C9.67157 21 9 20.3284 9 19.5V13C9 12.4477 8.55228 12 8 12H1.5C0.671573 12 0 11.3284 0 10.5V10.5C0 9.67157 0.671573 9 1.5 9H8C8.55228 9 9 8.55228 9 8V1.5C9 0.671573 9.67157 0 10.5 0V0C11.3284 0 12 0.671573 12 1.5V8C12 8.55228 12.4477 9 13 9H19.5C20.3284 9 21 9.67157 21 10.5V10.5Z"/>
+                </svg>
+            </div>
     </div>
-    <div id=logotype>
-        <img id=LogoImage src="svg/NoteLogo.svg" alt="Logo"  alt="Image"></img>
-        <img id=LogoText src="svg/Notes.svg" alt="Text"  alt="Image"></img>
-    </div>
-    <div id="add-button" class="nav-bar-button" onclick="DialogCreateNote()">
-        <img src="svg/AddIcon.svg" id="AddIcon" alt="icon"  alt="Image"></img>
-    </div>
-    <div id="notes">
-    </div>
-
-    <div id="add-note-shadow">
-        <div id="add-note-card">
-            <p id="add-note-p">Add new Global note</p>
-            <input id="add-note-title"></input>
-            <div id="add-note-accept-button" onclick="CreateNote()"><p id="add-note-accept-p">Create!</p></div>
+    <div class="FluxAppWindowArea" id="add-note-window">
+        <div class="FluxAppWindow" id="add-note-card">
+            <p id="add-note-p" class="FluxAppWindowTitle">Add new Global note</p>
+            <input id="add-note-title" class="FluxAppTextbox" placeholder="Title"></input>
+            <div id="add-note-accept-button" class="FluxAppTextButton" onmouseover="AddNoteHover()" onmouseout="AddNoteUnHover()" onclick="CreateNote()"><p id="add-note-accept-p" class="FluxAppTextButtonText">Create!</p></div>
+            <input id="add-note-description" class="FluxAppTextboxL" placeholder="Description"></input>
         </div>
     </div>
 
