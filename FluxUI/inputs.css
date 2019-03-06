@@ -19,21 +19,33 @@ input:focus {
     vertical-align: top;
 }
 
-input{
+
+.FluxAppTextbox{
+    height: 30px;
     border-radius:5px;
     border-style: solid;
     font-size: 14px;
     font-family: 'gsans-regular';
     padding-left:8px;
     border: #00000000;
-    background: var(--main-shadow-color);
+    background: var(--main-color-light);
     transition: 0.3s;
     text-align: left;
     left: 20px;
     position: absolute;
     color: var(--main-color);
 }
-
-.FluxAppTextbox{
-    height: 30px;
+.FluxAppTextboxL{
+    border-radius:5px;
+    border-style: solid;
+    font-size: 14px;
+    font-family: 'gsans-regular';
+    padding-left:8px;
+    border: #00000000;
+    background: var(--main-color-light);
+    transition: 0.3s;
+    text-align: left;
+    left: 20px;
+    position: absolute;
+    color: var(--main-color);
 }

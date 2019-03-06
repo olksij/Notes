@@ -33,3 +33,15 @@ function UserButtonUnHover() {
     var x = document.getElementById("SvgAccountIcon");
     x.style.fill = "var(--main-color)";
 }
+
+// Mobile User Account Icon ---------------------------------------
+
+function MobileUserButtonHover() {
+    var x = document.getElementById("MobileSvgAccountIcon");
+    x.style.fill = "white";
+}
+
+function MobileUserButtonUnHover() {
+    var x = document.getElementById("MobileSvgAccountIcon");
+    x.style.fill = "var(--main-color)";
+}

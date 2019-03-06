@@ -1,0 +1,15 @@
+div.FluxAppSearchBar{
+    background-color: var(--main-color-light);
+    border-radius: 10px;
+    height: 56px;
+
+}
+
+.FluxAppSearchBarIcon{
+    width: 19px;
+    height: 19px;
+    position: absolute;
+    left: 18px;
+    top: 18px;
+    fill: var(--main-color);
+}

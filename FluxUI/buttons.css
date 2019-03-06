@@ -1,5 +1,5 @@
 div.FluxAppButton{
-    background-color: var(--main-shadow-color);
+    background-color: var(--main-color-light);
     box-shadow: 0px 0px 0px #00000000;
     border-radius: 10px;
     height: 56px;
@@ -10,6 +10,7 @@ div.FluxAppButton:hover{
     box-shadow: 0px 1px 20px var(--main-shadow-color);
     background-color: var(--main-color);
 }
+
 .FluxAppButtonIcon{
     width: 21px;
     height: 21px;
@@ -17,10 +18,4 @@ div.FluxAppButton:hover{
     left: 17px;
     top: 17px;
     fill: var(--main-color);
-}
-svg#SvgAccountIcon{
-    transition: 0.3s;
-}
-svg#SvgAddIcon{
-    transition: 0.3s;
 }
