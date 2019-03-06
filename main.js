@@ -56,6 +56,14 @@ function AddNote(title, description){
         versionReleased: app_info.version_released,
         added: "guest"
     });
+    
+    console.clear();
+    db.collection("gnotes").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            console.log(doc.id,doc.data());
+        });
+    });
+
 }
 
 function DialogCreateNote(){
