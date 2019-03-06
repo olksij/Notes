@@ -25,7 +25,7 @@ function AddNoteUnHover() {
 }
 
 function LoadGNotes(){
-    var db = firebase.firestore(); db.settings({timestampsInSnapshots: true});
+    var db = firebase.firestore();
 
     db.collection("gnotes").get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
