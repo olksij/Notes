@@ -48,3 +48,6 @@ function DialogCreateNote(){
     document.getElementById("add-note-window").style.visibility = "visible";
 }
 
+function DialogAccount(){
+}
+
