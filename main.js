@@ -1,27 +1,5 @@
 function Start() {
-    var x = document.getElementById("SvgAddIcon");
-    x.style.fill = "var(--main-color)";
     LoadGNotes();
-}
-
-function AddButtonHover() {
-    var x = document.getElementById("SvgAddIcon");
-    x.style.fill = "white";
-}
-
-function AddButtonUnHover() {
-    var x = document.getElementById("SvgAddIcon");
-    x.style.fill = "var(--main-color)";
-}
-
-function AddNoteHover() {
-    var x = document.getElementById("add-note-accept-p");
-    x.style.color = "white";
-}
-
-function AddNoteUnHover() {
-    var x = document.getElementById("add-note-accept-p");
-    x.style.color = "var(--main-color)";
 }
 
 function LoadGNotes(){

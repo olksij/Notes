@@ -39,3 +39,14 @@ div#FluxAppButton{
   top: 115px;
   width: 252px;
 }
+#AddNoteButton{
+  right: 20px;
+  top:20px;
+  position: absolute;
+}
+
+#UserButton{
+  right: 106px;
+  top: 20px;
+  position: absolute;
+}

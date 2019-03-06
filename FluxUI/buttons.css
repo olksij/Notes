@@ -4,9 +4,6 @@ div.FluxAppButton{
     border-radius: 10px;
     height: 56px;
     width: 56px;
-    right: 20px;
-    top:20px;
-    position: absolute;
     transition: 0.5s;
 }
 div.FluxAppButton:hover{
@@ -20,6 +17,9 @@ div.FluxAppButton:hover{
     left: 17px;
     top: 17px;
     fill: var(--main-color);
+}
+svg#SvgAccountIcon{
+    transition: 0.3s;
 }
 svg#SvgAddIcon{
     transition: 0.3s;
