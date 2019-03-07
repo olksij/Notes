@@ -49,3 +49,27 @@ input:focus {
     position: absolute;
     color: var(--main-color);
 }
+
+.FluxAppSearchBar{
+    background-color: var(--main-color-light );
+    border-radius: 10px;
+    height: 14px;
+    border-style: solid;
+    font-size: 18px;
+    padding: 21px;
+    padding-left: 57px;
+    border: #00000000;
+    transition: 0.3s;
+    text-align:left;
+    color: var(--main-color);
+    font-family: 'gsans-medium';
+}
+
+.FluxAppSearchBarIcon{
+    width: 19px;
+    height: 19px;
+    position: absolute;
+    left: 38px;
+    top: 38px;
+    fill: var(--main-color);
+}

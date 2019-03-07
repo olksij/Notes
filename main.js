@@ -1,5 +1,12 @@
 function Start() {
     LoadGNotes();
+
+    document.getElementById("SearchBar").style.width = ((document.getElementById('body').offsetWidth)-116-76)+"px";
+
+}
+
+function Resized() {
+    document.getElementById("SearchBar").style.width = ((document.getElementById('body').offsetWidth)-116-76)+"px";
 }
 
 function LoadGNotes(){
@@ -46,6 +53,9 @@ function AddNote(title, description){
 
 function DialogCreateNote(){
     document.getElementById("add-note-window").style.visibility = "visible";
+}
+function CloseAddNoteWindow(){
+    document.getElementById("add-note-window").style.visibility = "hidden";
 }
 
 function DialogAccount(){

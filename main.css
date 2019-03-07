@@ -36,3 +36,7 @@ svg#SvgAddIcon{
 svg#MobileSvgAccountIcon{
     transition: 0.3s;
 }
+
+body{
+    overflow: hidden;
+}
