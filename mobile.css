@@ -98,4 +98,20 @@
         bottom: 20px;
         width: 112px;
     }
+
+    #SvgCloseAddIcon{
+        transform: rotate(45deg);    
+        width: 23px;
+        height: 23px;
+        position: absolute;
+        left: 16px;
+        top: 16px;
+    }
+
+    #CloseAddNoteDialogButton{
+        position: absolute;
+        right: 152px;
+        bottom: 20px;
+        transition: 0;
+    }
 }

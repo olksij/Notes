@@ -76,3 +76,7 @@ function CreateNoteMobile(){
     var description = document.getElementById("AddNoteDescription").value;
     AddNote(title,description);
 }
+
+function CloseDialogCreateNote(){
+    document.getElementById("AddNoteWindow").style.visibility = "hidden";
+}
