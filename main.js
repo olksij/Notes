@@ -2,10 +2,15 @@ function Start() {
     LoadGNotes();
 
     document.getElementById("SearchBar").style.width = ((document.getElementById('body').offsetWidth)-116-76)+"px";
+    document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth)-80)+"px";
+    document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth)-80)+"px";
 
+    document.getElementById("AddNoteWindow").style.visibility = "hidden";
 }
 
 function Resized() {
+    document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth)-60-20)+"px";
+    document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth)-60-20)+"px";
     document.getElementById("SearchBar").style.width = ((document.getElementById('body').offsetWidth)-116-76)+"px";
 }
 
@@ -25,8 +30,8 @@ function LoadGNotes(){
 function CreateNote(){
     var title = document.getElementById("add-note-title").value;
     var description = document.getElementById("add-note-description").value;
-    document.getElementById("add-note-window").style.visibility = "hidden"
-    AddNote(title, description)
+    document.getElementById("add-note-window").style.visibility = "hidden";
+    AddNote(title, description);
 }
 
 function AddNote(title, description){
@@ -61,3 +66,13 @@ function CloseAddNoteWindow(){
 function DialogAccount(){
 }
 
+function MobileDialogCreateNote(){
+    document.getElementById("AddNoteWindow").style.visibility = "visible";
+}
+
+function CreateNoteMobile(){
+    document.getElementById("AddNoteWindow").style.visibility = "hidden";
+    var title = document.getElementById("AddNoteTitle").value;
+    var description = document.getElementById("AddNoteDescription").value;
+    AddNote(title,description);
+}

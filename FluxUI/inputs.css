@@ -29,7 +29,6 @@ input:focus {
     padding-left:8px;
     border: #00000000;
     background: var(--main-color-light);
-    transition: 0.3s;
     text-align: left;
     left: 20px;
     position: absolute;
@@ -43,7 +42,6 @@ input:focus {
     padding-left:8px;
     border: #00000000;
     background: var(--main-color-light);
-    transition: 0.3s;
     text-align: left;
     left: 20px;
     position: absolute;
@@ -72,4 +70,29 @@ input:focus {
     left: 38px;
     top: 38px;
     fill: var(--main-color);
+}
+
+.FluxAppCardTextBox{
+    background-color: var(--main-color-light);
+    border-radius: 10px;
+    height: 14px;
+    border-style: solid;
+    font-size: 18px;
+    padding: 21px;
+    border: #00000000;
+    text-align: left;
+    color: var(--main-color);
+    font-family: 'gsans-medium';
+}
+
+.FluxAppLargeCardTextBox{
+    background-color: var(--main-color-light);
+    border-radius: 10px;
+    border-style: solid;
+    font-size: 18px;
+    padding: 21px;
+    border: #00000000;
+    text-align: left;
+    color: var(--main-color);
+    font-family: 'gsans-medium';
 }
