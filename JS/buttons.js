@@ -34,14 +34,14 @@ function UserButtonUnHover() {
     x.style.fill = "var(--main-color)";
 }
 
-// Mobile User Account Icon ---------------------------------------
+// Mobile App Menu Icon ---------------------------------------
 
-function MobileUserButtonHover() {
-    var x = document.getElementById("MobileSvgAccountIcon");
+function AppMenuButtonHover() {
+    var x = document.getElementById("AppMenuButtonIcon");
     x.style.fill = "white";
 }
 
-function MobileUserButtonUnHover() {
-    var x = document.getElementById("MobileSvgAccountIcon");
+function AppMenuButtonUnHover() {
+    var x = document.getElementById("AppMenuButtonIcon");
     x.style.fill = "var(--main-color)";
 }

@@ -32,11 +32,12 @@
         width: 252px;
     }
     
-    #UserButton{
+    #AppMenuButton{
         right: 20px;
         top: 20px;
         position: absolute;
     }
+
 
     #SearchBar{
         position: absolute;
