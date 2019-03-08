@@ -67,6 +67,9 @@
     #MobileView{
         width: 100%;
         height: 100%;
+        position: absolute;
+        left:0px;
+        top: 0px;
     }
 
     #AddNoteWindow{
@@ -113,6 +116,6 @@
         position: absolute;
         right: 152px;
         bottom: 20px;
-        transition: 0;
+        transition: 0s;
     }
 }
