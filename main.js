@@ -1,5 +1,5 @@
 function Start() {
-    LoadGNotes();
+    LoadNotes(false);
 
     document.getElementById("SearchBar").style.width = ((document.getElementById('body').offsetWidth)-116-76)+"px";
     document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth)-82)+"px";

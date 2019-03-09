@@ -27,13 +27,25 @@ function AddNote(title, description){
             console.log(doc.id,doc.data());
         });
     });
+
+    LoadNotes(true);
 }
 
 // Read from here
 
-async function LoadGNotes(){
+async function LoadNotes(reload){
     var db = firebase.firestore();
     
+    if (reload==true){
+        for (var i=1; i<=notes.length; i++){
+            var element = document.getElementById(notes[i-1]+"Mobile");
+            element.parentNode.removeChild(element);
+        }
+    }
+
+    data = new Array();
+    notes = new Array();
+
     await db.collection("gnotes").get().then((querySnapshot) => { 
         querySnapshot.forEach((doc) => { 
             console.log(doc.id,doc.data());
