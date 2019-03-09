@@ -1,3 +1,6 @@
+var notes = new Array();
+var data = new Array();
+
 function CreateNote(){
     var title = document.getElementById("add-note-title").value;
     var description = document.getElementById("add-note-description").value;
@@ -26,18 +29,41 @@ function AddNote(title, description){
     });
 }
 
+// Read from here
 
-function LoadGNotes(){
+async function LoadGNotes(){
     var db = firebase.firestore();
-    var vnotes = new Array();
-
-    db.collection("gnotes").get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
+    
+    await db.collection("gnotes").get().then((querySnapshot) => { 
+        querySnapshot.forEach((doc) => { 
             console.log(doc.id,doc.data());
-            vnotes.push(doc.id)
+            notes.push(doc.id);
+            data.push(doc.data());
         });
     });
 
-    document.getElementById("add-note-window").style.visibility = "hidden";
+    RenderNotes();
+}
 
+function RenderNotes(){
+    for (var i=1; i<=notes.length; i++){
+        var NoteCard = document.createElement("div");
+        NoteCard.style.width = ((document.getElementById('body').offsetWidth)-40)+"px";
+        NoteCard.style.height = "56px";
+        NoteCard.style.position = "absolute";
+        NoteCard.style.left = "20px";
+        NoteCard.style.top = (76*i+20)+"px";
+        NoteCard.setAttribute('class', 'FluxAppLiteCard');
+        NoteCard.setAttribute('id', notes[i-1]+"Mobile");
+
+        document.getElementById("NoteList").appendChild(NoteCard);
+
+        var NoteTitle = document.createElement("p");
+        x=data[i-1];
+        NoteTitle.innerHTML = x.title;
+        NoteTitle.setAttribute('class', 'FluxAppLiteCardP');
+        NoteTitle.setAttribute('id', notes[i-1]+"MobileP");
+
+        document.getElementById(notes[i-1]+"Mobile").appendChild(NoteTitle);
+    }
 }

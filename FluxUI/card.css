@@ -1,0 +1,12 @@
+.FluxAppLiteCard{
+    background: var(--main-color-light);
+    border-radius: 10px;
+}
+
+.FluxAppLiteCardP{
+    color: var(--main-color);
+    font-family: 'gsans-medium';
+    margin: 19px;
+    size: 18px;
+
+}
