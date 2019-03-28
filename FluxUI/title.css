@@ -1,5 +1,5 @@
 div#FluxAppTitle{
-    position: fixed;
+    position: absolute;
     left: 20px;
     top:20px;
     background-color: var(--main-color);

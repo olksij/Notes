@@ -6,6 +6,7 @@ function Start() {
     document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth)-82)+"px";
 
     document.getElementById("AddNoteWindow").style.visibility = "hidden";
+    Resized();
 }
 
 function Resized() {

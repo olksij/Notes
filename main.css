@@ -17,5 +17,5 @@ svg#MobileSvgAccountIcon{
 }
 
 body{
-    overflow: hidden;
+     overflow-x: hidden;
 }
