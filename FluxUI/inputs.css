@@ -52,6 +52,7 @@ input:focus {
     background-color: var(--main-color-light );
     border-radius: 10px;
     height: 14px;
+    width: auto;
     border-style: solid;
     font-size: 18px;
     padding: 21px;

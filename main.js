@@ -9,12 +9,19 @@ function Start() {
 }
 
 function Resized() {
+    if (document.getElementById('body').offsetWidth>=500){
+        SwitchDesktopView();
+    }
+    else{
+        SwitchMobileView();
+    }
+
     document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth)-62-20)+"px";
     document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth)-62-20)+"px";
     document.getElementById("SearchBar").style.width = ((document.getElementById('body').offsetWidth)-116-76)+"px";
 
     for (var i=1; i<=notes.length; i++) {
-        document.getElementById(notes[i-1]+"Mobile").style.width = ((document.getElementById('body').offsetWidth)-40)+"px";
+        //document.getElementById(notes[i-1]+"Mobile").style.width = ((document.getElementById('body').offsetWidth)-40)+"px";
     }
 }
 
@@ -43,3 +50,12 @@ function CloseDialogCreateNote(){
     document.getElementById("AddNoteWindow").style.visibility = "hidden";
 }
 
+function SwitchDesktopView(){
+    document.getElementById("MobileView").style.visibility = "hidden";
+    document.getElementById("DesktopView").style.visibility = "visible";
+}
+
+function SwitchMobileView(){
+    document.getElementById("DesktopView").style.visibility = "hidden";
+    document.getElementById("MobileView").style.visibility = "visible";
+}

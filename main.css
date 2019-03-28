@@ -2,28 +2,7 @@
     --main-color: #0075FF;
     --main-shadow-color: #0075FF40;
     --main-color-light: #E5F1FF;
-}
-
-
-@media only screen and (min-width: 500px) {
-    div#MobileView{
-        visibility: hidden;
-    }
-
-    div#DesktopView{
-        visibility: visible;
-    }
-}
-
-@media only screen and (max-width: 500px) {
-    div#MobileView{
-        visibility: visible;
-    }
-
-    div#DesktopView{
-        visibility: hidden;
-    }
-}
+} 
 
 svg#SvgAccountIcon{
     transition: 0.3s;

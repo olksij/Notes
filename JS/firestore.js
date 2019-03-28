@@ -60,10 +60,11 @@ async function LoadNotes(reload){
 function RenderNotes(){
     for (var i=1; i<=notes.length; i++){
         var NoteCard = document.createElement("div");
-        NoteCard.style.width = ((document.getElementById('body').offsetWidth)-40)+"px";
+        //NoteCard.style.width = ((document.getElementById('body').offsetWidth)-40)+"px";
         NoteCard.style.height = "56px";
         NoteCard.style.position = "absolute";
         NoteCard.style.left = "20px";
+        NoteCard.style.right = "20px";
         NoteCard.style.top = (76*i+20)+"px";
         NoteCard.setAttribute('class', 'FluxAppLiteCard');
         NoteCard.setAttribute('id', notes[i-1]+"Mobile");
