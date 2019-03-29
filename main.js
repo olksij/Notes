@@ -10,11 +10,11 @@ function Start() {
 }
 
 function Resized() {
-    if (document.getElementById('body').offsetWidth>=500){
-        SwitchDesktopView();
+    if (document.getElementById('body').offsetWidth>=483){
+        //SwitchDesktopView();
     }
     else{
-        SwitchMobileView();
+        //SwitchMobileView();
     }
 
     document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth)-62-20)+"px";
