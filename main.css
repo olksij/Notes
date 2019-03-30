@@ -2,6 +2,8 @@
     --main-color: #0075FF;
     --main-shadow-color: #0075FF40;
     --main-color-light: #E5F1FF;
+
+    --device-view-width:650px;
 } 
 
 svg#SvgAccountIcon{
@@ -50,8 +52,15 @@ body {width: 100%;}
 ---------------------------------------------
 */
 
-@media only screen and (max-width: 499px) {
+@media only screen and (max-width: 656px) {
     div#FluxAppTitle{
+        visibility: hidden;
+    }
+
+    #SearchBarD{
+        visibility: hidden;
+    }
+    #SearchIconD{
         visibility: hidden;
     }
     
@@ -194,16 +203,16 @@ body {width: 100%;}
 ---------------------------------------------
 */
 
-@media only screen and (min-width: 500px) {
-    #SearchBar{
-        visibility: hidden;
-    }
-
+@media only screen and (min-width: 657px) {
     #AppMenuButtonIcon{
         visibility: hidden;
     }
 
     #SearchIcon{
+        visibility: hidden;
+    }
+
+    #SearchBar{
         visibility: hidden;
     }
 
@@ -219,8 +228,21 @@ body {width: 100%;}
         visibility: hidden;
     }
 
+    #SearchBarD{
+        position: absolute;
+        top: 20px;
+        right: 117px;
+        left: 180px;
+        width: auto;    
+    }
+
+    
+    #SearchIconD{
+        left: 200px;  
+    }
+
     div#FluxAppTitle{
-    width: 140px;
+        width: 140px;
     }
 
     div#FluxAppButton{

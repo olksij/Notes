@@ -10,20 +10,9 @@ function Start() {
 }
 
 function Resized() {
-    if (document.getElementById('body').offsetWidth>=483){
-        //SwitchDesktopView();
-    }
-    else{
-        //SwitchMobileView();
-    }
-
+    document.getElementById("SearchBar").style.width = ((document.getElementById('body').offsetWidth)-116-76)+"px";
     document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth)-62-20)+"px";
     document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth)-62-20)+"px";
-    document.getElementById("SearchBar").style.width = ((document.getElementById('body').offsetWidth)-116-76)+"px";
-
-    for (var i=1; i<=notes.length; i++) {
-        //document.getElementById(notes[i-1]+"Mobile").style.width = ((document.getElementById('body').offsetWidth)-40)+"px";
-    }
 }
 
 function DialogCreateNote(){
