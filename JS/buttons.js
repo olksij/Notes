@@ -1,13 +1,15 @@
 // Add Note Icon ---------------------------------------
 
 function AddButtonHover() {
-    var x = document.getElementById("SvgAddIcon");
-    x.style.fill = "white";
+    if (document.getElementById('body').offsetWidth>=640){
+        document.getElementById("SvgAddIcon").style.fill = "white";
+    }
 }
 
 function AddButtonUnHover() {
-    var x = document.getElementById("SvgAddIcon");
-    x.style.fill = "var(--main-color)";
+    if (document.getElementById('body').offsetWidth>=640){
+        document.getElementById("SvgAddIcon").style.fill = "var(--main-color)";    
+    }
 }
 
 // Create Note Text ---------------------------------------

@@ -1,7 +1,6 @@
 function Start() {
     LoadNotes(false);
 
-    document.getElementById("SearchBar").style.width = ((document.getElementById('body').offsetWidth)-116-76)+"px";
     document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth)-82)+"px";
     document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth)-82)+"px";
 
@@ -10,7 +9,17 @@ function Start() {
 }
 
 function Resized() {
-    document.getElementById("SearchBar").style.width = ((document.getElementById('body').offsetWidth)-116-76)+"px";
+    if (document.getElementById('body').offsetWidth<640){
+        // MOBILE
+        document.getElementById("SvgAddIcon").style.fill = "white";
+        document.getElementById("AddNoteButton").setAttribute('class', 'FluxAppFloatingButton');
+    }
+    else{
+        // DESKTOP
+        document.getElementById("SvgAddIcon").style.fill = "var(--main-color)";    
+        document.getElementById("AddNoteButton").setAttribute('class', 'FluxAppButton');
+        //document.getElementById("SearchBar").style.width = "205px";
+    }
     document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth)-62-20)+"px";
     document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth)-62-20)+"px";
 }
