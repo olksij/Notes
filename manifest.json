@@ -12,7 +12,7 @@
   ],
   "theme_color": "#1a1a1a",
   "background_color": "#fff",
-  "start_url": "/",
+  "start_url": "alexbesida.github.io/Notes",
   "display": "standalone",
   "orientation": "natural"
 }
