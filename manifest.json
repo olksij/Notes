@@ -10,9 +10,9 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#1a1a1a",
+  "theme_color": "#0075FF",
   "background_color": "#fff",
-  "start_url": "alexbesida.github.io/Notes",
+  "start_url": "https://alexbesida.github.io/Notes",
   "display": "standalone",
   "orientation": "natural"
 }
