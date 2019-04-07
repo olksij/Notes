@@ -8,10 +8,13 @@
     <meta name="viewport" content=" width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="FluxUI.css">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+    <link rel="manifest" href="manifest.json">
     <script src="main.js"></script>
     <script src="JS/buttons.js"></script>
     <script src="JS/firestore.js"></script>
     <script src="initialize.js"></script>
+    <script src="pwa.js"></script>
+    <script src="sw.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
     <script>
     var config = {
@@ -24,6 +27,9 @@
     };
     firebase.initializeApp(config);
     </script>
+    <script async src="https://cdn.jsdelivr.net/npm/pwacompat@2.0.6/pwacompat.min.js"
+    integrity="sha384-GOaSLecPIMCJksN83HLuYf9FToOiQ2Df0+0ntv7ey8zjUHESXhthwvq9hXAZTifA"
+    crossorigin="anonymous"></script>
 </head>
 <body onload="Start()" id="body" onresize="Resized()">
     <div id="NoteList">
