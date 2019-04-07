@@ -179,8 +179,6 @@ body {width: 100%;}
         bottom: 20px;
         transition: 0.3s;
     }
-
-
 }
 
 /* 
@@ -217,46 +215,94 @@ body {width: 100%;}
     }
 
     div#FluxAppButton{
-    position: absolute;
-    right: 20px;
-    top: 20px;
+        position: absolute;
+        right: 20px;
+        top: 20px;
     }
 
     #add-note-card{
-    width: 300px;
-    height: 165px;
-    top: 30%;
+        width: 300px;
+        height: 165px;
+        top: 30%;
     }
 
     #add-note-p{
-    font-family: 'gsans-medium';
+        font-family: 'gsans-medium';
     }
 
     #add-note-title{
-    top: 65px;
-    width: 168px;
+        top: 65px;
+        width: 168px;
     }
 
     #add-note-accept-button{
-    width:70px;
-    right: 20px;
-    top: 65px;
+        width:70px;
+        right: 20px;
+        top: 65px;
     }
 
     #add-note-description{
-    height: 30px;
-    top: 115px;
-    width: 252px;
+        height: 30px;
+        top: 115px;
+        width: 252px;
     }
+
     #AddNoteButton{
-    right: 20px;
-    top:20px;
-    position: absolute;
+        right: 20px;
+        top:20px;
+        position: absolute;
     }
 
     #AppMenuButton{
-    right: 101px;
-    top: 20px;
-    position: absolute;
+        right: 101px;
+        top: 20px;
+        position: absolute;
+    }
+
+    #AddNoteWindow{
+        position: fixed;
+        left:0px;
+        right: 0px;
+        width: 100%;
+        height: 100%;
+        background-color: #ffffff;
+    }
+
+    #AddNoteTitle{
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        right: 20px;
+        width: auto;
+    }
+
+    #AddNoteDescription{
+        position: absolute;
+        left: 20px;
+        top: 96px;
+        right: 20px;
+        width: auto;
+    }
+
+    #CreateNoteAcceptButton{
+        right: 20px;
+        bottom: 20px;
+        width: 112px;
+    }
+
+    #SvgCloseAddIcon{
+        transform: rotate(45deg);    
+        width: 23px;
+        height: 23px;
+        position: absolute;
+        left: 16px;
+        top: 16px;
+    }
+
+    #CloseAddNoteDialogButton{
+        position: absolute;
+        right: 152px;
+        bottom: 20px;
+        transition: 0.3s;
     }
 }

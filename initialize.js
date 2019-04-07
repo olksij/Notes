@@ -1,7 +1,7 @@
 var app_info = {
-    version: "0.3", //Major Version, Minor Version, Bug fixes.
+    version: "0.4", //Major Version, Minor Version, Bug fixes.
     type: "alpha",
     developer: "Alex Besida",
     link: "@AlexBesida",
-    version_released: "07.03.2019"
+    version_released: "07.04.2019"
 };

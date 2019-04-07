@@ -55,3 +55,13 @@ function AppMenuButtonUnHover() {
         document.getElementById("SvgAccountIcon").style.fill = "var(--main-color)";
     }
 }
+
+// Add Note Close Icon ---------------------------------------
+
+function AddNoteCloseButtonHover(){
+    document.getElementById("SvgCloseAddIcon").style.fill = "white";
+}
+
+function AddNoteCloseButtonOut(){
+    document.getElementById("SvgCloseAddIcon").style.fill = "var(--main-color)";
+}
