@@ -1,18 +1,15 @@
 {
-  "lang": "en",
-  "dir": "ltr",
   "name": "Flux Notes",
   "short_name": "Notes",
+  "lang": "en-US",
+  "start_url": "/Notes",
+  "display": "standalone",
+  "theme_color": "#0075FF",
   "icons": [
     {
       "src": "/Assets/AppIcon.png",
       "sizes": "192x192",
       "type": "image/png"
     }
-  ],
-  "theme_color": "#0075FF",
-  "background_color": "#fff",
-  "start_url": "https://alexbesida.github.io/Notes",
-  "display": "standalone",
-  "orientation": "natural"
+  ]
 }
