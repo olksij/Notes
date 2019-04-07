@@ -134,7 +134,7 @@ body {width: 100%;}
     }
 
     #AddNoteWindow{
-        position: absolute;
+        position: fixed;
         left:0px;
         right: 0px;
         width: 100%;
@@ -177,7 +177,7 @@ body {width: 100%;}
         position: absolute;
         right: 152px;
         bottom: 20px;
-        transition: 0s;
+        transition: 0.3s;
     }
 
 

@@ -39,11 +39,19 @@ function UserButtonUnHover() {
 // Mobile App Menu Icon ---------------------------------------
 
 function AppMenuButtonHover() {
-    var x = document.getElementById("AppMenuButtonIcon");
-    x.style.fill = "white";
+    if (document.getElementById('body').offsetWidth<640){
+        document.getElementById("AppMenuButtonIcon").style.fill = "white";
+    }
+    else{
+        document.getElementById("SvgAccountIcon").style.fill = "white";
+    }
 }
 
 function AppMenuButtonUnHover() {
-    var x = document.getElementById("AppMenuButtonIcon");
-    x.style.fill = "var(--main-color)";
+    if (document.getElementById('body').offsetWidth<640){
+        document.getElementById("AppMenuButtonIcon").style.fill = "var(--main-color)";    
+    }
+    else{
+        document.getElementById("SvgAccountIcon").style.fill = "var(--main-color)";
+    }
 }

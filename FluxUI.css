@@ -316,7 +316,7 @@ p.FluxAppTitleP{
     background-color: #ffffff;
     border-radius: 5px;
     box-shadow: 0px 2px 15px #00000040;
-    position: relative;
+    position: fixed;
     width: 300px;
     height: 165px;
     display: inline-block;
@@ -325,7 +325,7 @@ p.FluxAppTitleP{
 
 .FluxAppWindowTitle{
     margin: 20px;
-    position: relative;
+    position: fixed;
     font-size: 18px;
     color: var(--main-color);
 }
