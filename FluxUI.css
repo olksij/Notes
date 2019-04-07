@@ -24,6 +24,7 @@ div.FluxAppButton:hover{
     left: 17px;
     top: 17px;
     fill: var(--main-color);
+    transition: 0.3s;
 }
 
 div.FluxAppFloatingButton{
