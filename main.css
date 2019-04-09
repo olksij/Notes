@@ -64,10 +64,6 @@ body {width: 100%;}
 */
 
 @media only screen and (max-width: 656px) {
-    #SvgAccountIcon{
-        visibility: hidden;
-    }
-
     div#FluxAppTitle{
         visibility: hidden;
     }
@@ -188,11 +184,6 @@ body {width: 100%;}
 */
 
 @media only screen and (min-width: 657px) {
-    #AppMenuButtonIcon{
-        visibility: hidden;
-    }
-
-
     #SearchBar{
         position: absolute;
         top: 20px;

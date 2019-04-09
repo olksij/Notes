@@ -39,21 +39,11 @@ function UserButtonUnHover() {
 // Mobile App Menu Icon ---------------------------------------
 
 function AppMenuButtonHover() {
-    if (document.getElementById('body').offsetWidth<640){
-        document.getElementById("AppMenuButtonIcon").style.fill = "white";
-    }
-    else{
-        document.getElementById("SvgAccountIcon").style.fill = "white";
-    }
+    document.getElementById("AppMenuButtonIcon").style.fill = "white";
 }
 
 function AppMenuButtonUnHover() {
-    if (document.getElementById('body').offsetWidth<640){
-        document.getElementById("AppMenuButtonIcon").style.fill = "var(--main-color)";    
-    }
-    else{
-        document.getElementById("SvgAccountIcon").style.fill = "var(--main-color)";
-    }
+    document.getElementById("AppMenuButtonIcon").style.fill = "var(--main-color)";    
 }
 
 // Add Note Close Icon ---------------------------------------

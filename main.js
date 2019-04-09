@@ -6,23 +6,9 @@ function Start() {
     document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth)-82)+"px";
 
     document.getElementById("AddNoteWindow").style.visibility = "hidden";
-    Resized();
+    Resized();  
 
-    var installPromptEvent;
-    var btnInstall = document.querySelector('#install');
-    event.preventDefault();
-    installPromptEvent = event;
-    installPromptEvent.prompt();
-    installPromptEvent.userChoice.then((choice) => {
-        if (choice.outcome === 'accepted') {
-            console.log('User accepted the A2HS prompt');
-        } else {
-            console.log('User dismissed the A2HS prompt');
-        }
-        installPromptEvent = null;
-    });
-    
-    
+
 }
 
 function registerSW() {
@@ -84,4 +70,19 @@ function SwitchDesktopView(){
 function SwitchMobileView(){
     document.getElementById("DesktopView").style.visibility = "hidden";
     document.getElementById("MobileView").style.visibility = "visible";
+}
+
+function AppMenuButtonClick(){
+    // Show the prompt
+    deferredPrompt.prompt();
+    // Wait for the user to respond to the prompt
+    deferredPrompt.userChoice
+        .then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the A2HS prompt');
+        } else {
+            console.log('User dismissed the A2HS prompt');
+        }
+        deferredPrompt = null;
+    });
 }
