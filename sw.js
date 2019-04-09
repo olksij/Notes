@@ -5,6 +5,13 @@ const staticAssets = [
   './FluxUI.css',
   './main.css',
   './main.js',
+  './Assets/AppIcon.ico',
+  './Assets/AppIcon.png',
+  './Assets/AppIcon512.png',
+  './Assets/AppIconWhite.svg',
+  './Fonts/GoogleSans-Medium.ttf',
+  './Fonts/GoogleSans-Regular.ttf',
+  './Fonts/GoogleSans-Bold.ttf',
   './JS/buttons.js',
   './JS/firestore.js'
 ];
