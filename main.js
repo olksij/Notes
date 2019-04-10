@@ -73,6 +73,8 @@ function SwitchMobileView(){
 }
 
 function AppMenuButtonClick(){
+    console.log("clicked")
+    document.getElementById("body").style.background = "white";
     // Show the prompt
     deferredPrompt.prompt();
     // Wait for the user to respond to the prompt

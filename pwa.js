@@ -5,5 +5,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   // Stash the event so it can be triggered later.
   deferredPrompt = e;
-  document.getElementById("AppMenuButtonIcon").style.fill = "red";
+  // Update UI notify the user they can add to home screen
+  document.getElementById("body").style.background = "red";
 });
