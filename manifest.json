@@ -7,11 +7,11 @@
   "theme_color": "#0075FF",
   "icons": [
     {
-      "src": "/Assets/AppIcon.png",
+      "src": "https://alexbesida.github.io/Notes/Assets/AppIcon.png",
       "sizes": "192x192",
       "type": "image/png"
     }, {
-      "src": "/Assets/AppIcon512.png",
+      "src": "https://alexbesida.github.io/Notes/Assets/AppIcon512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
