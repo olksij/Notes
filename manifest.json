@@ -15,5 +15,6 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ]
+  ],
+  "prefer_related_applications": false
 }

@@ -7,4 +7,5 @@ window.addEventListener('beforeinstallprompt', (e) => {
   deferredPrompt = e;
   // Update UI notify the user they can add to home screen
   document.getElementById("body").style.background = "red";
+  console.log("Allowed");
 });
