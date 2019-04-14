@@ -72,9 +72,9 @@ function SwitchMobileView(){
     document.getElementById("MobileView").style.visibility = "visible";
 }
 
-function AppMenuButtonClick(){
+btnAdd.addEventListener('click', (e) => {
     console.log("clicked")
-    document.getElementById("body").style.background = "white";
+    btnAdd.style.display = 'none';
     // Show the prompt
     deferredPrompt.prompt();
     // Wait for the user to respond to the prompt
