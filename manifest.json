@@ -2,7 +2,7 @@
   "name": "Flux Notes",
   "short_name": "Notes",
   "lang": "en-US",
-  "start_url": "/Notes",
+  "start_url": "./Notes",
   "display": "standalone",
   "theme_color": "#0075FF",
   "icons": [
