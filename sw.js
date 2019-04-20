@@ -1,40 +1,45 @@
 const cacheName = 'f-notes-v1';
-const staticAssets = [
-  './',
-  './index.html',
-  './FluxUI.css',
-  './main.css',
-  './main.js',
-  './Assets/AppIcon.ico',
-  './Assets/AppIcon.png',
-  './Assets/AppIcon512.png',
-  './Assets/AppIconWhite.svg',
-  './Fonts/GoogleSans-Medium.ttf',
-  './Fonts/GoogleSans-Regular.ttf',
-  './Fonts/GoogleSans-Bold.ttf',
-  './JS/buttons.js',
-  './JS/firestore.js'
-];
 
-self.addEventListener('install', async e => {
-  const cache = await caches.open(cacheName);
-  await cache.addAll(staticAssets);
-  return self.skipWaiting();
+self.addEventListener('install', function(event) {
+  event.waitUntil(
+    caches.open(cacheName).then(function(cache) {
+      return cache.addAll(
+        [
+          './',
+          './index.html',
+          './FluxUI.css',
+          './main.css',
+          './main.js',
+          './Assets/AppIcon.ico',
+          './Assets/AppIcon.png',
+          './Assets/AppIcon512.png',
+          './Assets/AppIconWhite.svg',
+          './Fonts/GoogleSans-Medium.ttf',
+          './Fonts/GoogleSans-Regular.ttf',
+          './Fonts/GoogleSans-Bold.ttf',
+          './JS/buttons.js',
+          './JS/firestore.js'
+        ]
+      );
+    })
+  );
 });
 
 self.addEventListener('activate', e => {
   self.clients.claim();
 });
 
-self.addEventListener('fetch', async e => {
-  const req = e.request;
-  const url = new URL(req.url);
-
-  if (url.origin === location.origin) {
-    e.respondWith(cacheFirst(req));
-  } else {
-    e.respondWith(networkAndCache(req));
-  }
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    caches.open(cacheName).then(function(cache) {
+      return cache.match(event.request).then(function (response) {
+        return response || fetch(event.request).then(function(response) {
+          cache.put(event.request, response.clone());
+          return response;
+        });
+      });
+    })
+  );
 });
 
 async function cacheFirst(req) {
