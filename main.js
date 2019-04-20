@@ -13,7 +13,7 @@ function Start() {
 
 function registerSW() {
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js', { scope: './' }).then(() => {
+        navigator.serviceWorker.register('sw.js', { scope: 'https://alexbesida.github.io/Notes/sw.js' }).then(() => {
           console.log('Service Worker registered successfully.');
         }).catch(error => {
           console.log('Service Worker registration failed:', error);
