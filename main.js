@@ -13,7 +13,7 @@ function Start() {
 
 function registerSW() {
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js', { scope: '/Notes/' }).then(() => {
+        navigator.serviceWorker.register('sw.js', { scope: './' }).then(() => {
           console.log('Service Worker registered successfully.');
         }).catch(error => {
           console.log('Service Worker registration failed:', error);
@@ -71,20 +71,3 @@ function SwitchMobileView(){
     document.getElementById("DesktopView").style.visibility = "hidden";
     document.getElementById("MobileView").style.visibility = "visible";
 }
-
-btnAdd.addEventListener('click', (e) => {
-    console.log("clicked")
-    btnAdd.style.display = 'none';
-    // Show the prompt
-    deferredPrompt.prompt();
-    // Wait for the user to respond to the prompt
-    deferredPrompt.userChoice
-        .then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-            console.log('User accepted the A2HS prompt');
-        } else {
-            console.log('User dismissed the A2HS prompt');
-        }
-        deferredPrompt = null;
-    });
-});
