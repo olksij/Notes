@@ -1,5 +1,3 @@
-importScripts('sw-cache-polyfill.js');
-
 self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open('sw-notes-v1.1').then(function(cache) {
