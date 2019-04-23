@@ -2,13 +2,10 @@ function Start() {
     LoadNotes(false);
     registerSW();
 
-    document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth)-82)+"px";
-    document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth)-82)+"px";
+    document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth)-82)+"px"; document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth)-82)+"px";
 
     document.getElementById("AddNoteWindow").style.visibility = "hidden";
     Resized(); 
-
-
 }
 
 function registerSW() {
@@ -18,56 +15,35 @@ function registerSW() {
         }).catch(error => {
           console.log('Service Worker registration failed:', error);
         });
-      }
     }
+}
 
 function Resized() {
-    if (document.getElementById('body').offsetWidth<640){
-        // MOBILE
+    if (document.getElementById('body').offsetWidth<640){ // MOBILE
         document.getElementById("SvgAddIcon").style.fill = "white";
         document.getElementById("AddNoteButton").setAttribute('class', 'FluxAppFloatingButton');
     }
-    else{
-        // DESKTOP
+    else{ // DESKTOP
         document.getElementById("SvgAddIcon").style.fill = "var(--main-color)";    
         document.getElementById("AddNoteButton").setAttribute('class', 'FluxAppButton');
-        //document.getElementById("SearchBar").style.width = "205px";
     }
+
     document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth)-62-20)+"px";
     document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth)-62-20)+"px";
 }
 
-function DialogCreateNote(){
-    document.getElementById("add-note-window").style.visibility = "visible";
-}
-function CloseAddNoteWindow(){
-    document.getElementById("add-note-window").style.visibility = "hidden";
-}
+function DialogCreateNote(){ document.getElementById("add-note-window").style.visibility = "visible"; }
 
-function DialogAccount(){
-}
+function CloseAddNoteWindow(){ document.getElementById("add-note-window").style.visibility = "hidden"; }
 
-function MobileDialogCreateNote(){
-    document.getElementById("AddNoteWindow").style.visibility = "visible";
-}
+function DialogAccount(){}
 
-function CreateNoteMobile(){
-    document.getElementById("AddNoteWindow").style.visibility = "hidden";
-    var title = document.getElementById("AddNoteTitle").value;
-    var description = document.getElementById("AddNoteDescription").value;
-    AddNote(title,description);
-}
+function MobileDialogCreateNote(){ document.getElementById("AddNoteWindow").style.visibility = "visible"; }
 
-function CloseDialogCreateNote(){
-    document.getElementById("AddNoteWindow").style.visibility = "hidden";
-}
+function CreateNoteMobile(){ document.getElementById("AddNoteWindow").style.visibility = "hidden"; AddNote(document.getElementById("AddNoteTitle").value,document.getElementById("AddNoteDescription").value); }
 
-function SwitchDesktopView(){
-    document.getElementById("MobileView").style.visibility = "hidden";
-    document.getElementById("DesktopView").style.visibility = "visible";
-}
+function CloseDialogCreateNote(){ document.getElementById("AddNoteWindow").style.visibility = "hidden"; }
 
-function SwitchMobileView(){
-    document.getElementById("DesktopView").style.visibility = "hidden";
-    document.getElementById("MobileView").style.visibility = "visible";
-}
+let deferredPrompt; window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
+
+window.addEventListener('appinstalled', (evt) => { app.logEvent('a2hs', 'installed'); });
