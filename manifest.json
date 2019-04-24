@@ -4,7 +4,7 @@
   "lang": "en-US",
   "start_url": "/Notes/",
   "display": "standalone",
-  "theme_color": "#0075FF",
+  "theme_color": "#FFFFFF",
   "icons": [
     {
       "src": "https://alexbesida.github.io/Notes/Assets/AppIcon.png",
