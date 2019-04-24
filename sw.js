@@ -7,6 +7,7 @@ self.addEventListener('install', function(event) {
         './FluxUI.css',
         './main.css',
         './main.js',
+        './manifest.json',
         './Assets/AppIcon.ico',
         './Assets/AppIcon.png',
         './Assets/AppIcon512.png',
