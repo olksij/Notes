@@ -1,5 +1,4 @@
 self.addEventListener('install', function(event) {
-  if (self.skipWaiting) { self.skipWaiting(); }
   event.waitUntil(
     caches.open('sw-notes-v1.1').then(function(cache) {
       return cache.addAll([
