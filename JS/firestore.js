@@ -1,5 +1,4 @@
-var notes = new Array();
-var data = new Array();
+var notes = new Array(); var data = new Array();
 
 function CreateNote(){
     var title = document.getElementById("add-note-title").value;
@@ -22,12 +21,7 @@ function AddNote(title, description){
     });
     
     console.clear();
-    db.collection("gnotes").get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            console.log(doc.id,doc.data());
-        });
-    });
-
+    db.collection("gnotes").get().then((querySnapshot) => {querySnapshot.forEach((doc) => {console.log(doc.id,doc.data());});});
     LoadNotes(true);
 }
 
@@ -36,23 +30,11 @@ function AddNote(title, description){
 async function LoadNotes(reload){
     var db = firebase.firestore();
     
-    if (reload==true){
-        for (var i=1; i<=notes.length; i++){
-            var element = document.getElementById(notes[i-1]+"Mobile");
-            element.parentNode.removeChild(element);
-        }
-    }
+    if (reload==true){ for (var i=1; i<=notes.length; i++){ var element = document.getElementById(notes[i-1]+"Mobile"); element.parentNode.removeChild(element); } }
 
-    data = new Array();
-    notes = new Array();
+    data = new Array(); notes = new Array();
 
-    await db.collection("gnotes").get().then((querySnapshot) => { 
-        querySnapshot.forEach((doc) => { 
-            console.log(doc.id,doc.data());
-            notes.push(doc.id);
-            data.push(doc.data());
-        });
-    });
+    await db.collection("gnotes").get().then((querySnapshot) => { querySnapshot.forEach((doc) => { console.log(doc.id,doc.data()); notes.push(doc.id); data.push(doc.data()); }); });
 
     RenderNotes();
 }
@@ -79,4 +61,11 @@ function RenderNotes(){
 
         document.getElementById(notes[i-1]+"Mobile").appendChild(NoteTitle);
     }
+
+    var EndDiv = document.createElement("div");
+    EndDiv.style.height= "20px";
+    EndDiv.style.width= "20px";
+    EndDiv.style.position = "absolute";
+    EndDiv.style.top = notes.length*76+76+"px";
+    document.getElementById("NoteList").appendChild(EndDiv);
 }
