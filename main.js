@@ -8,26 +8,34 @@ function Start() {
     Resized(); 
 }
 
-function registerSW() { 
-    if ('serviceWorker' in navigator) { 
-        navigator.serviceWorker.register('sw.js', { scope: 'https://alexbesida.github.io/Notes/' }).then(reg => {
-        reg.onupdatefound = () => {
-            const installingWorker = reg.installing;
-            installingWorker.onstatechange = () => {
-                switch (installingWorker.state) {
-                    case 'installed':
-                        if (navigator.serviceWorker.controller) {
-                            resolve(true);
-                        } else {
-                            resolve(false);
-                        }
-                        break;
-                    }
-                };
-            };
-        }).catch(err => console.error('[Error]', err));
+function registerSW() { if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js', { scope: 'https://alexbesida.github.io/Notes/' }).then(() => { console.log('Service Worker registered successfully.'); }).catch(error => { console.log('Service Worker registration failed:', error); }); } }
+
+window.isUpdateAvailable = new Promise(function(resolve, reject) {
+	// lazy way of disabling service workers while developing
+	if ('serviceWorker' in navigator) {
+		navigator.serviceWorker.register('sw.js', { scope: 'https://alexbesida.github.io/Notes/' })
+			.then(reg => {
+				reg.onupdatefound = () => {
+					const installingWorker = reg.installing;
+					installingWorker.onstatechange = () => {
+						switch (installingWorker.state) {
+							case 'installed':
+								if (navigator.serviceWorker.controller) {
+									// new update available
+									resolve(true);
+								} else {
+									// no update available
+									resolve(false);
+								}
+							break;
+						}
+					};
+				};
+			}).catch(err => console.error('[SW ERROR]', err));
+        }
     }
-}
+);
+
 
 window['isUpdateAvailable'].then(isAvailable => {
     if (isAvailable) {
