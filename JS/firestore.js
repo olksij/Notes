@@ -21,7 +21,6 @@ function AddNote(title, description){
     });
     
     console.clear();
-    db.collection("gnotes").get().then((querySnapshot) => {querySnapshot.forEach((doc) => {console.log(doc.id,doc.data());});});
     LoadNotes(true);
 }
 
@@ -34,7 +33,7 @@ async function LoadNotes(reload){
 
     data = new Array(); notes = new Array();
 
-    await db.collection("gnotes").get().then((querySnapshot) => { querySnapshot.forEach((doc) => { console.log(doc.id,doc.data()); notes.push(doc.id); data.push(doc.data()); }); });
+    await db.collection("gnotes").get().then((querySnapshot) => { querySnapshot.forEach((doc) => {notes.push(doc.id); data.push(doc.data()); }); });
 
     RenderNotes();
 }
