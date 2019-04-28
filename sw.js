@@ -1,6 +1,6 @@
 self.addEventListener('install', function(event) {
   event.waitUntil(
-    caches.open('sw-notes-v1.3').then(function(cache) {
+    caches.open('sw-notes-v1.1').then(function(cache) {
       return cache.addAll([
         './',
         './index.html',
@@ -15,6 +15,7 @@ self.addEventListener('install', function(event) {
         './Fonts/GoogleSans-Medium.ttf',
         './Fonts/GoogleSans-Regular.ttf',
         './Fonts/GoogleSans-Bold.ttf',
+        './JS/buttons.js',
         './JS/firestore.js'
       ]);
     })
