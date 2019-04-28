@@ -1,6 +1,6 @@
 self.addEventListener('install', function(event) {
   event.waitUntil(
-    caches.open('sw-notes-v1.2').then(function(cache) {
+    caches.open('sw-notes-v1.3').then(function(cache) {
       return cache.addAll([
         './',
         './index.html',

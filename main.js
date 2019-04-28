@@ -1,6 +1,6 @@
 function Start() {
-    LoadNotes(false);
     registerSW();
+    LoadNotes(false);
 
     document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth)-82)+"px"; document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth)-82)+"px";
 

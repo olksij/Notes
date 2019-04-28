@@ -1,4 +1,5 @@
-var notes = new Array(); var data = new Array();
+var notes = new Array(); 
+var data = new Array();
 
 function CreateNote(){
     var title = document.getElementById("add-note-title").value;
