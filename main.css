@@ -10,6 +10,10 @@
     width:100%;
 }
 
+svg#SvgAccountIcon{
+    transition: 0.3s;
+}
+
 svg#SvgAddIcon{
     transition: 0.3s;
 }
@@ -68,6 +72,16 @@ body {width: 100%;}
         position: absolute;
         right: 20px;
         top: 20px;
+    }
+
+    #add-note-card{
+        width: 300px;
+        height: 165px;
+        top: 30%;
+    }
+
+    #add-note-p{
+        font-family: 'gsans-medium';
     }
 
     #add-note-title{

@@ -4,27 +4,23 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Flux Notes</title>
-    <meta name="Description" content="Flux Notes. Alpha. Description is coming soon.">
     <meta name="viewport" content=" width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="FluxUI.css">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css">
     <link rel="manifest" href="manifest.json">
     <script src="main.js"></script>
-    <script src="JS/firestore.js"></script>
+    <script src="firestore.js"></script>
     <script src="initialize.js"></script>
     <script src="sw.js"></script>
     <link rel="icon" href="./Assets/AppIcon.ico">
-    <script src="https://www.gstatic.com/firebasejs/5.8.5/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
     <script>
-        var config = {
-            apiKey: "AIzaSyD5e1BRr6QliCZrUGUyS2HmaS98RoEMhjU",
-            authDomain: "flux-notes.firebaseapp.com",
-            databaseURL: "https://flux-notes.firebaseio.com",
-            projectId: "flux-notes",
-            storageBucket: "flux-notes.appspot.com",
-            messagingSenderId: "423307191915"
-        };
-        firebase.initializeApp(config);
+        firebase.initializeApp({ apiKey: "AIzaSyD5e1BRr6QliCZrUGUyS2HmaS98RoEMhjU",authDomain: "flux-notes.firebaseapp.com",databaseURL: "https://flux-notes.firebaseio.com",projectId: "flux-notes",storageBucket: "flux-notes.appspot.com",messagingSenderId: "423307191915"}); let app = firebase.app();
+        firebase.firestore().enablePersistence().catch(function(err) {
+            if (err.code == 'failed-precondition') { /*Multiple tabs open*/ } 
+            else if (err.code == 'unimplemented') { /*The current browser does not support all of the features*/}
+        });
     </script>
 </head>
 
@@ -35,7 +31,7 @@
 
     <div id="TopBar">
         <div id="FluxAppTitle">
-            <img src="Assets/AppIconWhite.svg" class="FluxAppTitleImg" alt="AppIconWhite"/>
+            <img src="Assets/AppIconWhite.svg" class="FluxAppTitleImg"/>
             <p class="FluxAppTitleP">Notes</p>
         </div>
     </div>
