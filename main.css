@@ -34,6 +34,33 @@ html{
     height: 100%;
 }
 
+
+.NoteTitle{
+    color: var(--main-color);
+    font-family: 'gsans-medium';
+    margin: 19px;
+    size: 18px;
+}
+
+.NoteDescription{
+    color: #73B3FF;
+    font-family: 'gsans-medium';
+    margin: 19px;
+    font-size: 14px;
+    position: relative;
+    top: -5px;
+}
+
+.NoteDate{
+    color: #73B3FF;
+    font-family: 'gsans-medium';
+    margin: 19px;
+    font-size: 14px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+
 /* 
 -------------------------------------------
          FONTS

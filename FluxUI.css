@@ -147,14 +147,6 @@ div.FluxAppFloatingButton:hover{
     left: 20px;
 }
 
-.FluxAppLiteCardP{
-    color: var(--main-color);
-    font-family: 'gsans-medium';
-    margin: 19px;
-    size: 18px;
-
-}
-
 /* 
 -------------------------------------------
          INPUTS

@@ -1,6 +1,7 @@
-var FluxAppBuild = '1014';
+var FluxAppBuild = '1035';
 
 self.addEventListener('install', function(event) {
+    self.skipWaiting();
     console.log("Caching..");
     event.waitUntil(
         caches.open(FluxAppBuild).then(function(cache) {
@@ -26,31 +27,31 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('activate', function(event) {
+    console.log("Activated");
     event.waitUntil(
         caches.keys().then(function(cacheNames) {
             return Promise.all(
                 cacheNames.filter(function(cacheName) {
-                    console.log(cacheName);
-                    if (parseInt(cacheName)<parseInt(FluxAppBuild)) {
+                    if (FluxAppBuild!=cacheName) {
                         return true;
                     }
                     else{
                         return false;
                     }
                 }).map(function(cacheName) {
+                    console.log("Delete cache: ", cacheName);
                     return caches.delete(cacheName);
                 })
             );
         })
     );
-  });
+    return self.clients.claim();
+});
 
 self.addEventListener('fetch', function(event) {
     event.respondWith(
-        caches.match(event.request).then(function(response) {
-            return response || fetch(event.request);
-        }).catch(function() {
-            console.log('rip ' + event.request.url);
+        fetch(event.request).catch(function() {
+            return caches.match(event.request);
         })
     );
-  });
+});
