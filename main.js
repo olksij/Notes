@@ -5,7 +5,7 @@ function Start() {
     Resized(); Theme(1);
 }
 
-function registerSW() { if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js', { scope: '/' }).then(() => { console.log('Service Worker registered successfully.'); }).catch(error => { console.log('Service Worker registration failed:', error); }); } }
+function registerSW() { if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js', { scope: '/Notes/' }).then(() => { console.log('Service Worker registered successfully.'); }).catch(error => { console.log('Service Worker registration failed:', error); }); } }
 
 function Resized() {
     if (document.getElementById('body').offsetWidth<640){ // MOBILE
