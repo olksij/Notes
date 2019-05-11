@@ -31,20 +31,11 @@
 
     <div id="TopBar">
         <div id="FluxAppTitle">
-            <svg width="24" height="23" class="FluxAppTitleImg" viewBox="0 0 24 23" xmlns="http://www.w3.org/2000/svg">
-                <path d="M22.2769 5.08491C21.8492 5.51258 21.4342 5.92767 21.4216 6.34277C21.3838 6.74528 21.8115 7.16038 22.214 7.55031L22.9395 8.27582C23.5253 8.8616 23.5253 9.81135 22.9395 10.3971L17.7732 15.5634C17.2803 16.0564 16.4811 16.0564 15.9881 15.5634V15.5634C15.4948 15.0701 15.4953 14.27 15.9892 13.7773L19.8342 9.94128C20.1689 9.60737 20.1692 9.06526 19.8349 8.73096V8.73096C19.502 8.39802 18.9626 8.39678 18.6281 8.72818L18.547 8.80858C18.1676 9.18444 17.5558 9.18303 17.1782 8.80542L14.2062 5.83341C13.6198 5.24704 13.6205 4.29612 14.2077 3.71058L17.5599 0.367924C18.0505 -0.122641 18.8681 -0.122641 19.3335 0.367924L22.2769 3.31132C22.7675 3.77673 22.7675 4.59434 22.2769 5.08491Z" fill="var(--main-contrast-color)"/>
-                <path d="M1.14626 18.1952L11.4565 7.87393C11.6517 7.67849 11.9685 7.6784 12.1638 7.87374L14.7595 10.4694C14.9547 10.6646 14.9547 10.981 14.7597 11.1763L4.44893 21.498C4.35515 21.5919 4.22789 21.6447 4.09519 21.6447H1.5C1.22386 21.6447 1 21.4208 1 21.1447L1 18.5485C1 18.416 1.05261 18.2889 1.14626 18.1952Z" fill="var(--main-contrast-color)" fill-opacity="0.4" stroke="var(--main-contrast-color)" stroke-width="2"/>
+            <svg width="24" height="23" class="FluxAppTitleImg" viewBox="0 0 24 23" xmlns="http://www.w3.org/2000/svg" style="transition: 0s;">
+                <path d="M22.2769 5.08491C21.8492 5.51258 21.4342 5.92767 21.4216 6.34277C21.3838 6.74528 21.8115 7.16038 22.214 7.55031L22.9395 8.27582C23.5253 8.8616 23.5253 9.81135 22.9395 10.3971L17.7732 15.5634C17.2803 16.0564 16.4811 16.0564 15.9881 15.5634V15.5634C15.4948 15.0701 15.4953 14.27 15.9892 13.7773L19.8342 9.94128C20.1689 9.60737 20.1692 9.06526 19.8349 8.73096V8.73096C19.502 8.39802 18.9626 8.39678 18.6281 8.72818L18.547 8.80858C18.1676 9.18444 17.5558 9.18303 17.1782 8.80542L14.2062 5.83341C13.6198 5.24704 13.6205 4.29612 14.2077 3.71058L17.5599 0.367924C18.0505 -0.122641 18.8681 -0.122641 19.3335 0.367924L22.2769 3.31132C22.7675 3.77673 22.7675 4.59434 22.2769 5.08491Z" style="transition: 0.3s;" fill="var(--main-contrast-color)"/>
+                <path d="M1.14626 18.1952L11.4565 7.87393C11.6517 7.67849 11.9685 7.6784 12.1638 7.87374L14.7595 10.4694C14.9547 10.6646 14.9547 10.981 14.7597 11.1763L4.44893 21.498C4.35515 21.5919 4.22789 21.6447 4.09519 21.6447H1.5C1.22386 21.6447 1 21.4208 1 21.1447L1 18.5485C1 18.416 1.05261 18.2889 1.14626 18.1952Z" fill="var(--main-contrast-color)" style="transition: 0.3s;" fill-opacity="0.4" stroke="var(--main-contrast-color)" stroke-width="2"/>
             </svg>
             <p class="FluxAppTitleP">Notes</p>
-        </div>
-    </div>
-
-    <div class="FluxAppWindowArea" id="add-note-window">
-        <div class="FluxAppWindow" id="add-note-card">
-            <p id="add-note-p" class="FluxAppWindowTitle">Add new Global note</p>
-            <input id="add-note-title" class="FluxAppTextbox" placeholder="Title"></input>
-            <div id="add-note-accept-button" class="FluxAppTextButton" onmouseover="AddNoteHover()" onmouseout="AddNoteUnHover()" onclick="CreateNote()"><p id="add-note-accept-p" class="FluxAppTextButtonText">Create!</p></div>
-            <input id="add-note-description" class="FluxAppTextboxL" placeholder="Description"></input>
         </div>
     </div>
 

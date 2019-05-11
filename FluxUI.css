@@ -126,7 +126,7 @@ div.FluxAppFloatingButton:hover{
 
 
 .FluxAppFloatingTextButtonText{
-    color: white;
+    color: var(--main-contrast-color);
     font-family: 'gsans-medium';
     font-size: 16px;
     margin-top: 18px;
@@ -160,18 +160,22 @@ input:focus {
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     color: var(--secondary-color);
     vertical-align: top;
+    transition: 0.3s;
 }
 ::-moz-placeholder { /* Firefox 19+ */
     color: var(--secondary-color);
     vertical-align: top;
+    transition: 0.3s;
 }
 :-ms-input-placeholder { /* IE 10+ */
     color: var(--secondary-color);
     vertical-align: top;
+    transition: 0.3s;
 }
 :-moz-placeholder { /* Firefox 18- */
     color: var(--secondary-color);
     vertical-align: top;
+    transition: 0.3s;
 }
 
 
@@ -226,6 +230,7 @@ input:focus {
     left: 38px;
     top: 38px;
     fill: var(--main-color);
+    transition: 0.3s;
 }
 
 .FluxAppCardTextBox{

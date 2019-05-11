@@ -1,4 +1,4 @@
-var FluxAppBuild = '1041';
+var FluxAppBuild = '1044';
 
 self.addEventListener('install', function(event) {
     self.skipWaiting();

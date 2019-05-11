@@ -1,12 +1,13 @@
 :root {
-    --main-color: #0075FF;
-    --main-shadow-color: #0075FF40;
-    --main-color-light: #E5F1FF;
-    --main-contrast-color: #ffffff;
-    --secondary-color: #0075FF80;
-    --background-color: #FFFFFF;
     --device-view-width:650px;
 } 
+
+*{
+    transition: 0.3s;
+}
+path{
+    transition: 0s;
+}
 
 #SearchBarForm{
     width:100%;
@@ -196,6 +197,15 @@ body {width: 100%;}
         right: 152px;
         bottom: 20px;
         transition: 0.3s;
+    }
+
+    #AddNoteWindow{
+        position: fixed;
+        left:0px;
+        right: 0px;
+        width: 100%;
+        height: 100%;
+        background-color: var(--background-color);
     }
 }
 
