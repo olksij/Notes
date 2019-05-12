@@ -14,7 +14,7 @@ div.FluxAppButton{
 }
 div.FluxAppButton:hover{
     box-shadow: 0px 1px 20px var(--main-shadow-color);
-    background-color: var(--main-color);
+    background-color: var(--hover-color);
 }
 
 .FluxAppButtonIcon{
@@ -28,7 +28,7 @@ div.FluxAppButton:hover{
 }
 
 div.FluxAppFloatingButton{
-    background-color: var(--main-color);
+    background-color: var(--hover-color);
     box-shadow: 0px 1px 10px var(--main-shadow-color);
     border-radius: 10px;
     height: 56px;
@@ -61,7 +61,7 @@ div.FluxAppFloatingButton:hover{
 .FluxAppTextButton:hover{
     animation: FluxAppTextButtonHover linear 0.3s;
     box-shadow: 0px 1px 9px var(--main-shadow-color);
-    background-color: var(--main-color);    
+    background-color: var(--hover-color);    
 }
 @keyframes FluxAppTextButtonHover{
     from{
@@ -99,7 +99,7 @@ div.FluxAppFloatingButton:hover{
     border-radius: 10px;
     animation: FluxAppFloatingTextButtonUnHover linear 0.3s;
     box-shadow: 0px 0px 10px var(--main-shadow-color);
-    background-color: var(--main-color);  
+    background-color: var(--hover-color);  
 }
 
 .FluxAppFloatingTextButton:hover{
@@ -268,7 +268,7 @@ div#FluxAppTitle{
     position: absolute;
     left: 20px;
     top:20px;
-    background-color: var(--main-color);
+    background-color: var(--hover-color);
     height: 56px;
     border-radius: 10px;
     box-shadow: 0px 0px 15px var(--main-shadow-color);
@@ -282,7 +282,7 @@ div#FluxAppTitle:hover{
     position: absolute;
     left: 19px;
     top: 16px;
-    fill: var(--main-contrast-color);
+    fill: var(--hover-c-color);
     transition: 0.3s;
 }
 p.FluxAppTitleP{
@@ -291,7 +291,7 @@ p.FluxAppTitleP{
     position: absolute;
     font-family: 'gsans-medium';
     font-size: 18px;
-    color: var(--main-contrast-color);
+    color: var(--hover-c-color);
     transition: 0.3s;
 }
 
