@@ -1,11 +1,11 @@
-function Start() { LoadNotes(false); registerSW(); Resized(); Theme(1); document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth)-82)+"px"; document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth)-82)+"px"; document.getElementById("AddNoteWindow").style.display = 'none'; }
+function Start() { LoadNotes(false); registerSW(); Resized(); Theme(1); document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth)-82)+"px"; document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth)-82)+"px"; document.getElementById("AddNoteWindow").style.display = 'none'; ResizeNote(); }
 
-function registerSW() { if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js', { scope: '/' }).then(() => { console.log('Service Worker registered successfully.'); }).catch(error => { console.log('Service Worker registration failed:', error); }); } }
+function registerSW() { if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js', { scope: '/Notes/' }).then(() => { console.log('Service Worker registered successfully.'); }).catch(error => { console.log('Service Worker registration failed:', error); }); } }
 
 function Resized() {
     if (document.getElementById('body').offsetWidth<640){ /* MOBILE */ document.getElementById("SvgAddIcon").style.fill = "var(--main-contrast-color)"; document.getElementById("AddNoteButton").setAttribute('class', 'FluxAppFloatingButton');
     } else { /* DESKTOP */ document.getElementById("SvgAddIcon").style.fill = "var(--main-color)"; document.getElementById("AddNoteButton").setAttribute('class', 'FluxAppButton'); }
-    document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth)-62-20)+"px"; document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth)-62-20)+"px";
+    document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth)-82)+"px"; document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth)-62-20)+"px";
 }
 
 // BTN CLICKS
@@ -35,6 +35,8 @@ function /* App Menu Icon */ AppMenuButtonHover() { document.getElementById("App
 function /* Add Note Close Icon */ AddNoteCloseButtonHover(){ document.getElementById("SvgCloseAddIcon").style.fill = "var(--main-contrast-color)"; } function AddNoteCloseButtonOut(){ document.getElementById("SvgCloseAddIcon").style.fill = "var(--main-color)"; }
 
 // FUNCTIONS
+
+function ResizeNote(){ var g_height = 96; for (var i=0; notes.length > i; i++) { document.getElementById(notes[i]+"-NoteCard").style.height = (76+document.getElementById(notes[i]+"-NoteDescription").offsetHeight)+"px"; document.getElementById(notes[i]+"-NoteCard").style.top = g_height+"px"; g_height = g_height + 20 + document.getElementById(notes[i]+"-NoteCard").offsetHeight; } g_r_height = g_height}
 
 function Theme(mode){ if (localStorage.getItem('AppTheme') != 'BlueLight' && localStorage.getItem('AppTheme') != 'BlackLight' && localStorage.getItem('AppTheme') != 'Dark'){ localStorage.setItem('AppTheme', 'BlueLight'); } if (mode==2){ var ThemeOne=['Dark', 'BlueLight', 'BlackLight']; } else { var ThemeOne=['BlueLight', 'BlackLight', 'Dark'];} 
     if (localStorage.getItem('AppTheme') == ThemeOne[0]) { var Theme = 'BlueLight';

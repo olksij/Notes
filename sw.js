@@ -1,4 +1,4 @@
-var FluxAppBuild = '1047';
+var FluxAppBuild = '1054';
 
 self.addEventListener('install', function(event) {
     self.skipWaiting();
@@ -16,7 +16,6 @@ self.addEventListener('install', function(event) {
                 './Assets/AppIcon.ico',
                 './Assets/AppIcon.png',
                 './Assets/AppIcon512.png',
-                './Assets/AppIconWhite.svg',
                 './Fonts/GoogleSans-Medium.ttf',
                 './Fonts/GoogleSans-Regular.ttf',
                 './Fonts/GoogleSans-Bold.ttf',

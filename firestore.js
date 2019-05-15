@@ -29,19 +29,28 @@ async function LoadNotes(reload){
 
     data = new Array(); notes = new Array();
 
+    g_r_height = 96;
     db.collection("gnotes").onSnapshot({ includeMetadataChanges: true }, function(snapshot) {snapshot.docChanges().forEach(function(change) { var source = snapshot.metadata.fromCache ? "local cache" : "server"; console.log(change.doc.id,source,change.doc.data()); notes.push(change.doc.id); data.push(change.doc.data()); RenderNote(notes.length); }); });
 }
 
+var g_r_height = 96;
 function RenderNote(i){
-    var NoteCard = document.createElement("div"); NoteCard.style.height = "90px"; NoteCard.style.position = "absolute"; NoteCard.style.left = "20px"; NoteCard.style.right = "20px"; NoteCard.style.top = (110*(i-1)+96)+"px"; NoteCard.setAttribute('class', 'FluxAppLiteCard'); NoteCard.setAttribute('id', notes[i-1]+"-NoteCard");
+    var NoteCard = document.createElement("div"); NoteCard.style.position = "absolute"; NoteCard.style.left = "20px"; NoteCard.style.right = "20px"; NoteCard.style.top = 96+(i-1)*110+"px"; NoteCard.setAttribute('class', 'FluxAppLiteCard'); NoteCard.setAttribute('id', notes[i-1]+"-NoteCard");
     document.getElementById("NoteList").appendChild(NoteCard);
 
     var NoteTitle = document.createElement("p"); NoteTitle.innerHTML = data[i-1].title; NoteTitle.setAttribute('class', 'NoteTitle'); NoteTitle.setAttribute('id', notes[i-1]+"-NoteTitle");
     document.getElementById(notes[i-1]+"-NoteCard").appendChild(NoteTitle);
 
-    var NoteDescription = document.createElement("p"); var ds = data[i-1].description; if (ds.length > 37) {var dscr = ds.slice(0,40)+"..."; } else { var dscr = ds;}NoteDescription.innerHTML = dscr;NoteDescription.setAttribute('class', 'NoteDescription'); NoteDescription.setAttribute('id', notes[i-1]+"-NoteDescription");
+    var NoteDescription = document.createElement("p"); NoteDescription.innerHTML = data[i-1].description; NoteDescription.setAttribute('class', 'NoteDescription'); NoteDescription.setAttribute('id', notes[i-1]+"-NoteDescription");
     document.getElementById(notes[i-1]+"-NoteCard").appendChild(NoteDescription);
 
     var NoteDate = document.createElement("p"); NoteDate.innerHTML = data[i-1].date; NoteDate.setAttribute('class', 'NoteDate'); NoteDate.setAttribute('id', notes[i-1]+"-NoteDate");
     document.getElementById(notes[i-1]+"-NoteCard").appendChild(NoteDate);
+
+    var NoteCardC = document.getElementById(notes[i-1]+"-NoteCard");
+    NoteCardC.style.height = (76 + NoteDescription.offsetHeight)+"px";   
+    NoteCardC.style.top = g_r_height+"px"; 
+    g_r_height = g_r_height + 20 + NoteCardC.offsetHeight; 
+    document.getElementById(notes[i-1]+"-NoteCard").style.top = NoteCardC.style.top;
+    document.getElementById(notes[i-1]+"-NoteCard").style.height = NoteCardC.style.height;
 }
