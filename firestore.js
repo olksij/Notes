@@ -14,8 +14,8 @@ function AddNote(title, description){
         description: description,
         date: new Date().getDate()+"."+(new Date().getMonth()+1)+"."+new Date().getFullYear(),
         time: new Date().getHours()+":"+new Date().getMinutes(),
+        url: window.location.pathname,
         version: FluxAppBuild,
-        added: "guest"
     });
     
     console.clear(); db.collection("gnotes").get().then((querySnapshot) => {querySnapshot.forEach((doc) => { console.log(doc.id,doc.data());});});
