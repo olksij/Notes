@@ -128,9 +128,9 @@ div.FluxAppFloatingButton:hover{
 .FluxAppFloatingTextButtonText{
     color: var(--main-contrast-color);
     font-family: 'gsans-medium';
-    font-size: 16px;
-    margin-top: 18px;
-    margin-left: 29px;
+    font-size: 18px;
+    margin-top: 17px;
+    margin-left: 27px;
 }
 
 /* 

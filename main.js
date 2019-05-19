@@ -2,14 +2,15 @@ function Start() { LoadNotes(false); registerSW(); Resized(); Theme(1); document
 
 function registerSW() { if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js', { scope: window.location.pathname }).then(() => { console.log('Service Worker registered successfully.'); }).catch(error => { console.log('Service Worker registration failed:', error); }); } }
 
-function Resized() {
-    if (document.getElementById('body').offsetWidth<657){ /* MOBILE */ document.getElementById("SvgAddIcon").style.fill = "var(--main-contrast-color)"; document.getElementById("AddNoteButton").setAttribute('class', 'FluxAppFloatingButton');
-    } else { /* DESKTOP */ document.getElementById("SvgAddIcon").style.fill = "var(--main-color)"; document.getElementById("AddNoteButton").setAttribute('class', 'FluxAppButton'); }
-    document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth)-82)+"px"; document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth)-62-20)+"px";
-    ResizeNote(); setTimeout(function(){ResizeNote();}, 300);
-}
+function Resized() { ResizeNote(); setTimeout(function(){ResizeNote();}, 300); if (document.getElementById('body').offsetWidth<657){ /* MOBILE */ document.getElementById("SvgAddIcon").style.fill = "var(--main-contrast-color)"; document.getElementById("AddNoteButton").setAttribute('class', 'FluxAppFloatingButton'); } else { /* DESKTOP */ document.getElementById("SvgAddIcon").style.fill = "var(--main-color)"; document.getElementById("AddNoteButton").setAttribute('class', 'FluxAppButton'); } document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth)-82)+"px"; document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth)-62-20)+"px"; }
 
 // BTN CLICKS
+
+/*function OpenNote(id) { 
+    var idn = notes.indexOf(id);
+    document.getElementById("OpenNoteWindow").style.display="block";
+    document.getElementById("OpenNoteTitle").innerHTML = data[idn].title;
+}*/
 
 function DialogCreateNote(){ document.getElementById("add-note-window").style.display = 'block'; }
 
@@ -35,6 +36,8 @@ function /* App Menu Icon */ AppMenuButtonHover() { document.getElementById("App
 
 function /* Add Note Close Icon */ AddNoteCloseButtonHover(){ document.getElementById("SvgCloseAddIcon").style.fill = "var(--main-contrast-color)"; } function AddNoteCloseButtonOut(){ document.getElementById("SvgCloseAddIcon").style.fill = "var(--main-color)"; }
 
+function /* Notes */ NoteHover(id) { document.getElementById(id+'-NoteTitle').style.color = 'var(--main-contrast-color)'; document.getElementById(id+'-NoteDescription').style.color = 'var(--secondary-contrast-color)'; document.getElementById(id+'-NoteDate').style.color = 'var(--secondary-contrast-color)'; } function NoteMouseOut(id) { document.getElementById(id+'-NoteTitle').style.color = 'var(--main-color)'; document.getElementById(id+'-NoteDescription').style.color = 'var(--secondary-color)'; document.getElementById(id+'-NoteDate').style.color = 'var(--secondary-color)'; }
+
 // FUNCTIONS
 
 function ResizeNote(){var g_height = 96; for (var i=0; notes.length > i; i++) { document.getElementById(notes[i]+"-NoteCard").style.height = (76+document.getElementById(notes[i]+"-NoteDescription").offsetHeight)+"px"; document.getElementById(notes[i]+"-NoteCard").style.top = g_height+"px"; g_height = g_height + 20 + document.getElementById(notes[i]+"-NoteCard").offsetHeight; } }
@@ -49,6 +52,7 @@ function Theme(mode){ if (localStorage.getItem('AppTheme') != 'BlueLight' && loc
         document.documentElement.style.setProperty('--background-color', '#FFFFFF');
         document.documentElement.style.setProperty('--hover-color', '#0075FF');
         document.documentElement.style.setProperty('--hover-c-color', '#FFFFFF');
+        document.documentElement.style.setProperty('--secondary-contrast-color', '#FFFFFFA0');
     } else if (localStorage.getItem('AppTheme') == ThemeOne[1]) { var Theme = 'BlackLight';
         document.documentElement.style.setProperty('--main-color', '#05050A');
         document.documentElement.style.setProperty('--main-color-light', '#05050A07');
@@ -58,6 +62,7 @@ function Theme(mode){ if (localStorage.getItem('AppTheme') != 'BlueLight' && loc
         document.documentElement.style.setProperty('--background-color', '#FFFFFF');
         document.documentElement.style.setProperty('--hover-color', '#FFFFFF');
         document.documentElement.style.setProperty('--hover-c-color', '#05050A');
+        document.documentElement.style.setProperty('--secondary-contrast-color', '#00000080');
     } else { var Theme = 'Dark';
         document.documentElement.style.setProperty('--main-color', '#FFFFFF');
         document.documentElement.style.setProperty('--main-color-light', '#FFFFFF10');
@@ -67,5 +72,6 @@ function Theme(mode){ if (localStorage.getItem('AppTheme') != 'BlueLight' && loc
         document.documentElement.style.setProperty('--background-color', '#05050A');
         document.documentElement.style.setProperty('--hover-color', '#FFFFFF');
         document.documentElement.style.setProperty('--hover-c-color', '#05050A');
+        document.documentElement.style.setProperty('--secondary-contrast-color', '#00000080');
     } localStorage.setItem('AppTheme', Theme);
 }
