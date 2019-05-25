@@ -98,6 +98,23 @@ html{
     display: none;
 }
 
+#OpenNote_ToHomeButtonIcon{
+    width: 24px;
+    height: 23px;
+    position: absolute;
+    left: 16px;
+    top: 16px;
+}
+
+#OpenNote_DeleteButtonIcon{
+    width: 24px;
+    fill: var(--main-color);
+    height: 24px;
+    position: absolute;
+    left: 15px;
+    top: 16px;
+}
+
 /* 
 -------------------------------------------
          FONTS
@@ -129,7 +146,7 @@ body {width: 100%;}
 
 @media only screen and (max-width: 656px) {
     div#FluxAppTitle{
-        visibility: hidden;
+        display: none;
     }
 
     div#FluxAppButton{
@@ -239,6 +256,53 @@ body {width: 100%;}
         height: 100%;
         background-color: var(--background-color);
     }
+
+    #OpenNoteCard{
+        height: 56px;
+        top: 20px;
+        right: 20px;
+        position: absolute;
+    }
+    
+    #OpenNoteTitle{
+        font-family: 'gsans-medium';
+        color: var(--main-color);
+        size: 18px;
+        margin: 19px;
+    }
+    
+    #OpenNoteDescription{
+        color: var(--secondary-color);
+        font-family: 'gsans-medium';
+        margin: 19px;
+        font-size: 14px;
+        position: relative;
+        height: auto;
+        top: -5px;
+    }
+    
+    #OpenNoteDate{
+        color: var(--secondary-color);
+        font-family: 'gsans-medium';
+        margin: 19px;
+        font-size: 14px;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+    }
+    
+    #OpenNote_ToHomeButton{
+        bottom: 20px;
+        right: 20px;
+        position: fixed;
+    }
+    
+    #OpenNote_Delete{
+        bottom: 20px;
+        right: 96px;
+        position: fixed;
+    }
+
 }
 
 /* 
@@ -263,6 +327,7 @@ body {width: 100%;}
 
     div#FluxAppTitle{
         width: 140px;
+        display: block;
     }
 
     #SvgAddIcon{
@@ -309,7 +374,7 @@ body {width: 100%;}
     }
 
     #AppMenuButton{
-        right: 101px;
+        right: 96px;
         top: 20px;
         position: absolute;
     }
@@ -359,5 +424,51 @@ body {width: 100%;}
         right: 152px;
         top: 20px;
         transition: 0.3s;
+    }
+
+    #OpenNoteCard{
+        height: 56px;
+        top: 96px;
+        right: 20px;
+        position: absolute;
+    }
+    
+    #OpenNoteTitle{
+        font-family: 'gsans-medium';
+        color: var(--main-color);
+        size: 18px;
+        margin: 19px;
+    }
+    
+    #OpenNoteDescription{
+        color: var(--secondary-color);
+        font-family: 'gsans-medium';
+        margin: 19px;
+        font-size: 14px;
+        position: relative;
+        height: auto;
+        top: -5px;
+    }
+    
+    #OpenNoteDate{
+        color: var(--secondary-color);
+        font-family: 'gsans-medium';
+        margin: 19px;
+        font-size: 14px;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+    }
+    
+    #OpenNote_ToHomeButton{
+        top: 20px;
+        right: 20px;
+        position: fixed;
+    }
+    
+    #OpenNote_Delete{
+        top: 20px;
+        right: 96px;
+        position: fixed;
     }
 }

@@ -6,6 +6,12 @@ function CreateNote(){
     AddNote(title, description);
 }
 
+function DeleteNote(NoteId){ var db = firebase.firestore();
+    db.collection("gnotes").doc(OpenedNote).delete().then(function() {
+        console.log("Delete: " + OpenedNote);
+    }).catch(function(error) { console.error("Error removing "+OpenedNote+": ", error);});
+}
+
 function AddNote(title, description){
     var db = firebase.firestore();
 
@@ -22,7 +28,7 @@ function AddNote(title, description){
     LoadNotes(true);
 }
 
-async function LoadNotes(reload){ var db = firebase.firestore(); if (reload==true){ for (var i=1; i<=notes.length; i++){ var element = document.getElementById(notes[i-1]+"-NoteCard"); element.parentNode.removeChild(element); } }
+function LoadNotes(reload){ var db = firebase.firestore(); if (reload==true){ for (var i=1; i<=notes.length; i++){ var element = document.getElementById(notes[i-1]+"-NoteCard"); element.parentNode.removeChild(element); } }
     data = new Array(); notes = new Array(); g_r_height = 96;
     db.collection("gnotes").onSnapshot({ includeMetadataChanges: true }, function(snapshot) {snapshot.docChanges().forEach(function(change) { var source = snapshot.metadata.fromCache ? "local cache" : "server"; console.log(change.doc.id,source,change.doc.data()); notes.push(change.doc.id); data.push(change.doc.data()); RenderNote(notes.length); }); });
 }

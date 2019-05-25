@@ -1,4 +1,4 @@
-function Start() { LoadNotes(false); registerSW(); Resized(); Theme(1); document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth)-82)+"px"; document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth)-82)+"px"; document.getElementById("AddNoteWindow").style.display = 'none';}
+function Start() { LoadNotes(false); registerSW(); Resized(); Theme(1); document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth)-82)+"px"; document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth)-82)+"px"; document.getElementById("AddNoteWindow").style.display = 'none'; Manifest();}
 
 function registerSW() { if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js', { scope: window.location.pathname }).then(() => { console.log('Service Worker registered successfully.'); }).catch(error => { console.log('Service Worker registration failed:', error); }); } }
 
@@ -6,17 +6,20 @@ function Resized() { ResizeNote(); setTimeout(function(){ResizeNote();}, 300); i
 
 // BTN CLICKS
 
-/*function OpenNote(id) { 
-    var idn = notes.indexOf(id);
-    document.getElementById("OpenNoteWindow").style.display="block";
-    document.getElementById("OpenNoteTitle").innerHTML = data[idn].title;
-}*/
+var OpenedNote; function OpenNote(id) { var idl = notes.indexOf(id); OpenedNote = id; document.getElementById("OpenNoteWindow").style.display="block"; document.getElementById("OpenNoteTitle").innerHTML = data[idl].title; document.getElementById("OpenNoteDescription").innerHTML = data[idl].description; document.getElementById("OpenNoteDate").innerHTML = data[idl].date; document.getElementById("OpenNoteCard").style.height = (76+document.getElementById("OpenNoteDescription").offsetHeight)+"px"; }
+
+function OpenNote_ToHomeButton() { document.getElementById("OpenNoteWindow").style.display="none";}
+
+function OpenNote_Delete() {
+    DeleteNote(OpenNote);
+    OpenNote_ToHomeButton();
+}
 
 function DialogCreateNote(){ document.getElementById("add-note-window").style.display = 'block'; }
 
 function CloseAddNoteWindow(){ document.getElementById("add-note-window").style.display = 'none'; }
 
-function AppMenuButtonClick(){ Theme(2); }
+function AppMenuButtonClick(){ Theme(2);}
 
 function MobileDialogCreateNote(){ document.getElementById("AddNoteWindow").style.display = 'block'; }
 
@@ -30,11 +33,11 @@ let deferredPrompt; window.addEventListener('beforeinstallprompt', (e) => { e.pr
 
 // BTN ANIMATIONS
 
+function /* Global Button Animation */ AppButtonHover(id) { document.getElementById(id).style.fill = "var(--main-contrast-color)"; } function AppButtonOut(id) { document.getElementById(id).style.fill = "var(--main-color)";}
+
 function /* Add Note icon */ AddButtonHover() { if (document.getElementById('body').offsetWidth>=640){ document.getElementById("SvgAddIcon").style.fill = "var(--main-contrast-color)"; } } function AddButtonUnHover() { if (document.getElementById('body').offsetWidth>=640){ document.getElementById("SvgAddIcon").style.fill = "var(--main-color)"; } }
 
-function /* App Menu Icon */ AppMenuButtonHover() { document.getElementById("AppMenuButtonIcon").style.fill = "var(--main-contrast-color)"; } function AppMenuButtonUnHover() { document.getElementById("AppMenuButtonIcon").style.fill = "var(--main-color)"; }
-
-function /* Add Note Close Icon */ AddNoteCloseButtonHover(){ document.getElementById("SvgCloseAddIcon").style.fill = "var(--main-contrast-color)"; } function AddNoteCloseButtonOut(){ document.getElementById("SvgCloseAddIcon").style.fill = "var(--main-color)"; }
+function /* Add Note Close Icon */ AddNoteCloseButtonHover(){ console.log("Hey"); document.getElementById("OpenNote_ToHomeButtonIcon").style.fill = "var(--main-contrast-color)"; } function AddNoteCloseButtonOut(){ document.getElementById("OpenNote_ToHomeButtonIcon").style.fill = "var(--main-color)"; }
 
 function /* Notes */ NoteHover(id) { document.getElementById(id+'-NoteTitle').style.color = 'var(--main-contrast-color)'; document.getElementById(id+'-NoteDescription').style.color = 'var(--secondary-contrast-color)'; document.getElementById(id+'-NoteDate').style.color = 'var(--secondary-contrast-color)'; } function NoteMouseOut(id) { document.getElementById(id+'-NoteTitle').style.color = 'var(--main-color)'; document.getElementById(id+'-NoteDescription').style.color = 'var(--secondary-color)'; document.getElementById(id+'-NoteDate').style.color = 'var(--secondary-color)'; }
 
@@ -74,4 +77,33 @@ function Theme(mode){ if (localStorage.getItem('AppTheme') != 'BlueLight' && loc
         document.documentElement.style.setProperty('--hover-c-color', '#05050A');
         document.documentElement.style.setProperty('--secondary-contrast-color', '#00000080');
     } localStorage.setItem('AppTheme', Theme);
+}
+
+// INITIALIZATION
+function Manifest(DynamicManifest){
+    if (!DynamicManifest) {
+        var DynamicManifest = {
+            "name": "Flux Notes",
+            "short_name": "Notes",
+            "lang": "en-US",
+            "start_url": window.location.href,
+            "display": "standalone",
+            "theme_color": "#FFFFFF00",
+            "icons": [
+                {
+                    "src": window.location.href +"Assets/AppIcon.png",
+                    "sizes": "192x192",
+                    "type": "image/png"
+                }, {
+                    "src": window.location.href +"Assets/AppIcon512.png",
+                    "sizes": "512x512",
+                    "type": "image/png"
+                }
+            ],
+        }
+    }
+    const stringManifest = JSON.stringify(DynamicManifest);
+    const blob = new Blob([stringManifest], {type: 'application/json'});
+    const manifestURL = URL.createObjectURL(blob);
+    document.getElementById('manifest-object').setAttribute('href', manifestURL);
 }
