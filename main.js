@@ -1,4 +1,4 @@
-function Start() { LoadNotes(false); registerSW(); Resized(); Theme(1); document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth)-82)+"px"; document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth)-82)+"px"; document.getElementById("AddNoteWindow").style.display = 'none'; Manifest();}
+function Start() { registerSW(); Resized(); Theme(1); document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth)-82)+"px"; document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth)-82)+"px"; document.getElementById("AddNoteWindow").style.display = 'none'; Manifest();}
 
 function registerSW() { if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js', { scope: window.location.pathname }).then(() => { console.log('Service Worker registered successfully.'); }).catch(error => { console.log('Service Worker registration failed:', error); }); } }
 
@@ -10,10 +10,7 @@ var OpenedNote; function OpenNote(id) { var idl = notes.indexOf(id); OpenedNote 
 
 function OpenNote_ToHomeButton() { document.getElementById("OpenNoteWindow").style.display="none";}
 
-function OpenNote_Delete() {
-    DeleteNote(OpenNote);
-    OpenNote_ToHomeButton();
-}
+function OpenNote_Delete() { DeleteNote(); OpenNote_ToHomeButton(); }
 
 function DialogCreateNote(){ document.getElementById("add-note-window").style.display = 'block'; }
 
@@ -80,30 +77,7 @@ function Theme(mode){ if (localStorage.getItem('AppTheme') != 'BlueLight' && loc
 }
 
 // INITIALIZATION
-function Manifest(DynamicManifest){
-    if (!DynamicManifest) {
-        var DynamicManifest = {
-            "name": "Flux Notes",
-            "short_name": "Notes",
-            "lang": "en-US",
-            "start_url": window.location.href,
-            "display": "standalone",
-            "theme_color": "#FFFFFF00",
-            "icons": [
-                {
-                    "src": window.location.href +"Assets/AppIcon.png",
-                    "sizes": "192x192",
-                    "type": "image/png"
-                }, {
-                    "src": window.location.href +"Assets/AppIcon512.png",
-                    "sizes": "512x512",
-                    "type": "image/png"
-                }
-            ],
-        }
-    }
-    const stringManifest = JSON.stringify(DynamicManifest);
-    const blob = new Blob([stringManifest], {type: 'application/json'});
-    const manifestURL = URL.createObjectURL(blob);
-    document.getElementById('manifest-object').setAttribute('href', manifestURL);
+
+function Manifest(DynamicManifest){ if (!DynamicManifest) { var DynamicManifest = { "name": "Flux Notes","short_name": "Notes","lang": "en-US","start_url": window.location.href,"display": "standalone","theme_color": "#FFFFFF00","icons": [{"src": window.location.href +"Assets/AppIcon.png","sizes": "192x192","type": "image/png"}, {"src": window.location.href +"Assets/AppIcon512.png","sizes": "512x512","type": "image/png"}],}}
+    const stringManifest = JSON.stringify(DynamicManifest);const blob = new Blob([stringManifest], {type: 'application/json'});const manifestURL = URL.createObjectURL(blob);document.getElementById('manifest-object').setAttribute('href', manifestURL);
 }

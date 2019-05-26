@@ -1,4 +1,8 @@
-var notes = new Array(); var data = new Array();
+var notes = new Array(); var data = new Array(); var db = firebase.firestore();
+
+db.collection("gnotes").onSnapshot(function(snapshot) { snapshot.forEach(function(doc) { 
+    console.log(doc.id,"-",snapshot.metadata.fromCache ? "cache" : "server"); notes.push(doc.id); data.push(doc.data()); RenderNote(notes.length); 
+});});    
 
 function CreateNote(){
     var title = document.getElementById("add-note-title").value; var description = document.getElementById("add-note-description").value;
@@ -6,31 +10,32 @@ function CreateNote(){
     AddNote(title, description);
 }
 
-function DeleteNote(NoteId){ var db = firebase.firestore();
+function DeleteNote(){
     db.collection("gnotes").doc(OpenedNote).delete().then(function() {
         console.log("Delete: " + OpenedNote);
     }).catch(function(error) { console.error("Error removing "+OpenedNote+": ", error);});
+    console.log("$$$ Deleted Note");
+    ClearNotes();
 }
 
 function AddNote(title, description){
-    var db = firebase.firestore();
-
     db.collection("gnotes").add({
         title: title,
         description: description,
         date: new Date().getDate()+"."+(new Date().getMonth()+1)+"."+new Date().getFullYear(),
         time: new Date().getHours()+":"+new Date().getMinutes(),
         url: window.location.pathname,
+        user: account.displayName,
+        email: account.email,
         version: FluxAppBuild,
     });
-    
-    console.clear(); db.collection("gnotes").get().then((querySnapshot) => {querySnapshot.forEach((doc) => { console.log(doc.id,doc.data());});});
-    LoadNotes(true);
+    console.log("$$$ Added Note");
+    ClearNotes();
 }
 
-function LoadNotes(reload){ var db = firebase.firestore(); if (reload==true){ for (var i=1; i<=notes.length; i++){ var element = document.getElementById(notes[i-1]+"-NoteCard"); element.parentNode.removeChild(element); } }
-    data = new Array(); notes = new Array(); g_r_height = 96;
-    db.collection("gnotes").onSnapshot({ includeMetadataChanges: true }, function(snapshot) {snapshot.docChanges().forEach(function(change) { var source = snapshot.metadata.fromCache ? "local cache" : "server"; console.log(change.doc.id,source,change.doc.data()); notes.push(change.doc.id); data.push(change.doc.data()); RenderNote(notes.length); }); });
+function ClearNotes(){
+    document.getElementById("NoteList").innerHTML = '';
+    g_r_height = 96; data = new Array(); notes = new Array();
 }
 
 var g_r_height = 96;

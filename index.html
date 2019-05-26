@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!--GENERAL-->
     <title>Flux Notes</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content=" width=device-width, initial-scale=1">
+
+    <!--OTHER-->
+    <link rel="manifest" id="manifest-object">
+    <link rel="icon" href="./Assets/AppIcon.ico">
+
+    <!--CSS & OTHER-->
     <link rel="stylesheet" type="text/css" media="screen" href="FluxUI.css">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css">
-    <link rel="manifest" id="manifest-object"><!--<link rel="manifest" href="manifest.json">-->
-    <script src="main.js"></script>
-    <script src="firestore.js"></script>
-    <script src="sw.js"></script>
-    <link rel="icon" href="./Assets/AppIcon.ico">
-    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+
+    <!--JS-->
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-auth.js"></script>
-    <script>
-        firebase.initializeApp({ apiKey: "AIzaSyD5e1BRr6QliCZrUGUyS2HmaS98RoEMhjU",authDomain: "flux-notes.firebaseapp.com",databaseURL: "https://flux-notes.firebaseio.com",projectId: "flux-notes",storageBucket: "flux-notes.appspot.com",messagingSenderId: "423307191915"}); let app = firebase.app();
-        firebase.firestore().enablePersistence().catch(function(err) { if (err.code == 'failed-precondition') { /*Multiple tabs open*/ } else if (err.code == 'unimplemented') { /*The current browser does not support all of the features*/}});
-    </script>
+    <script>firebase.initializeApp({ apiKey: "AIzaSyD5e1BRr6QliCZrUGUyS2HmaS98RoEMhjU",authDomain: "flux-notes.firebaseapp.com",databaseURL: "https://flux-notes.firebaseio.com",projectId: "flux-notes",storageBucket: "flux-notes.appspot.com",messagingSenderId: "423307191915"}); let app = firebase.app(); firebase.firestore().enablePersistence().catch(function(err) { if (err.code == 'failed-precondition') { /*Multiple tabs open*/ } else if (err.code == 'unimplemented') { /*The current browser does not support all of the features*/}}); </script>
+    <script src="firestore.js"></script>
+    <script src="auth.js"></script>    
+    <script src="sw.js"></script>
+    <script src="main.js"></script>
 </head>
 
 <body onload="Start()" id="body" onresize="Resized()">
