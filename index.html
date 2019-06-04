@@ -1,93 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <!--GENERAL-->
-    <title>Flux Notes</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content=" width=device-width, initial-scale=1">
+    <head>
+        <!--GENERAL-->
+        <meta charset="utf-8">
+        <title>Flux Notes</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content=" width=device-width, initial-scale=1">
+        <!--OTHER-->
+        <link rel="manifest" id="manifest-object">
+        <link rel="icon" href="./Assets/AppIcon.ico">
+        <!--CSS & OTHER-->
+        <link rel="stylesheet" type="text/css" media="screen" href="FluxUI.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+        <!--JS-->
+        <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-firestore.js"></script>
+        <script>
+            firebase.initializeApp({
+                apiKey: "AIzaSyD5e1BRr6QliCZrUGUyS2HmaS98RoEMhjU",
+                authDomain: "flux-notes.firebaseapp.com",
+                databaseURL: "https://flux-notes.firebaseio.com",
+                projectId: "flux-notes",
+                storageBucket: "flux-notes.appspot.com",
+                messagingSenderId: "423307191915"
+            });
+            firebase.firestore().enablePersistence();
+        </script>
+        <script src="firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-auth.js"></script>
+        <script src="auth.js"></script>
+        <script src="sw.js"></script>
+        <script src="main.js"></script>
+    </head>
+    <body onload="Start()" id="body" onresize="Resized()">
+        <div id="NoteList"></div>
 
-    <!--OTHER-->
-    <link rel="manifest" id="manifest-object">
-    <link rel="icon" href="./Assets/AppIcon.ico">
-
-    <!--CSS & OTHER-->
-    <link rel="stylesheet" type="text/css" media="screen" href="FluxUI.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css">
-
-    <!--JS-->
-    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-auth.js"></script>
-    <script>firebase.initializeApp({ apiKey: "AIzaSyD5e1BRr6QliCZrUGUyS2HmaS98RoEMhjU",authDomain: "flux-notes.firebaseapp.com",databaseURL: "https://flux-notes.firebaseio.com",projectId: "flux-notes",storageBucket: "flux-notes.appspot.com",messagingSenderId: "423307191915"}); let app = firebase.app(); firebase.firestore().enablePersistence().catch(function(err) { if (err.code == 'failed-precondition') { /*Multiple tabs open*/ } else if (err.code == 'unimplemented') { /*The current browser does not support all of the features*/}}); </script>
-    <script src="firestore.js"></script>
-    <script src="auth.js"></script>    
-    <script src="sw.js"></script>
-    <script src="main.js"></script>
-</head>
-
-<body onload="Start()" id="body" onresize="Resized()">
-    <div id="NoteList"></div>
-
-    <div class="FluxAppButton" id="AppMenuButton" onmouseover="AppButtonHover('AppMenuButtonIcon')" onmouseout="AppButtonOut('AppMenuButtonIcon')" onclick="AppMenuButtonClick()">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" id="AppMenuButtonIcon" class="FluxAppButtonIcon">
-            <path d="M4 18C4 19.1046 3.10457 20 2 20C0.89543 20 0 19.1046 0 18C0 16.8954 0.89543 16 2 16C3.10457 16 4 16.8954 4 18Z"/> <path d="M12 18C12 19.1046 11.1046 20 10 20C8.89543 20 8 19.1046 8 18C8 16.8954 8.89543 16 10 16C11.1046 16 12 16.8954 12 18Z"/> <path d="M20 18C20 19.1046 19.1046 20 18 20C16.8954 20 16 19.1046 16 18C16 16.8954 16.8954 16 18 16C19.1046 16 20 16.8954 20 18Z"/><path d="M4 10C4 11.1046 3.10457 12 2 12C0.89543 12 0 11.1046 0 10C0 8.89543 0.89543 8 2 8C3.10457 8 4 8.89543 4 10Z"/><path d="M12 10C12 11.1046 11.1046 12 10 12C8.89543 12 8 11.1046 8 10C8 8.89543 8.89543 8 10 8C11.1046 8 12 8.89543 12 10Z"/><path d="M20 10C20 11.1046 19.1046 12 18 12C16.8954 12 16 11.1046 16 10C16 8.89543 16.8954 8 18 8C19.1046 8 20 8.89543 20 10Z"/><path d="M4.00006 2C4.00006 3.10457 3.10463 4 2.00006 4C0.895491 4 6.10352e-05 3.10457 6.10352e-05 2C6.10352e-05 0.89543 0.895491 0 2.00006 0C3.10463 0 4.00006 0.89543 4.00006 2Z"/><path d="M20 2C20 3.10457 19.1046 4 18 4C16.8954 4 16 3.10457 16 2C16 0.89543 16.8954 0 18 0C19.1046 0 20 0.89543 20 2Z"/><path d="M12.0001 2C12.0001 3.10457 11.1046 4 10.0001 4C8.89549 4 8.00006 3.10457 8.00006 2C8.00006 0.895434 8.89549 3.8147e-06 10.0001 3.8147e-06C11.1046 3.8147e-06 12.0001 0.895434 12.0001 2Z"/>
+        <!-- # SEARCH BAR # -->
+        <div id="SearchBarForm">
+            <input id="SearchBar" class="FluxAppSearchBar" placeholder="Search"/>
+        </div>
+        <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg" id="SearchIcon" class="FluxAppSearchBarIcon">
+            <path d="M7.05714 0C8.92881 0 10.7238 0.743518 12.0473 2.06699C13.3708 3.39046 14.1143 5.18547 14.1143 7.05714C14.1143 8.80514 13.4737 10.412 12.4206 11.6497L12.7137 11.9429H13.5714L19 17.3714L17.3714 19L11.9429 13.5714V12.7137L11.6497 12.4206C10.412 13.4737 8.80514 14.1143 7.05714 14.1143C5.18547 14.1143 3.39046 13.3708 2.06699 12.0473C0.743518 10.7238 0 8.92881 0 7.05714C0 5.18547 0.743518 3.39046 2.06699 2.06699C3.39046 0.743518 5.18547 0 7.05714 0ZM7.05714 2.17143C4.34286 2.17143 2.17143 4.34286 2.17143 7.05714C2.17143 9.77143 4.34286 11.9429 7.05714 11.9429C9.77143 11.9429 11.9429 9.77143 11.9429 7.05714C11.9429 4.34286 9.77143 2.17143 7.05714 2.17143Z"/>
         </svg>
-    </div>
 
-    <div id="SearchBarForm">
-        <input id="SearchBar" class="FluxAppSearchBar" placeholder="Search"/>
-    </div>
-    <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg" id="SearchIcon" class="FluxAppSearchBarIcon">
-        <path d="M7.05714 0C8.92881 0 10.7238 0.743518 12.0473 2.06699C13.3708 3.39046 14.1143 5.18547 14.1143 7.05714C14.1143 8.80514 13.4737 10.412 12.4206 11.6497L12.7137 11.9429H13.5714L19 17.3714L17.3714 19L11.9429 13.5714V12.7137L11.6497 12.4206C10.412 13.4737 8.80514 14.1143 7.05714 14.1143C5.18547 14.1143 3.39046 13.3708 2.06699 12.0473C0.743518 10.7238 0 8.92881 0 7.05714C0 5.18547 0.743518 3.39046 2.06699 2.06699C3.39046 0.743518 5.18547 0 7.05714 0ZM7.05714 2.17143C4.34286 2.17143 2.17143 4.34286 2.17143 7.05714C2.17143 9.77143 4.34286 11.9429 7.05714 11.9429C9.77143 11.9429 11.9429 9.77143 11.9429 7.05714C11.9429 4.34286 9.77143 2.17143 7.05714 2.17143Z"/>
-    </svg>
-
-    <div class="FluxAppFloatingButton" id="AddNoteButton" onmouseover="AddButtonHover()" onmouseout="AddButtonUnHover()" onclick="MobileDialogCreateNote()">
-        <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg" id="SvgAddIcon" class="FluxAppFloatingButtonIcon">
-            <path d="M21 10.5C21 11.3284 20.3284 12 19.5 12H13C12.4477 12 12 12.4477 12 13V19.5C12 20.3284 11.3284 21 10.5 21V21C9.67157 21 9 20.3284 9 19.5V13C9 12.4477 8.55228 12 8 12H1.5C0.671573 12 0 11.3284 0 10.5V10.5C0 9.67157 0.671573 9 1.5 9H8C8.55228 9 9 8.55228 9 8V1.5C9 0.671573 9.67157 0 10.5 0V0C11.3284 0 12 0.671573 12 1.5V8C12 8.55228 12.4477 9 13 9H19.5C20.3284 9 21 9.67157 21 10.5V10.5Z"/>
-        </svg>
-    </div>
-
-    <div id="AddNoteWindow">
-        <input id="AddNoteTitle" class="FluxAppCardTextBox" placeholder="Title"/>
-        <input id="AddNoteDescription" class="FluxAppLargeCardTextBox" placeholder="Description"/>
-        <div id="CreateNoteAcceptButton" class="FluxAppFloatingTextButton" onclick="CreateNoteMobile()"><p id="CreateNoteAcceptP" class="FluxAppFloatingTextButtonText">Create</p></div>
-        <div class="FluxAppButton" id="CloseAddNoteDialogButton" onclick="CloseDialogCreateNote()" onmouseover="AddNoteCloseButtonHover()" onmouseout="AddNoteCloseButtonOut()">
-            <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg" id="SvgCloseAddIcon" class="FluxAppButtonIcon">
+        <!-- # ADD NOTE BUTTON # -->
+        <div class="FluxAppFloatingButton" id="AddNoteButton" onmouseover="AddButtonHover()" onmouseout="AddButtonUnHover()" onclick="MobileDialogCreateNote()">
+            <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg" id="SvgAddIcon" class="FluxAppFloatingButtonIcon">
                 <path d="M21 10.5C21 11.3284 20.3284 12 19.5 12H13C12.4477 12 12 12.4477 12 13V19.5C12 20.3284 11.3284 21 10.5 21V21C9.67157 21 9 20.3284 9 19.5V13C9 12.4477 8.55228 12 8 12H1.5C0.671573 12 0 11.3284 0 10.5V10.5C0 9.67157 0.671573 9 1.5 9H8C8.55228 9 9 8.55228 9 8V1.5C9 0.671573 9.67157 0 10.5 0V0C11.3284 0 12 0.671573 12 1.5V8C12 8.55228 12.4477 9 13 9H19.5C20.3284 9 21 9.67157 21 10.5V10.5Z"/>
             </svg>
         </div>
-    </div>
 
-    <div id="OpenNoteWindow">
-        <div id="OpenNoteCard" class="FluxAppLiteCard">
-            <p id="OpenNoteTitle"></p>
-            <p id="OpenNoteDescription"></p>
-            <p id="OpenNoteDate"></p>
-        </div>  
+        <!-- # SETTINGS WINDOW # -->
+        <div id="SettingsWindow"></div>
 
-        <div class="FluxAppButton" id="OpenNote_ToHomeButton" onclick="OpenNote_ToHomeButton()" onmouseover="AppButtonHover('OpenNote_ToHomeButtonIcon')" onmouseout="AppButtonOut('OpenNote_ToHomeButtonIcon')">
-            <svg id="OpenNote_ToHomeButtonIcon" class="FluxAppButton" width="24" height="23" viewBox="0 0 24 23" xmlns="http://www.w3.org/2000/svg"  fill="var(--main-color)">
-                <path d="M11.3269 3.66069C11.7095 3.30782 12.2905 3.30782 12.6731 3.66069L18.1408 8.7024C18.5648 9.09343 19 9.65049 19 10.235V19.1794C19 19.7488 18.5557 20.2103 18 20.2103H17C16.4443 20.2103 16 19.7488 16 19.1794V13.9033C16 12.7645 15.1115 12 14 12H10C8.88853 12 8 12.7645 8 13.9033V19.1794C8 19.7488 7.55574 20.2103 7 20.2103H6C5.44426 20.2103 5 19.7488 5 19.1794V10.235C5 9.65049 5.43516 9.09343 5.85922 8.7024L11.3269 3.66069ZM13.3463 0.529307C12.5809 -0.176436 11.4191 -0.176435 10.6537 0.529308L0.335128 10.0441C-0.350347 10.6762 0.0860618 11.8414 1.00827 11.8414H1.46397C2.01971 11.8414 2.5 12.4306 2.5 13V21C2.5 22.1388 3.37125 23 4.48272 23H8.5C9.61147 23 10.5 22.1388 10.5 21V15.5C10.5 14.9306 10.9443 14.5 11.5 14.5H12.5C13.0557 14.5 13.5 14.9306 13.5 15.5V21C13.5 22.1388 14.3885 23 15.5 23H19.5173C20.6288 23 21.5298 22.0768 21.5298 20.9381V12.8723C21.5298 12.3029 21.9803 11.8414 22.536 11.8414H22.9917C23.9139 11.8414 24.3503 10.6762 23.6649 10.0441L13.3463 0.529307Z"/>
+        <!-- # APP MENU BUTTON # -->
+        <div class="FluxAppButton" id="AppMenuButton" onmouseover="AppButtonHover('AppMenuButtonIcon')" onmouseout="AppButtonOut('AppMenuButtonIcon')" onclick="AppMenuButtonClick()">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" id="AppMenuButtonIcon" class="FluxAppButtonIcon">
+                <path d="M4 18C4 19.1046 3.10457 20 2 20C0.89543 20 0 19.1046 0 18C0 16.8954 0.89543 16 2 16C3.10457 16 4 16.8954 4 18Z"/>
+                <path d="M12 18C12 19.1046 11.1046 20 10 20C8.89543 20 8 19.1046 8 18C8 16.8954 8.89543 16 10 16C11.1046 16 12 16.8954 12 18Z"/>
+                <path d="M20 18C20 19.1046 19.1046 20 18 20C16.8954 20 16 19.1046 16 18C16 16.8954 16.8954 16 18 16C19.1046 16 20 16.8954 20 18Z"/>
+                <path d="M4 10C4 11.1046 3.10457 12 2 12C0.89543 12 0 11.1046 0 10C0 8.89543 0.89543 8 2 8C3.10457 8 4 8.89543 4 10Z"/>
+                <path d="M12 10C12 11.1046 11.1046 12 10 12C8.89543 12 8 11.1046 8 10C8 8.89543 8.89543 8 10 8C11.1046 8 12 8.89543 12 10Z"/>
+                <path d="M20 10C20 11.1046 19.1046 12 18 12C16.8954 12 16 11.1046 16 10C16 8.89543 16.8954 8 18 8C19.1046 8 20 8.89543 20 10Z"/>
+                <path d="M4.00006 2C4.00006 3.10457 3.10463 4 2.00006 4C0.895491 4 6.10352e-05 3.10457 6.10352e-05 2C6.10352e-05 0.89543 0.895491 0 2.00006 0C3.10463 0 4.00006 0.89543 4.00006 2Z"/>
+                <path d="M20 2C20 3.10457 19.1046 4 18 4C16.8954 4 16 3.10457 16 2C16 0.89543 16.8954 0 18 0C19.1046 0 20 0.89543 20 2Z"/>
+                <path d="M12.0001 2C12.0001 3.10457 11.1046 4 10.0001 4C8.89549 4 8.00006 3.10457 8.00006 2C8.00006 0.895434 8.89549 3.8147e-06 10.0001 3.8147e-06C11.1046 3.8147e-06 12.0001 0.895434 12.0001 2Z"/>
             </svg>
         </div>
 
-        <div class="FluxAppButton" id="OpenNote_Delete" onclick="OpenNote_Delete()" onmouseover="AppButtonHover('OpenNote_DeleteButtonIcon')" onmouseout="AppButtonOut('OpenNote_DeleteButtonIcon')">
-            <svg class="FluxAppButtonIcon" id="OpenNote_DeleteButtonIcon" width="16" height="24" viewBox="0 0 16 24" xmlns="http://www.w3.org/2000/svg" fill="var(--main-color)">
-                <path d="M0.777705 21.5C0.777705 22.8941 1.85402 24 3.18511 24H12.8147C14.1458 24 15.2221 22.8941 15.2221 21.5V8.5C15.2221 7.39543 14.3267 6.5 13.2221 6.5H2.7777C1.67313 6.5 0.777705 7.39543 0.777705 8.5V21.5ZM3.18511 9.76923C3.18511 9.21695 3.63283 8.76923 4.18511 8.76923H11.8147C12.367 8.76923 12.8147 9.21695 12.8147 9.76923V20.5C12.8147 21.0523 12.367 21.5 11.8147 21.5H4.18511C3.63283 21.5 3.18511 21.0523 3.18511 20.5V9.76923ZM13.0454 1.2856C12.5848 1.27017 12.1437 1.09616 11.7966 0.792989L11.454 0.493736C11.0896 0.175416 10.6222 0 10.1383 0H5.73579C5.32898 0 4.93185 0.124056 4.59737 0.355616L4.18026 0.644384C3.84579 0.875944 3.44865 1 3.04184 1H1.34615C0.602693 1 0 1.60269 0 2.34615V2.34615C0 3.08961 0.602694 3.69231 1.34615 3.69231H14.8268C15.4748 3.69231 16 3.16706 16 2.51913V2.51913C16 1.8865 15.4984 1.36781 14.8661 1.34662L13.0454 1.2856Z"/>
-            </svg>
-                
+        <!-- # ADD NOTE WINDOW # -->
+        <div id="AddNoteWindow">
+            <input id="AddNoteTitle" class="FluxAppCardTextBox" placeholder="Title"/>
+            <input id="AddNoteDescription" class="FluxAppLargeCardTextBox" placeholder="Description"/>
+            <div id="CreateNoteAcceptButton" class="FluxAppFloatingTextButton" onclick="CreateNoteMobile()">
+                <p id="CreateNoteAcceptP" class="FluxAppFloatingTextButtonText">Create</p>
+            </div>
+            <div class="FluxAppButton" id="CloseAddNoteDialogButton" onclick="CloseDialogCreateNote()" onmouseover="AddNoteCloseButtonHover()" onmouseout="AddNoteCloseButtonOut()">
+                <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg" id="SvgCloseAddIcon" class="FluxAppButtonIcon">
+                    <path d="M21 10.5C21 11.3284 20.3284 12 19.5 12H13C12.4477 12 12 12.4477 12 13V19.5C12 20.3284 11.3284 21 10.5 21V21C9.67157 21 9 20.3284 9 19.5V13C9 12.4477 8.55228 12 8 12H1.5C0.671573 12 0 11.3284 0 10.5V10.5C0 9.67157 0.671573 9 1.5 9H8C8.55228 9 9 8.55228 9 8V1.5C9 0.671573 9.67157 0 10.5 0V0C11.3284 0 12 0.671573 12 1.5V8C12 8.55228 12.4477 9 13 9H19.5C20.3284 9 21 9.67157 21 10.5V10.5Z"/>
+                </svg>
+            </div>
         </div>
-    </div>
 
-    <div id="TopBar">
-        <div id="FluxAppTitle">
-            <svg width="24" height="23" class="FluxAppTitleImg" viewBox="0 0 24 23" xmlns="http://www.w3.org/2000/svg" style="transition: 0s;">
-                <path d="M22.2769 5.08491C21.8492 5.51258 21.4342 5.92767 21.4216 6.34277C21.3838 6.74528 21.8115 7.16038 22.214 7.55031L22.9395 8.27582C23.5253 8.8616 23.5253 9.81135 22.9395 10.3971L17.7732 15.5634C17.2803 16.0564 16.4811 16.0564 15.9881 15.5634V15.5634C15.4948 15.0701 15.4953 14.27 15.9892 13.7773L19.8342 9.94128C20.1689 9.60737 20.1692 9.06526 19.8349 8.73096V8.73096C19.502 8.39802 18.9626 8.39678 18.6281 8.72818L18.547 8.80858C18.1676 9.18444 17.5558 9.18303 17.1782 8.80542L14.2062 5.83341C13.6198 5.24704 13.6205 4.29612 14.2077 3.71058L17.5599 0.367924C18.0505 -0.122641 18.8681 -0.122641 19.3335 0.367924L22.2769 3.31132C22.7675 3.77673 22.7675 4.59434 22.2769 5.08491Z" style="transition: 0.3s;" fill="var(--hover-c-color)"/>
-                <path d="M1.14626 18.1952L11.4565 7.87393C11.6517 7.67849 11.9685 7.6784 12.1638 7.87374L14.7595 10.4694C14.9547 10.6646 14.9547 10.981 14.7597 11.1763L4.44893 21.498C4.35515 21.5919 4.22789 21.6447 4.09519 21.6447H1.5C1.22386 21.6447 1 21.4208 1 21.1447L1 18.5485C1 18.416 1.05261 18.2889 1.14626 18.1952Z" fill="var(--hover-c-color)" style="transition: 0.3s;" fill-opacity="0.3" stroke="var(--hover-c-color)" stroke-width="2"/>
-            </svg>
-            <p class="FluxAppTitleP">Notes</p>
+        <!-- # OPENED NOTE WINDOW # -->
+        <div id="OpenNoteWindow">
+            <div id="OpenNoteCard" class="FluxAppLiteCard">
+                <p id="OpenNoteTitle"></p>
+                <p id="OpenNoteDescription"></p>
+                <p id="OpenNoteDate"></p>
+            </div>
+            <div class="FluxAppButton" id="OpenNote_ToHomeButton" onclick="OpenNote_ToHomeButton()" onmouseover="AppButtonHover('OpenNote_ToHomeButtonIcon')" onmouseout="AppButtonOut('OpenNote_ToHomeButtonIcon')">
+                <svg id="OpenNote_ToHomeButtonIcon" class="FluxAppButton" width="24" height="23" viewBox="0 0 24 23" xmlns="http://www.w3.org/2000/svg" fill="var(--main-color)">
+                    <path d="M11.3269 3.66069C11.7095 3.30782 12.2905 3.30782 12.6731 3.66069L18.1408 8.7024C18.5648 9.09343 19 9.65049 19 10.235V19.1794C19 19.7488 18.5557 20.2103 18 20.2103H17C16.4443 20.2103 16 19.7488 16 19.1794V13.9033C16 12.7645 15.1115 12 14 12H10C8.88853 12 8 12.7645 8 13.9033V19.1794C8 19.7488 7.55574 20.2103 7 20.2103H6C5.44426 20.2103 5 19.7488 5 19.1794V10.235C5 9.65049 5.43516 9.09343 5.85922 8.7024L11.3269 3.66069ZM13.3463 0.529307C12.5809 -0.176436 11.4191 -0.176435 10.6537 0.529308L0.335128 10.0441C-0.350347 10.6762 0.0860618 11.8414 1.00827 11.8414H1.46397C2.01971 11.8414 2.5 12.4306 2.5 13V21C2.5 22.1388 3.37125 23 4.48272 23H8.5C9.61147 23 10.5 22.1388 10.5 21V15.5C10.5 14.9306 10.9443 14.5 11.5 14.5H12.5C13.0557 14.5 13.5 14.9306 13.5 15.5V21C13.5 22.1388 14.3885 23 15.5 23H19.5173C20.6288 23 21.5298 22.0768 21.5298 20.9381V12.8723C21.5298 12.3029 21.9803 11.8414 22.536 11.8414H22.9917C23.9139 11.8414 24.3503 10.6762 23.6649 10.0441L13.3463 0.529307Z"/>
+                </svg>
+            </div>
+            <div class="FluxAppButton" id="OpenNote_Delete" onclick="OpenNote_Delete()" onmouseover="AppButtonHover('OpenNote_DeleteButtonIcon')" onmouseout="AppButtonOut('OpenNote_DeleteButtonIcon')">
+                <svg class="FluxAppButtonIcon" id="OpenNote_DeleteButtonIcon" width="16" height="24" viewBox="0 0 16 24" xmlns="http://www.w3.org/2000/svg" fill="var(--main-color)">
+                    <path d="M0.777705 21.5C0.777705 22.8941 1.85402 24 3.18511 24H12.8147C14.1458 24 15.2221 22.8941 15.2221 21.5V8.5C15.2221 7.39543 14.3267 6.5 13.2221 6.5H2.7777C1.67313 6.5 0.777705 7.39543 0.777705 8.5V21.5ZM3.18511 9.76923C3.18511 9.21695 3.63283 8.76923 4.18511 8.76923H11.8147C12.367 8.76923 12.8147 9.21695 12.8147 9.76923V20.5C12.8147 21.0523 12.367 21.5 11.8147 21.5H4.18511C3.63283 21.5 3.18511 21.0523 3.18511 20.5V9.76923ZM13.0454 1.2856C12.5848 1.27017 12.1437 1.09616 11.7966 0.792989L11.454 0.493736C11.0896 0.175416 10.6222 0 10.1383 0H5.73579C5.32898 0 4.93185 0.124056 4.59737 0.355616L4.18026 0.644384C3.84579 0.875944 3.44865 1 3.04184 1H1.34615C0.602693 1 0 1.60269 0 2.34615V2.34615C0 3.08961 0.602694 3.69231 1.34615 3.69231H14.8268C15.4748 3.69231 16 3.16706 16 2.51913V2.51913C16 1.8865 15.4984 1.36781 14.8661 1.34662L13.0454 1.2856Z"/>
+                </svg>
+            </div>
         </div>
-    </div>
-</body>
+
+        <!-- # TOP BAR # -->
+        <div id="TopBar">
+            <div id="FluxAppTitle">
+                <svg width="24" height="23" class="FluxAppTitleImg" viewBox="0 0 24 23" xmlns="http://www.w3.org/2000/svg" style="transition: 0s;">
+                    <path d="M22.2769 5.08491C21.8492 5.51258 21.4342 5.92767 21.4216 6.34277C21.3838 6.74528 21.8115 7.16038 22.214 7.55031L22.9395 8.27582C23.5253 8.8616 23.5253 9.81135 22.9395 10.3971L17.7732 15.5634C17.2803 16.0564 16.4811 16.0564 15.9881 15.5634V15.5634C15.4948 15.0701 15.4953 14.27 15.9892 13.7773L19.8342 9.94128C20.1689 9.60737 20.1692 9.06526 19.8349 8.73096V8.73096C19.502 8.39802 18.9626 8.39678 18.6281 8.72818L18.547 8.80858C18.1676 9.18444 17.5558 9.18303 17.1782 8.80542L14.2062 5.83341C13.6198 5.24704 13.6205 4.29612 14.2077 3.71058L17.5599 0.367924C18.0505 -0.122641 18.8681 -0.122641 19.3335 0.367924L22.2769 3.31132C22.7675 3.77673 22.7675 4.59434 22.2769 5.08491Z" style="transition: 0.3s;" fill="var(--hover-c-color)"/>
+                    <path d="M1.14626 18.1952L11.4565 7.87393C11.6517 7.67849 11.9685 7.6784 12.1638 7.87374L14.7595 10.4694C14.9547 10.6646 14.9547 10.981 14.7597 11.1763L4.44893 21.498C4.35515 21.5919 4.22789 21.6447 4.09519 21.6447H1.5C1.22386 21.6447 1 21.4208 1 21.1447L1 18.5485C1 18.416 1.05261 18.2889 1.14626 18.1952Z" fill="var(--hover-c-color)" style="transition: 0.3s;" fill-opacity="0.3" stroke="var(--hover-c-color)" stroke-width="2"/>
+                </svg>
+                <p class="FluxAppTitleP">Notes</p>
+            </div>
+        </div>
+    </body>
 </html>

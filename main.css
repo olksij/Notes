@@ -1,7 +1,3 @@
-:root {
-    --device-view-width:650px;
-} 
-
 *{
     transition: 0.3s;
 }
@@ -88,7 +84,7 @@ html{
     top: 0px;
 }
 
-#OpenNoteWindow{
+#OpenNoteWindow,#AddNoteWindow,#SettingsWindow{
     width: 100%;
     height:100%;
     background: var(--background-color);
@@ -248,15 +244,6 @@ body {width: 100%;}
         transition: 0.3s;
     }
 
-    #AddNoteWindow{
-        position: fixed;
-        left:0px;
-        right: 0px;
-        width: 100%;
-        height: 100%;
-        background-color: var(--background-color);
-    }
-
     #OpenNoteCard{
         height: 56px;
         top: 20px;
@@ -377,15 +364,6 @@ body {width: 100%;}
         right: 96px;
         top: 20px;
         position: absolute;
-    }
-
-    #AddNoteWindow{
-        position: fixed;
-        left:0px;
-        right: 0px;
-        width: 100%;
-        height: 100%;
-        background-color: var(--background-color);
     }
 
     #AddNoteTitle{

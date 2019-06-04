@@ -5,17 +5,17 @@ firebase.auth().useDeviceLanguage();
 
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-        account=user;
-        console.log("Registered User: "+account.email);
+        account = user;
+        console.log("%c[i]",'color: blue', account.email);
     } else {
         firebase.auth().signInWithRedirect(provider);
     }
 });
 
 firebase.auth().getRedirectResult().then(function(result) {
-    if (result.credential) { account = result.credential.accessToken; }
+    if (result.credential) {
+        account = result.credential.accessToken;
+    }
 }).catch(function(error) {
-    console.log("Error ("+error.code+"): "+error.message);
-    console.log("Account: "+error.email);
-    console.log("Credential:"+error.credential);
+    console.error("[!] Error (" + error.code + "): " + error.message);
 });
