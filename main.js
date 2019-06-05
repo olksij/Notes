@@ -1,3 +1,4 @@
+var ColorAccent = '#0075ff';
 function Start() {
     registerSW(); Resized(); Theme(1);
     document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth) - 82) + "px";
@@ -158,18 +159,18 @@ function Theme(mode) {
         var ThemeOne = ['BlueLight', 'BlackLight', 'Dark'];
     }
     if (localStorage.getItem('AppTheme') == ThemeOne[0]) {
-        var Theme = 'BlueLight';
-        document.documentElement.style.setProperty('--main-color', '#0075FF');
-        document.documentElement.style.setProperty('--main-color-light', '#0075FF10');
-        document.documentElement.style.setProperty('--main-shadow-color', '#0075FF40');
+        var Theme = 'Colored';
+        document.documentElement.style.setProperty('--main-color', ColorAccent);
+        document.documentElement.style.setProperty('--main-color-light', ColorAccent+'10');
+        document.documentElement.style.setProperty('--main-shadow-color', ColorAccent+'40');
         document.documentElement.style.setProperty('--main-contrast-color', '#FFFFFF');
-        document.documentElement.style.setProperty('--secondary-color', '#0075FF80');
+        document.documentElement.style.setProperty('--secondary-color', ColorAccent+'80');
         document.documentElement.style.setProperty('--background-color', '#FFFFFF');
-        document.documentElement.style.setProperty('--hover-color', '#0075FF');
+        document.documentElement.style.setProperty('--hover-color', ColorAccent);
         document.documentElement.style.setProperty('--hover-c-color', '#FFFFFF');
         document.documentElement.style.setProperty('--secondary-contrast-color', '#FFFFFFA0');
     } else if (localStorage.getItem('AppTheme') == ThemeOne[1]) {
-        var Theme = 'BlackLight';
+        var Theme = 'Light';
         document.documentElement.style.setProperty('--main-color', '#05050A');
         document.documentElement.style.setProperty('--main-color-light', '#05050A07');
         document.documentElement.style.setProperty('--main-shadow-color', '#05050A20');

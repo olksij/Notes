@@ -2,32 +2,54 @@ var notes = new Array();
 var data = new Array();
 var db = firebase.firestore();
 
-db.collection("gnotes").onSnapshot(/*{ includeMetadataChanges: true }, */function(snapshot) {
-    snapshot.docChanges().forEach(function(change) {
-        if (change.type === "added") {
-            console.log("%c[+]",'color: green', change.doc.id, "-", snapshot.metadata.fromCache ? "cache" : "server");
-            notes.push(change.doc.id);
-            data.push(change.doc.data());   
-            RenderNote(notes.length); 
-        }
+async function SyncNotes() {
+    var doc = await db.collection("notes").doc("users").collection(account.email).doc("UserInfo").get();
+    if (!doc.exists) {
+        db.collection("notes").doc("users").collection(account.email).add({
+            title: "Welcome to Notes!",
+            description: "It's your private space now. Introdiction is coming soon.",
+            date: new Date().getDate() + "." + (new Date().getMonth() + 1) + "." + new Date().getFullYear(),
+            time: new Date().getHours() + ":" + new Date().getMinutes(),
+            url: window.location.href,
+            user: account.displayName,
+            email: account.email,
+            version: FluxAppBuild,
+        });
 
-        if (change.type === "modified") {
-            console.log("%c[#]",'color: yellow', change.doc.id, "-", snapshot.metadata.fromCache ? "cache" : "server");
-            ClearNote(change.doc.id);
-            notes.push(change.doc.id); data.push(change.doc.data());   
-            RenderNote(notes.length); 
-        }
+        db.collection("notes").doc("users").collection(account.email).doc("UserInfo").set({
+            name: account.email,
+        })
+    }
 
-        if (change.type === "removed") {
-            console.log("%c[-]", 'color: red', change.doc.id, "-", snapshot.metadata.fromCache ? "cache" : "server");
-            ClearNote(change.doc.id);
-        }
-        ResizeNote();
-        setTimeout(function() {
-            ResizeNote();
-        }, 300);
+    db.collection("notes").doc("users").collection(account.email).onSnapshot(/*{ includeMetadataChanges: true }, */function(snapshot) {
+        snapshot.docChanges().forEach(function(change) {
+            if (change.doc.id!="UserInfo") {
+                if (change.type === "added") {
+                    console.log("%c[+]",'color: green', change.doc.id, "-", snapshot.metadata.fromCache ? "cache" : "server");
+                    notes.push(change.doc.id);
+                    data.push(change.doc.data());   
+                    RenderNote(notes.length); 
+                }
+    
+                if (change.type === "modified") {
+                    console.log("%c[#]",'color: yellow', change.doc.id, "-", snapshot.metadata.fromCache ? "cache" : "server");
+                    ClearNote(change.doc.id);
+                    notes.push(change.doc.id); data.push(change.doc.data());   
+                    RenderNote(notes.length); 
+                }
+    
+                if (change.type === "removed") {
+                    console.log("%c[-]", 'color: red', change.doc.id, "-", snapshot.metadata.fromCache ? "cache" : "server");
+                    ClearNote(change.doc.id);
+                }
+                ResizeNote();
+                setTimeout(function() {
+                    ResizeNote();
+                }, 300);    
+            }
+        });
     });
-});
+}
 
 function CreateNote() {
     var title = document.getElementById("add-note-title").value;
@@ -37,13 +59,13 @@ function CreateNote() {
 }
 
 function DeleteNote() {
-    db.collection("gnotes").doc(OpenedNote).delete().catch(function(error) {
+    db.collection("notes").doc("users").collection(account.email).doc(OpenedNote).delete().catch(function(error) {
         console.error("[!] Error removing " + OpenedNote + ": ", error);
     });
 }
 
 function AddNote(title, description) {
-    db.collection("gnotes").add({
+    db.collection("notes").doc("users").collection(account.email).add({
         title: title,
         description: description,
         date: new Date().getDate() + "." + (new Date().getMonth() + 1) + "." + new Date().getFullYear(),
