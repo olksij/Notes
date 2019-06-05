@@ -150,13 +150,13 @@ function ResizeNote() {
 }
 
 function Theme(mode) {
-    if (localStorage.getItem('AppTheme') != 'BlueLight' && localStorage.getItem('AppTheme') != 'BlackLight' && localStorage.getItem('AppTheme') != 'Dark') {
-        localStorage.setItem('AppTheme', 'BlueLight');
+    if (localStorage.getItem('AppTheme') != 'Colored' && localStorage.getItem('AppTheme') != 'Light' && localStorage.getItem('AppTheme') != 'Dark') {
+        localStorage.setItem('AppTheme', 'Light');
     }
     if (mode == 2) {
-        var ThemeOne = ['Dark', 'BlueLight', 'BlackLight'];
+        var ThemeOne = ['Dark', 'Colored', 'Light'];
     } else {
-        var ThemeOne = ['BlueLight', 'BlackLight', 'Dark'];
+        var ThemeOne = ['Colored', 'Light', 'Dark'];
     }
     if (localStorage.getItem('AppTheme') == ThemeOne[0]) {
         var Theme = 'Colored';
