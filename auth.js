@@ -13,6 +13,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 firebase.auth().getRedirectResult().then(function(result) {
     if (result.credential) {
+        console.log("...");
         account = result.credential.accessToken;
         console.log("%c[i]",'color: blue', account.email);
         SyncNotes();

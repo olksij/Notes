@@ -1,4 +1,4 @@
-var FluxAppBuild = '1082';
+var FluxAppBuild = '1085';
 
 self.addEventListener('install', function(event) {
     self.skipWaiting();
@@ -8,13 +8,16 @@ self.addEventListener('install', function(event) {
             './FluxUI.css', 
             './main.css', 
             './main.js', 
-            './404.html', 
-            './Assets/AppIcon.ico', 
+            './404.html',
+            './auth.js',
+            './Assets/favicon.ico', 
             './Assets/AppIcon.png', 
             './Assets/AppIcon512.png', 
-            './Fonts/GoogleSans-Medium.ttf', 
-            './Fonts/GoogleSans-Regular.ttf', 
-            './Fonts/GoogleSans-Bold.ttf', 
+            './Assets/favicon-16x16.png', 
+            './Assets/favicon-32x32.png', 
+            './Fonts/GoogleSans-Medium.ttf',
+            './Fonts/GoogleSans-Regular.ttf',
+            './Fonts/GoogleSans-Bold.ttf',
             './firestore.js'
         ]);
     }));
@@ -29,7 +32,7 @@ self.addEventListener('activate', function(event) {
                 return false;
             }
         }).map(function(cacheName) {
-            console.log("%c[-] cache: ", 'color: red', cacheName);
+            console.log("%c[-]", 'color: red',' cache: ', cacheName);
             return caches.delete(cacheName);
         }));
     }));

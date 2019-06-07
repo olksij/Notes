@@ -28,16 +28,18 @@ function Resized() {
     if (document.getElementById('body').offsetWidth < 657) { /* MOBILE */
         document.getElementById("SvgAddIcon").style.fill = "var(--main-contrast-color)";
         document.getElementById("AddNoteButton").setAttribute('class', 'FluxAppFloatingButton');
+        document.getElementById("Settings_ToHomeButton").setAttribute('class', 'FluxAppFloatingButton');
     } else { /* DESKTOP */
         document.getElementById("SvgAddIcon").style.fill = "var(--main-color)";
         document.getElementById("AddNoteButton").setAttribute('class', 'FluxAppButton');
+        document.getElementById("Settings_ToHomeButton").setAttribute('class', 'FluxAppButton');
     }
 
     document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth) - 82) + "px";
     document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth) - 62 - 20) + "px";
 }
 
-// BTN CLICKS
+// --- BTN CLICKS ---
 
 var OpenedNote;
 function OpenNote(id) {
@@ -54,20 +56,16 @@ function OpenNote_ToHomeButton() {
     document.getElementById("OpenNoteWindow").style.display = "none";
 }
 
+function Settings_ToHomeButton() {
+    document.getElementById("SettingsWindow").style.display = "none";
+}
+
 function OpenNote_Delete() {
     DeleteNote(); OpenNote_ToHomeButton();
 }
 
-function DialogCreateNote() {
-    document.getElementById("add-note-window").style.display = 'block';
-}
-
-function CloseAddNoteWindow() {
-    document.getElementById("add-note-window").style.display = 'none';
-}
-
 function AppMenuButtonClick() {
-    Theme(2);
+    document.getElementById("SettingsWindow").style.display = 'block';
 }
 
 function MobileDialogCreateNote() {
@@ -89,12 +87,11 @@ let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e)=>{
     e.preventDefault();
     deferredPrompt = e;
-}
-);
+});
+
 window.addEventListener('appinstalled', (evt)=>{
     app.logEvent('a2hs', 'installed');
-}
-);
+});
 
 // BTN ANIMATIONS
 
@@ -150,7 +147,7 @@ function ResizeNote() {
 }
 
 function Theme(mode) {
-    if (localStorage.getItem('AppTheme') != 'Colored' && localStorage.getItem('AppTheme') != 'Light' && localStorage.getItem('AppTheme') != 'Dark') {
+    /*if (localStorage.getItem('AppTheme') != 'Colored' && localStorage.getItem('AppTheme') != 'Light' && localStorage.getItem('AppTheme') != 'Dark') {
         localStorage.setItem('AppTheme', 'Light');
     }
     if (mode == 2) {
@@ -169,7 +166,7 @@ function Theme(mode) {
         document.documentElement.style.setProperty('--hover-color', ColorAccent);
         document.documentElement.style.setProperty('--hover-c-color', '#FFFFFF');
         document.documentElement.style.setProperty('--secondary-contrast-color', '#FFFFFFA0');
-    } else if (localStorage.getItem('AppTheme') == ThemeOne[1]) {
+    } else if (localStorage.getItem('AppTheme') == ThemeOne[1]) { */
         var Theme = 'Light';
         document.documentElement.style.setProperty('--main-color', '#05050A');
         document.documentElement.style.setProperty('--main-color-light', '#05050A07');
@@ -179,7 +176,7 @@ function Theme(mode) {
         document.documentElement.style.setProperty('--background-color', '#FFFFFF');
         document.documentElement.style.setProperty('--hover-color', '#FFFFFF');
         document.documentElement.style.setProperty('--hover-c-color', '#05050A');
-        document.documentElement.style.setProperty('--secondary-contrast-color', '#00000080');
+        document.documentElement.style.setProperty('--secondary-contrast-color', '#00000080'); /*
     } else {
         var Theme = 'Dark';
         document.documentElement.style.setProperty('--main-color', '#FFFFFF');
@@ -191,7 +188,7 @@ function Theme(mode) {
         document.documentElement.style.setProperty('--hover-color', '#FFFFFF');
         document.documentElement.style.setProperty('--hover-c-color', '#05050A');
         document.documentElement.style.setProperty('--secondary-contrast-color', '#00000080');
-    }
+    }*/
     localStorage.setItem('AppTheme', Theme);
 }
 
