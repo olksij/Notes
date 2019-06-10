@@ -4,7 +4,7 @@ var provider = new firebase.auth.GoogleAuthProvider(); firebase.auth().useDevice
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         account = user;
-        console.log("%c[i]",'color: blue', account.email);
+        pt('iUser',account.email);
         SyncNotes();
     } else {
         firebase.auth().signInWithRedirect(provider);
@@ -13,11 +13,8 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 firebase.auth().getRedirectResult().then(function(result) {
     if (result.credential) {
-        console.log("...");
         account = result.credential.accessToken;
-        console.log("%c[i]",'color: blue', account.email);
-        SyncNotes();
     }
 }).catch(function(error) {
-    console.error("[!] Error (" + error.code + "): " + error.message);
+    pt('!Auth', 'Error (' + error.code + '): ' + error.message);
 });

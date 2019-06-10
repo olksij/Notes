@@ -1,4 +1,5 @@
-var FluxAppBuild = '1085';
+var FluxAppBuild = '1091';
+try { self.importScripts('./functions.js'); } catch { }
 
 self.addEventListener('install', function(event) {
     self.skipWaiting();
@@ -8,6 +9,7 @@ self.addEventListener('install', function(event) {
             './FluxUI.css', 
             './main.css', 
             './main.js', 
+            './sw.js', 
             './404.html',
             './auth.js',
             './Assets/favicon.ico', 
@@ -18,10 +20,17 @@ self.addEventListener('install', function(event) {
             './Fonts/GoogleSans-Medium.ttf',
             './Fonts/GoogleSans-Regular.ttf',
             './Fonts/GoogleSans-Bold.ttf',
-            './firestore.js'
+            './firestore.js',
+            './functions.js'
         ]);
     }));
 });
+
+function StartSW() {
+    caches.keys().then(function(keyList) {
+        pt('iVersion',keyList[0]);
+    });
+}
 
 self.addEventListener('activate', function(event) {
     event.waitUntil(caches.keys().then(function(cacheNames) {
@@ -32,15 +41,19 @@ self.addEventListener('activate', function(event) {
                 return false;
             }
         }).map(function(cacheName) {
-            console.log("%c[-]", 'color: red',' cache: ', cacheName);
+            pt('-Cache',cacheName);
             return caches.delete(cacheName);
         }));
     }));
+    caches.keys().then(function(keyList) {
+        pt('iVersion',keyList[0]);
+    });
     return self.clients.claim();
 });
 
-self.addEventListener('fetch', function(event) {
+self.addEventListener('fetch', async function(event) {
     event.respondWith(fetch(event.request).catch(function() {
         return caches.match(event.request);
-    }));
+    }));    
 });
+

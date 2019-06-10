@@ -2,10 +2,21 @@ var notes = new Array();
 var data = new Array();
 var db = firebase.firestore();
 
+NetworkInitialize();
+
 async function SyncNotes() {
-    var doc = await db.collection("notes").doc("users").collection(account.email).doc("UserInfo").get();
+    var doc = await db.collection("users").doc(account.email).get();
     if (!doc.exists) {
-        db.collection("notes").doc("users").collection(account.email).add({
+        db.collection("users").doc(account.email).set({
+            name: account.email,
+            dateCreated: new Date().getDate(),
+            monthCreated: new Date().getMonth(),
+            yearCreated: new Date().getFullYear(),
+            hourCreated: new Date().getHours(),
+            minuteCreated: new Date().getMinutes()
+        })
+
+        db.collection("users").doc(account.email).collection("notes").add({
             title: "Welcome to Notes!",
             description: "It's your private space now. Introdiction is coming soon.",
             date: new Date().getDate() + "." + (new Date().getMonth() + 1) + "." + new Date().getFullYear(),
@@ -15,31 +26,30 @@ async function SyncNotes() {
             email: account.email,
             version: FluxAppBuild,
         });
-
-        db.collection("notes").doc("users").collection(account.email).doc("UserInfo").set({
-            name: account.email,
-        })
     }
 
-    db.collection("notes").doc("users").collection(account.email).onSnapshot(/*{ includeMetadataChanges: true }, */function(snapshot) {
+    db.collection("users").doc(account.email).collection("notes").onSnapshot(/*{ includeMetadataChanges: true }, */function(snapshot) {
         snapshot.docChanges().forEach(function(change) {
             if (change.doc.id!="UserInfo") {
                 if (change.type === "added") {
-                    console.log("%c[+]",'color: green', change.doc.id, "-", snapshot.metadata.fromCache ? "cache" : "server");
+            
+                pt('+Notes', change.doc.id, '-', snapshot.metadata.fromCache ? "cache" : "server");
                     notes.push(change.doc.id);
                     data.push(change.doc.data());   
                     RenderNote(notes.length); 
                 }
     
                 if (change.type === "modified") {
-                    console.log("%c[#]",'color: yellow', change.doc.id, "-", snapshot.metadata.fromCache ? "cache" : "server");
+            
+                pt('#Notes', change.doc.id, "-", snapshot.metadata.fromCache ? "cache" : "server");
                     ClearNote(change.doc.id);
                     notes.push(change.doc.id); data.push(change.doc.data());   
                     RenderNote(notes.length); 
                 }
     
                 if (change.type === "removed") {
-                    console.log("%c[-]", 'color: red', change.doc.id, "-", snapshot.metadata.fromCache ? "cache" : "server");
+            
+                pt('-Notes', change.doc.id, "-", snapshot.metadata.fromCache ? "cache" : "server");
                     ClearNote(change.doc.id);
                 }
                 ResizeNote();
@@ -59,13 +69,13 @@ function CreateNote() {
 }
 
 function DeleteNote() {
-    db.collection("notes").doc("users").collection(account.email).doc(OpenedNote).delete().catch(function(error) {
-        console.error("[!] Error removing " + OpenedNote + ": ", error);
+    db.collection("users").doc(account.email).collection("notes").doc(OpenedNote).delete().catch(function(error) {
+        pt('!Error Removing Note',OpenedNote + ": " + error);
     });
 }
 
 function AddNote(title, description) {
-    db.collection("notes").doc("users").collection(account.email).add({
+    db.collection("users").doc(account.email).collection("notes").add({
         title: title,
         description: description,
         date: new Date().getDate() + "." + (new Date().getMonth() + 1) + "." + new Date().getFullYear(),
@@ -75,7 +85,7 @@ function AddNote(title, description) {
         email: account.email,
         version: FluxAppBuild,
     });
-    console.log('%c[i]', 'color: blue', 'Added note');
+    pt('iNotes', 'Added');
 }
 
 function ClearNote(a) {
@@ -123,3 +133,19 @@ function RenderNote(i) {
     document.getElementById(notes[i - 1] + "-NoteCard").style.top = NoteCardC.style.top;
     document.getElementById(notes[i - 1] + "-NoteCard").style.height = NoteCardC.style.height;
 }
+
+function NetworkInitialize(event) {
+    navigator.onLine ? firebase.firestore().enableNetwork() : firebase.firestore().disableNetwork()
+    if (navigator.onLine) {
+
+    pt('$Status','Online');
+    } else {
+
+    pt('$Status','Offline');
+    }
+}
+
+window.addEventListener('load', function() {  
+    window.addEventListener('online',  NetworkInitialize);
+    window.addEventListener('offline', NetworkInitialize);
+}); 

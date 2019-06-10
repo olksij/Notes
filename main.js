@@ -1,6 +1,7 @@
 var ColorAccent = '#0075ff';
+
 function Start() {
-    registerSW(); Resized(); Theme(1);
+    registerSW(); StartSW(); Resized(); Theme(1);
     document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth) - 82) + "px";
     document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth) - 82) + "px";
     document.getElementById("AddNoteWindow").style.display = 'none';
@@ -12,9 +13,9 @@ function registerSW() {
         navigator.serviceWorker.register('sw.js', {
             scope: window.location.pathname
         }).then(()=>{
-            console.log('%c[i]', 'color: blue', "SW registered");
+            pt('iService Worker',"registered");
         }).catch(error=>{
-            console.error('[!] SW error:', error);
+            pt('!Service Worker Error', + error);
         });
     }
 }
@@ -62,6 +63,10 @@ function Settings_ToHomeButton() {
 
 function OpenNote_Delete() {
     DeleteNote(); OpenNote_ToHomeButton();
+}
+
+function Settings_ReloadApp() {
+    location.reload(true);
 }
 
 function AppMenuButtonClick() {
