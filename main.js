@@ -149,6 +149,11 @@ function ResizeNote() {
         document.getElementById(notes[i] + "-NoteCard").style.top = g_height + "px";
         g_height = g_height + 20 + document.getElementById(notes[i] + "-NoteCard").offsetHeight;
     }
+    if (document.getElementById('body').offsetWidth < 657) { /* MOBILE */
+        document.getElementById("NoteList").style.height = (g_height+76)+'px';
+    } else {
+        document.getElementById("NoteList").style.height = g_height+'px';
+    }
 }
 
 function Theme(mode) {

@@ -1,4 +1,4 @@
-var FluxAppBuild = '1091';
+var FluxAppBuild = '1092';
 try { self.importScripts('./functions.js'); } catch { }
 
 self.addEventListener('install', function(event) {
