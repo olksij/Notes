@@ -42,19 +42,17 @@ function LoadDBSettings(){
 
 function CreateDB(event) {
     print('iUpdated Database')
-    SettingsDB = event.target.result; 
-    try { SettingsDB.createObjectStore('Settings', { keyPath: "name" }); } catch {
-        indexedDB.open("NotesDB",parseInt(FluxAppBuild)).onsuccess = function(event) {
-            SettingsDB = event.target.result; 
-            var SettingsValues = [
-                { name: 'AppTheme', value: 'Light' },
-                { name: 'LoadApp', value: 'Cache' },
-                { name: 'LoadUser', value: 'Cache' },
-                { name: 'RealtimeNotes', value: 'False' }
-            ];      
-            var ObjectStore = SettingsDB.transaction("Settings", "readwrite").objectStore("Settings");
-            SettingsValues.forEach(function(setting) { ObjectStore.add(setting); });                
-        };
+    SettingsDBV = event.target.result; 
+    try { SettingsDBV.createObjectStore('Settings', { keyPath: "name" }); } catch {
+        var SettingsValues = [
+            { name: 'AppTheme', value: 'Light' },
+            { name: 'LoadApp', value: 'Cache' },
+            { name: 'LoadUser', value: 'Cache' },
+            { name: 'AccountEmail', value: '' },
+            { name: 'RealtimeNotes', value: 'False' }
+        ];      
+        var ObjectStore = SettingsDB.transaction("Settings", "readwrite").objectStore("Settings");
+        SettingsValues.forEach(function(setting) { ObjectStore.add(setting); });                
     }
 
     try { SettingsDB.createObjectStore('Notes', { keyPath: "id" }); } catch {}

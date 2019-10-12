@@ -16,6 +16,9 @@ function Start() {
     //setInterval(CheckUpdates(), 1000);
 }
 
+window.addEventListener('scroll',Scrolled());
+window.addEventListener('resize',Resized());
+
 function registerSW() {
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js', {

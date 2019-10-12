@@ -119,7 +119,6 @@ function AddNote(title, description,calledby) {
         date: new Date().getDate() + "." + (new Date().getMonth() + 1) + "." + new Date().getFullYear(),
         time: new Date().getHours() + ":" + new Date().getMinutes(),
         url: window.location.hostname,
-        user: account.displayName,
         email: AccountEmail,
         version: FluxAppBuild,
         folder: NotesFolderOpened

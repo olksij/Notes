@@ -7,7 +7,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 firebase.auth().getRedirectResult().then(function(result) {
     if (result.user) { 
         AccountEmail = result.user.email; 
-        UpdateSettings('AccountEmail',result.user.email);
+        UpdateSettings('AccountEmail',AccountEmail);
         SyncFData();
     }
 }).catch(function(error) { print('!Auth', 'Error (' + error.code + '): ' + error.message); });
