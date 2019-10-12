@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head id="head">
+        <!--GENERAL-->
+        <meta charset="utf-8">
+        <title>Sign In</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content=" width=device-width, initial-scale=1">
+        <!--OTHER-->
+        <link rel="icon" type="image/png" sizes="32x32" href="../Assets/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="../Assets/favicon-16x16.png">
+        <link rel="icon" href="../Assets/favicon.ico">
+        <!--CSS & OTHER-->
+        <link rel="stylesheet" type="text/css" media="screen" href="../SignIn/main.css">
+        <link rel="stylesheet" type="text/css" media="screen" href="../SignIn/desktop.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">        <!--JS-->
+        <script src="../functions.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.4.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.4.0/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.4.0/firebase-auth.js"></script>
+        <script>
+            firebase.initializeApp({
+                apiKey: "AIzaSyD5e1BRr6QliCZrUGUyS2HmaS98RoEMhjU",
+                authDomain: "flux-notes.firebaseapp.com",
+                databaseURL: "https://flux-notes.firebaseio.com",
+                projectId: "flux-notes",
+                storageBucket: "flux-notes.appspot.com",
+                messagingSenderId: "423307191915"
+            }); firebase.firestore().enablePersistence();
+        </script>
+        <script src="../SignIn/firebase.js"></script>
+        <script src="../SignIn/main.js"></script>
+    </head>
+    <body onload="Start()" id='body' onresize="Resize()" onloadeddata="Resize()">
+        <img id="NavBarLogo" src="../SignIn/Assets/SimpleLogo.svg" alt="Logo"/>
+        <img id="BackgroundNoteLogo" src="../SignIn/Assets/BackgroundLogo.svg" alt="Logo"/>
+        <div id="NextButtonD">
+            <svg id="NextButtonP" width="50" height="15" viewBox="0 0 50 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="20" font-weight="bold" letter-spacing="0em"><tspan x="-1" y="14.8359">NEXT</tspan></text>
+            </svg>    
+        </div>
+        <div id="FirstPage">
+            <img id="WelcomeText" src="../SignIn/Assets/WelcomeText.svg" alt="Text"/>
+        </div>
+    </body>
+</html>

@@ -1,35 +1,51 @@
 *{
     transition: 0.3s;
 }
+
 path{
     transition: 0s;
 }
 
-#NoteList{
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
+#AppQuickSettings{
+    box-shadow: 0px 1px 20px var(--main-shadow-color);
+    background: #FFFFFF;
+    border-radius: 10px;
+    left:0px;
+    margin-top:0px;
+    right:0px;
+    width:auto;
+    height: 0px;
+    position: relative;
+    padding-top: 0px;
+    opacity:0;
+}
+
+.AQSFolder{
+    height:56px;
+    margin: 20px;
+    margin-top: 15px;
+    background: var(--main-color-light);
+    border-radius: 7px;
+    width: auto;
+    position:relative;
 }
 
 #SearchBarForm{
     width:100%;
+    position:fixed;
 }
 
 svg#SvgAddIcon{
     transition: 0.3s;
 }
 
-
 body{
-     overflow-x: hidden;
-     background: var(--background-color);
-     margin: 0px;
-     width: 100%;
-     height: 100%;
-     transition: 0.3s;
-     overscroll-behavior-y: contain;
+    overflow-x: hidden;
+    background: var(--background-color);
+    margin: 0px;
+    width: 100%;
+    height: 100%;
+    transition: 0.3s;
 }
     
 html{
@@ -37,46 +53,14 @@ html{
     height: 100%;
 }
 
-.NoteCard{
-    background: var(--main-color-light);
-    box-shadow: 0px, 0px, 10px, #00000000;
-    border-radius: 10px;
-    width: auto;
-    right: 20px;
-    left: 20px;
-}
 
 .NoteCard:hover{
     background: var(--hover-color);
     box-shadow: 0px 3px 20px var(--main-shadow-color);
 }
 
-.NoteTitle{
-    color: var(--main-color);
-    font-family: 'gsans-medium';
-    margin: 19px;
-    size: 18px;
-}
-
-.NoteDescription{
-    color: var(--secondary-color);
-    font-family: 'gsans-medium';
-    margin: 19px;
-    font-size: 14px;
-    position: relative;
-    height: auto;
-    top: -5px;
-}
-
-.NoteDate{
-    color: var(--secondary-color);
-    font-family: 'gsans-medium';
-    margin: 19px;
-    font-size: 14px;
-    position: absolute;
-    right: 0px;
-    top: 0px;
-}
+.NoteCard:hover > .NoteDescription, .NoteCard:hover > .NoteDate { color: var(--secondary-contrast-color) }
+.NoteCard:hover > .NoteTitle { color: var(--main-contrast-color) }
 
 #OpenNoteWindow,#AddNoteWindow,#SettingsWindow{
     width: 100%;
@@ -121,20 +105,9 @@ html{
 ---------------------------------------------
 */
 
-@font-face{
-    font-family: 'gsans-regular';
-    src: url(Fonts/GoogleSans-Regular.ttf);                    
-}
+@font-face{ font-family: 'gsans-medium'; src: url(Fonts/RobotoML.woff2) }
 
-@font-face{
-    font-family: 'gsans-medium';
-    src: url(Fonts/GoogleSans-Medium.ttf);                    
-}
-
-@font-face{
-    font-family: 'gsans-bold';
-    src: url(Fonts/GoogleSans-Bold.ttf);                    
-}
+@font-face{ font-family: 'gsans-medium'; src: url(Fonts/RobotoMC.woff2) }
 
 body {width: 100%;}
 
@@ -158,11 +131,11 @@ body {width: 100%;}
     #AppMenuButton{
         right: 20px;
         top: 20px;
-        position: absolute;
+        position: fixed;
     }
 
     #SearchBarForm{
-        position: absolute;
+        position: fixed;
         top: 20px;
         right: 173px;
         left: 20px;
@@ -177,10 +150,7 @@ body {width: 100%;}
         right: 20px;
         bottom:20px;
         transition: 0.5s;
-    }
-
-    #SvgAddIcon{
-        fill: white;
+        position: fixed;
     }
 
     #AddNoteTitle{
@@ -197,6 +167,9 @@ body {width: 100%;}
         top: 96px;
         right: 20px;
         width: auto;
+        resize: none;
+        bottom:96px;
+        height:auto;
     }
 
     #CreateNoteAcceptButton{
@@ -243,6 +216,7 @@ body {width: 100%;}
         position: relative;
         height: auto;
         top: -5px;
+        word-break: break-all;
     }
     
     #OpenNoteDate{
@@ -277,7 +251,7 @@ body {width: 100%;}
 
 @media only screen and (min-width: 657px) {
     #SearchBar{
-        position: absolute;
+        position: fixed;
         top: 20px;
         right: 117px;
         left: 180px;
@@ -307,13 +281,13 @@ body {width: 100%;}
     #AddNoteButton{
         right: 20px;
         top:20px;
-        position: absolute;
+        position: fixed;
     }
 
     #AppMenuButton{
         right: 96px;
         top: 20px;
-        position: absolute;
+        position: fixed;
     }
 
     #AddNoteTitle{
@@ -330,6 +304,10 @@ body {width: 100%;}
         top: 172px;
         right: 20px;
         width: auto;
+        resize: none;
+        bottom:20px;
+        height:auto;
+
     }
 
     #CreateNoteAcceptButton{

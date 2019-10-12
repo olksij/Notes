@@ -1,0 +1,58 @@
+*{
+    transition:0.3s;
+}
+
+html{
+    width:100%;
+    height:100%;
+    overflow: hidden;
+}
+
+body{
+    width:100%;
+    height:100%;
+    margin:0px;
+    background:#FCFCFF;
+}
+
+#NavBarLogo{
+    position:absolute;
+    left:30px;
+    top:30px;
+}
+
+#BackgroundNoteLogo{
+    position:absolute;
+}
+
+#FirstPage{
+    text-align: center;
+    width:100%;
+    position:absolute;
+    top: 50%;
+}
+
+#WelcomeText{
+    display:inline-block;
+    margin-top:-42.5px;
+    width: 70%;
+}
+
+#NextButtonP{
+    padding: 20px 35px;
+    box-shadow: 0px 2px 20px #05050A10;
+    background: #FFF;
+    border-radius: 10px;
+    font-size: 20pt;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    display:inline-block;
+}
+
+#NextButtonD{
+    text-align: center;
+    position:absolute;
+    width: 100%;
+    bottom: 30px;
+}
+

@@ -1,0 +1,15 @@
+@media (min-width:650px) {
+    #WelcomeText{
+        width: 360px !important;
+        position:absolute;
+        left:94.5px;
+        top:50%;
+        margin-top:-42.5px;
+    }
+
+    #NextButtonP{
+        position:absolute;
+        right:50px;
+        bottom:20px;
+    }
+}    

@@ -1,64 +1,101 @@
-var notes = new Array();
-var data = new Array();
-var db = firebase.firestore();
+var FirestoreDB = firebase.firestore(); FirestoreDB.enablePersistence();
+var fromVersion; var notes = new Array(); var data = new Array();
+if (typeof(AppOnline)!='undefined') UpdateConnection(); if (AccountEmail) SyncFData();
 
-NetworkInitialize();
-
-async function SyncNotes() {
-    var doc = await db.collection("users").doc(account.email).get();
-    if (!doc.exists) {
-        db.collection("users").doc(account.email).set({
-            name: account.email,
-            dateCreated: new Date().getDate(),
-            monthCreated: new Date().getMonth(),
-            yearCreated: new Date().getFullYear(),
-            hourCreated: new Date().getHours(),
-            minuteCreated: new Date().getMinutes()
-        })
-
-        db.collection("users").doc(account.email).collection("notes").add({
-            title: "Welcome to Notes!",
-            description: "It's your private space now. Introdiction is coming soon.",
-            date: new Date().getDate() + "." + (new Date().getMonth() + 1) + "." + new Date().getFullYear(),
-            time: new Date().getHours() + ":" + new Date().getMinutes(),
-            url: window.location.href,
-            user: account.displayName,
-            email: account.email,
-            version: FluxAppBuild,
-        });
+async function LoadUserData() {
+    if (RealtimeNotes == 'False') {
+        SyncDBNotes('clear');
+        await LoadNotesOnce();
+        document.getElementById('body').style.overflowY = 'auto';
+        //document.getElementById('SplashScreen').style.display = 'none';
+        if (userInfo) userInfo.notesCounter = notes.length;
+        if (userInfo) {print('iNotes Loaded');}
+    } else {
+        if (userInfo==undefined)
+        var usertInfo = await FirestoreDB.collection("data").doc('notes').collection(AccountEmail).doc('#userInfo').get(); userInfo = usertInfo.data();
+        print('iConnected to Firestore'); 
+        SyncDBNotes('clear');   
     }
+}
 
-    db.collection("users").doc(account.email).collection("notes").onSnapshot(/*{ includeMetadataChanges: true }, */function(snapshot) {
+async function LoadNotesOnce(){
+    await FirestoreDB.collection("data").doc('notes').collection(AccountEmail).get().then(function(querySnapshot) {
+        print('iConnected to Firestore');
+        querySnapshot.forEach(function(doc) {
+            if (doc.id != '#userInfo'){
+                print('+Notes', (doc.id + ( userInfo == undefined || userInfo.notesCounter == 0 ? '' : (' - ' + (Math.round((notes.length+1)/userInfo.notesCounter*100) + '%'))) + ' - ' + (querySnapshot.metadata.fromCache ? "cache" : "server")));
+                notes.push(doc.id);
+                data.push(doc.data());  
+                SyncDBNotes('add',{id: notes[notes.length-1], data: data[data.length-1]}) 
+                RenderNote(notes.length);     
+            } else { userInfo = doc.data(); }
+        });
+    })
+}
+
+function StartRealtimeNotes(){
+    FirestoreDB.collection("data").doc('notes').collection(AccountEmail).onSnapshot({ includeMetadataChanges: true }, function(snapshot) {
         snapshot.docChanges().forEach(function(change) {
-            if (change.doc.id!="UserInfo") {
+            if (change.doc.id!="#userInfo") {
                 if (change.type === "added") {
-            
-                pt('+Notes', change.doc.id, '-', snapshot.metadata.fromCache ? "cache" : "server");
+                    print('+Notes', (change.doc.id + ( notesCounter == 0 ? '' : (' - ' + (Math.round((notes.length+1)/notesCounter*100) + '%'))) + ' - ' + (snapshot.metadata.fromCache ? "cache" : "server")));
                     notes.push(change.doc.id);
-                    data.push(change.doc.data());   
+                    data.push(change.doc.data()); 
+                    SyncDBNotes('add',{id: notes[notes.length-1], data: data[data.length-1]})
                     RenderNote(notes.length); 
-                }
-    
-                if (change.type === "modified") {
-            
-                pt('#Notes', change.doc.id, "-", snapshot.metadata.fromCache ? "cache" : "server");
+                } if (change.type === "modified") {
+                    print('/Notes', change.doc.id + " - " + snapshot.metadata.fromCache ? "cache" : "server");
                     ClearNote(change.doc.id);
-                    notes.push(change.doc.id); data.push(change.doc.data());   
+                    notes.push(change.doc.id); data.push(change.doc.data()); 
+                    SyncDBNotes('remove',notes[notes.length-1]);
+                    SyncDBNotes('add',{id: notes[notes.length-1], data: data[data.length-1]})
                     RenderNote(notes.length); 
-                }
-    
-                if (change.type === "removed") {
-            
-                pt('-Notes', change.doc.id, "-", snapshot.metadata.fromCache ? "cache" : "server");
+                } if (change.type === "removed") {
+                    print('-Notes', change.doc.id + " - " + snapshot.metadata.fromCache ? "cache" : "server");
+                    SyncDBNotes('remove',notes[notes.length-1]);
                     ClearNote(change.doc.id);
-                }
-                ResizeNote();
-                setTimeout(function() {
-                    ResizeNote();
-                }, 300);    
+                } 
+                ResizeNote(); setTimeout(function() { ResizeNote(); }, 300);   
+                userInfo = {
+                    name: AccountEmail,
+                    notesCounter: notes.length,
+                    version: FluxAppBuild,
+                    folders: userInfo.folders
+                };   
+                FirestoreDB.collection("data").doc('notes').collection(AccountEmail).doc('#userInfo').set(userInfo)
+                if (notesCounter == notes.length) { print('iNotes Loaded'); AppLoaded(); } else if (userInfo.notesCounter == 0) AppLoaded();
             }
         });
-    });
+    });    
+}
+
+async function SyncFData() {
+    if (!AccountEmail) return;
+    await LoadUserData();
+
+    if (!userInfo) {
+        userInfo = {
+            name: AccountEmail,
+            notesCounter: 0,
+            version: FluxAppBuild,
+            folders: 0
+        }
+        AddNote("Welcome to Notes!","It's your private space now. Introdiction is coming soon. Cause of database rebasing progress, you can lose your notes sometimes.",'firestore');
+        print('iAccount Created'); AppLoaded();
+    }
+
+    if (userInfo.version == undefined) fromVersion = 0; else fromVersion = parseInt(userInfo.version); 
+    try{CheckUpdates(fromVersion);}catch{}
+
+    userInfo = {
+        name: AccountEmail,
+        notesCounter: userInfo.notesCounter == undefined ? 0 : userInfo.notesCounter,
+        version: FluxAppBuild,
+        folders: userInfo.folders == undefined ? 0 : userInfo.folders
+    }
+    FirestoreDB.collection("data").doc('notes').collection(AccountEmail).doc('#userInfo').set(userInfo)
+
+    if (RealtimeNotes == 'True') StartRealtimeNotes();
 }
 
 function CreateNote() {
@@ -69,83 +106,74 @@ function CreateNote() {
 }
 
 function DeleteNote() {
-    db.collection("users").doc(account.email).collection("notes").doc(OpenedNote).delete().catch(function(error) {
-        pt('!Error Removing Note',OpenedNote + ": " + error);
+    FirestoreDB.collection("data").doc('notes').collection(AccountEmail).doc(OpenedNote).delete().then(()=>{SyncDBNotes('remove',OpenedNote);}).catch(function(error) {
+        print('!Error Removing Note',OpenedNote + ": " + error);
     });
+    
 }
 
-function AddNote(title, description) {
-    db.collection("users").doc(account.email).collection("notes").add({
+function AddNote(title, description,calledby) {
+    FirestoreDB.collection("data").doc('notes').collection(AccountEmail).add({
         title: title,
         description: description,
         date: new Date().getDate() + "." + (new Date().getMonth() + 1) + "." + new Date().getFullYear(),
         time: new Date().getHours() + ":" + new Date().getMinutes(),
-        url: window.location.pathname,
+        url: window.location.hostname,
         user: account.displayName,
-        email: account.email,
+        email: AccountEmail,
         version: FluxAppBuild,
+        folder: NotesFolderOpened
     });
-    pt('iNotes', 'Added');
+    if (RealtimeNotes == false) {viewDBNotes = true; LoadNotesOnce();}
 }
 
 function ClearNote(a) {
     document.getElementById(a+"-NoteCard").remove();
     notes.splice(notes.indexOf(a), 1);
-
 }
 
-var g_r_height = 96;
 function RenderNote(i) {
-    var NoteCard = document.createElement("div");
-    NoteCard.style.position = "absolute";
-    NoteCard.style.left = "20px";
-    NoteCard.style.right = "20px";
-    NoteCard.style.top = 96 + (i - 1) * 110 + "px";
-    NoteCard.setAttribute('class', 'NoteCard');
-    NoteCard.setAttribute('id', notes[i - 1] + "-NoteCard");
-    NoteCard.setAttribute('onclick', "OpenNote('" + notes[i - 1] + "')");
-    NoteCard.setAttribute('onmouseover', "NoteHover('" + notes[i - 1] + "')");
-    NoteCard.setAttribute('onmouseout', "NoteMouseOut('" + notes[i - 1] + "')");
-    document.getElementById("NoteList").appendChild(NoteCard);
+    if (viewDBNotes == true) {document.getElementById('NoteList').innerHTML = ''; viewDBNotes = false}
+    if ((NotesFolderOpened == data[i - 1].folder && NotesFolderOpened!='') || NotesFolderOpened=='') {
+        var NoteCard = document.createElement("div");
+        NoteCard.setAttribute('class', 'NoteCard ripple');
+        NoteCard.setAttribute('id', notes[i - 1] + "-NoteCard");
+        NoteCard.setAttribute('onclick', "OpenNote('" + notes[i - 1] + "')");
+        document.getElementById("NoteList").appendChild(NoteCard);
 
-    var NoteTitle = document.createElement("p");
-    NoteTitle.innerHTML = data[i - 1].title;
-    NoteTitle.setAttribute('class', 'NoteTitle');
-    NoteTitle.setAttribute('id', notes[i - 1] + "-NoteTitle");
-    document.getElementById(notes[i - 1] + "-NoteCard").appendChild(NoteTitle);
+        var NoteTitle = document.createElement("p");
+        NoteTitle.innerHTML = data[i - 1].title;
+        NoteTitle.setAttribute('class', 'NoteTitle');
+        NoteTitle.setAttribute('id', notes[i - 1] + "-NoteTitle");
+        document.getElementById(notes[i - 1] + "-NoteCard").appendChild(NoteTitle);
 
-    var NoteDescription = document.createElement("p");
-    NoteDescription.innerHTML = data[i - 1].description;
-    NoteDescription.setAttribute('class', 'NoteDescription');
-    NoteDescription.setAttribute('id', notes[i - 1] + "-NoteDescription");
-    document.getElementById(notes[i - 1] + "-NoteCard").appendChild(NoteDescription);
+        var NoteDescription = document.createElement("p");
+        NoteDescription.innerHTML = data[i - 1].description;
+        NoteDescription.setAttribute('class', 'NoteDescription');
+        NoteDescription.setAttribute('id', notes[i - 1] + "-NoteDescription");
+        document.getElementById(notes[i - 1] + "-NoteCard").appendChild(NoteDescription);
 
-    var NoteDate = document.createElement("p");
-    NoteDate.innerHTML = data[i - 1].date;
-    NoteDate.setAttribute('class', 'NoteDate');
-    NoteDate.setAttribute('id', notes[i - 1] + "-NoteDate");
-    document.getElementById(notes[i - 1] + "-NoteCard").appendChild(NoteDate);
+        var NoteDate = document.createElement("p");
+        NoteDate.innerHTML = data[i - 1].date;
+        NoteDate.setAttribute('class', 'NoteDate');
+        NoteDate.setAttribute('id', notes[i - 1] + "-NoteDate");
+        document.getElementById(notes[i - 1] + "-NoteCard").appendChild(NoteDate);
 
-    var NoteCardC = document.getElementById(notes[i - 1] + "-NoteCard");
-    NoteCardC.style.height = (76 + NoteDescription.offsetHeight) + "px";
-    NoteCardC.style.top = g_r_height + "px";
-    g_r_height = g_r_height + 20 + NoteCardC.offsetHeight;
-    document.getElementById(notes[i - 1] + "-NoteCard").style.top = NoteCardC.style.top;
-    document.getElementById(notes[i - 1] + "-NoteCard").style.height = NoteCardC.style.height;
+        var NoteCardC = document.getElementById(notes[i - 1] + "-NoteCard");
+        NoteCardC.style.height = (38 + NoteDescription.offsetHeight) + "px";
+        //NoteCardC.style.top = g_r_height + "px";
+        g_r_height = g_r_height + 20 + NoteCardC.offsetHeight;
+        //document.getElementById(notes[i - 1] + "-NoteCard").style.top = NoteCardC.style.top;
+        document.getElementById(notes[i - 1] + "-NoteCard").style.height = NoteCardC.style.height;
+
+        ResizeNote(); setTimeout(function() { ResizeNote(); }, 300);  
+    } 
 }
 
-function NetworkInitialize(event) {
-    navigator.onLine ? firebase.firestore().enableNetwork() : firebase.firestore().disableNetwork()
-    if (navigator.onLine) {
-
-    pt('$Status','Online');
-    } else {
-
-    pt('$Status','Offline');
+function UpdateConnection() {
+    if (AppOnline != AppOnlineF) {
+        AppOnlineF = AppOnline;
+        AppOnline ? firebase.firestore().enableNetwork() : firebase.firestore().disableNetwork();
+        print('$Status', AppOnline ? 'Online' : 'Offline')    
     }
 }
-
-window.addEventListener('load', function() {  
-    window.addEventListener('online',  NetworkInitialize);
-    window.addEventListener('offline', NetworkInitialize);
-}); 

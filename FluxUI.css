@@ -17,7 +17,7 @@ div.FluxAppButton:hover{
     background-color: var(--hover-color);
 }
 
-.FluxAppButtonIcon{
+.FluxAppButton svg{
     width: 21px;
     height: 21px;
     position: absolute;
@@ -40,13 +40,13 @@ div.FluxAppFloatingButton:hover{
     box-shadow: 0px 1px 25px var(--main-shadow-color);
 }
 
-.FluxAppFloatingButtonIcon{
+.FluxAppFloatingButton svg{
     width: 21px;
     height: 21px;
     position: absolute;
     left: 17px;
     top: 17px;
-    fill: white;
+    fill: var(--main-contrast-color);
 }
 
 .FluxAppTextButton{
@@ -153,7 +153,7 @@ div.FluxAppFloatingButton:hover{
 ---------------------------------------------
 */
 
-input:focus {
+input:focus, textarea:focus {
     outline-width: 0;
 }
 
@@ -194,10 +194,20 @@ input:focus {
     font-family: 'gsans-medium';
 }
 
+.FluxAppSearchBar:hover{
+    background-color: var(--hover-color);
+    box-shadow: 0px 1px 20px var(--main-shadow-color);
+}
+
+.FluxAppFloating{
+    background-color: var(--hover-color);
+    box-shadow: 0px 1px 10px var(--main-shadow-color);
+}
+
 .FluxAppSearchBarIcon{
     width: 19px;
     height: 19px;
-    position: absolute;
+    position: fixed;
     left: 38px;
     top: 38px;
     fill: var(--main-color);
@@ -236,7 +246,7 @@ input:focus {
 */
 
 div#FluxAppTitle{
-    position: absolute;
+    position: fixed;
     left: 20px;
     top:20px;
     background-color: var(--hover-color);
