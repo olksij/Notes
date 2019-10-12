@@ -40,7 +40,7 @@ svg#SvgAddIcon{
 }
 
 body{
-    overflow-x: hidden;
+    overflow-x: auto;
     background: var(--background-color);
     margin: 0px;
     width: 100%;

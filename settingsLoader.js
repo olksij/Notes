@@ -13,13 +13,13 @@ function LoadDBSettings(){
         SettingsStore = SettingsDB.transaction(["Settings"], 'readwrite').objectStore("Settings");
         SettingsStore.getAll().onsuccess = (r) => {
             if (r.target.result.length != 0) {
-                AccountEmail = r.target.result[0].value;
+                AccountEmail = r.target.result[0].value=='' ? undefined : r.target.result[0].value;
                 AppTheme = r.target.result[1].value;
                 LoadApp = r.target.result[2].value; 
                 LoadUser = r.target.result[3].value;
                 RealtimeNotes = r.target.result[4].value;
                 if (typeof(window) == 'object') { colorSplashScreen(); Theme(); try{SyncFData()}catch{}            }
-            } else {
+            } else {/*
                 var SettingsValues = [
                     { name: 'AppTheme', value: 'Light' },
                     { name: 'LoadApp', value: 'Cache' },
@@ -28,7 +28,7 @@ function LoadDBSettings(){
                     { name: 'RealtimeNotes', value: 'False' }
                 ];      
                 var ObjectStore = SettingsDB.transaction("Settings", "readwrite").objectStore("Settings");
-                SettingsValues.forEach(function(setting) { ObjectStore.add(setting); });            
+                SettingsValues.forEach(function(setting) { ObjectStore.add(setting); });    */        
             }
         }
     } else {
@@ -41,22 +41,27 @@ function LoadDBSettings(){
 }
 
 function CreateDB(event) {
-    print('iUpdated Database')
     SettingsDBV = event.target.result; 
-    try { SettingsDBV.createObjectStore('Settings', { keyPath: "name" }); } catch {
-        var SettingsValues = [
-            { name: 'AppTheme', value: 'Light' },
-            { name: 'LoadApp', value: 'Cache' },
-            { name: 'LoadUser', value: 'Cache' },
-            { name: 'AccountEmail', value: '' },
-            { name: 'RealtimeNotes', value: 'False' }
-        ];      
-        var ObjectStore = SettingsDB.transaction("Settings", "readwrite").objectStore("Settings");
-        SettingsValues.forEach(function(setting) { ObjectStore.add(setting); });                
+    if (!SettingsDBV.objectStoreNames.contains('Settings')) {
+        var objectStore = SettingsDBV.createObjectStore('Settings', { keyPath: "name" });
+        objectStore.onerror = (e) => console.log(e);
+        objectStore.onsuccess = (e) => console.log(e);
+        objectStore.transaction.oncomplete = () => {
+            var SettingsValues = [
+                { name: 'AppTheme', value: 'Light' },
+                { name: 'LoadApp', value: 'Cache' },
+                { name: 'LoadUser', value: 'Cache' },
+                { name: 'AccountEmail', value: '' },
+                { name: 'RealtimeNotes', value: 'False' }
+            ];      
+            var ObjectStore = SettingsDBV.transaction("Settings", "readwrite").objectStore("Settings");
+            SettingsValues.forEach(function(setting) { ObjectStore.add(setting); });                
+        }    
     }
-
-    try { SettingsDB.createObjectStore('Notes', { keyPath: "id" }); } catch {}
+    if (!SettingsDBV.objectStoreNames.contains('Notes')) SettingsDBV.createObjectStore('Notes', { keyPath: "id" });
+    print('iUpdated Database')
 }
+
 
 function UpdateSettings(setting, value){
     indexedDB.open("NotesDB",FluxAppBuild).onsuccess = function(event) {

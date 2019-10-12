@@ -1,13 +1,12 @@
 if(SettingsDB!=undefined){
     if (SettingsDB.objectStoreNames.contains('Notes')) {
-        SettingsStore = SettingsDB.transaction(['Notes'], 'readwrite').objectStore('Notes');
-        SettingsStore.getAll().onsuccess = r => {
+        SettingsDB.transaction(['Notes'], 'readwrite').objectStore('Notes').getAll().onsuccess = r => {
             if (r.target.result!=undefined){
                 window.dbnotes = r.target.result;
                 LoadDBNotes(r.target.result,'');
                 ResizeNote(true); setTimeout(function() { ResizeNote(true); }, 300);  
                 print('iDatabase notes are loaded');
-                document.getElementById('body').style.overflowY = 'auto';
+                //document.getElementById('body').style.overflowY = 'auto';
                 //document.getElementById('SplashScreen').style.display = 'none';
             }
         }
@@ -30,10 +29,12 @@ function ResizeNote(db) {
             g_height = g_height + 20 + document.getElementById(i.id + "-NoteCard").offsetHeight;
         })    
     } else {
-        notes.forEach(i=>{
-            document.getElementById(i + "-NoteCard").style.height = (38 + document.getElementById(i + "-NoteDescription").offsetHeight) + "px";
-            g_height = g_height + 20 + document.getElementById(i + "-NoteCard").offsetHeight;
-        })    
+        if (notes){
+            notes.forEach(i=>{
+                document.getElementById(i + "-NoteCard").style.height = (38 + document.getElementById(i + "-NoteDescription").offsetHeight) + "px";
+                g_height = g_height + 20 + document.getElementById(i + "-NoteCard").offsetHeight;
+            })       
+        }
     }
     if (document.offsetWidth < 657) { /* MOBILE */
         document.getElementById("NoteList").style.height = (g_height)+'px';

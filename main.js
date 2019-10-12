@@ -6,8 +6,6 @@ function Start() {
     document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth) - 82) + "px";
     document.getElementById("AddNoteWindow").style.display = 'none';
 
-    var metaThemeColor = document.getElementsByTagName('meta');
-    metaThemeColor[metaThemeColor.length-1].setAttribute('content',AppTheme == 'Dark' ? '#05050A' : '#FFFFFF');
 
     print('iVersion',FluxAppBuild);
 
@@ -31,33 +29,37 @@ function registerSW() {
 function Resized() {
     ResizeNote(); setTimeout(function() { ResizeNote(); }, 300);
 
-    if (document.body.offsetWidth < 657) { /* MOBILE */
-        document.getElementById("Settings_ToHomeButton").setAttribute('class', 'FluxAppFloatingButton');
-    } else { /* DESKTOP */
-        document.getElementById("Settings_ToHomeButton").setAttribute('class', 'FluxAppButton');
+    if (document.getElementById("AddNoteButton")){
+        if (document.body.offsetWidth < 657) { /* MOBILE */
+            document.getElementById("Settings_ToHomeButton").setAttribute('class', 'FluxAppFloatingButton');
+        } else { /* DESKTOP */
+            document.getElementById("Settings_ToHomeButton").setAttribute('class', 'FluxAppButton');
+        }
+
+        document.getElementById("AddNoteTitle").style.width = (document.body.offsetWidth - 82) + "px";
+        document.getElementById("AddNoteDescription").style.width = (document.body.offsetWidth - 62 - 20) + "px";
+
+        setTimeout(function() { Scrolled(); }, 300);
     }
-
-    document.getElementById("AddNoteTitle").style.width = (document.body.offsetWidth - 82) + "px";
-    document.getElementById("AddNoteDescription").style.width = (document.body.offsetWidth - 62 - 20) + "px";
-
-    setTimeout(function() { Scrolled(); }, 300);
 }
 
 function Scrolled() {
-    if (document.body.offsetWidth < 657) {
-        if (document.scrollingElement.scrollTop == (document.scrollingElement.scrollHeight - document.getElementById('body').offsetHeight)) { document.getElementById("AddNoteButton").setAttribute('class', 'FluxAppButton ripple');
-        } else { document.getElementById("AddNoteButton").setAttribute('class', 'FluxAppFloatingButton ripple'); }
-    } else {
-        if (document.scrollingElement.scrollTop == 0) { document.getElementById("AddNoteButton").setAttribute('class', 'FluxAppButton ripple');
-        } else { document.getElementById("AddNoteButton").setAttribute('class', 'FluxAppFloatingButton ripple'); }
-    }
-
-    if (document.scrollingElement.scrollTop == 0) {
-        document.getElementById("SearchBar").setAttribute('class', 'FluxAppSearchBar ripple');
-        document.getElementById("AppMenuButton").setAttribute('class', 'FluxAppButton ripple');
-    } else {
-        document.getElementById("SearchBar").setAttribute('class', 'FluxAppSearchBar FluxAppFloating ripple');
-        document.getElementById("AppMenuButton").setAttribute('class', 'FluxAppFloatingButton ripple');
+    if (document.getElementById("AddNoteButton")){
+        if (document.body.offsetWidth < 657) {
+            if (document.scrollingElement.scrollTop == (document.scrollingElement.scrollHeight - document.getElementById('body').offsetHeight)) { document.getElementById("AddNoteButton").setAttribute('class', 'FluxAppButton ripple');
+            } else { document.getElementById("AddNoteButton").setAttribute('class', 'FluxAppFloatingButton ripple'); }
+        } else {
+            if (document.scrollingElement.scrollTop == 0) { document.getElementById("AddNoteButton").setAttribute('class', 'FluxAppButton ripple');
+            } else { document.getElementById("AddNoteButton").setAttribute('class', 'FluxAppFloatingButton ripple'); }
+        }
+    
+        if (document.scrollingElement.scrollTop == 0) {
+            document.getElementById("SearchBar").setAttribute('class', 'FluxAppSearchBar ripple');
+            document.getElementById("AppMenuButton").setAttribute('class', 'FluxAppButton ripple');
+        } else {
+            document.getElementById("SearchBar").setAttribute('class', 'FluxAppSearchBar FluxAppFloating ripple');
+            document.getElementById("AppMenuButton").setAttribute('class', 'FluxAppFloatingButton ripple');
+        }    
     }
 }
 
