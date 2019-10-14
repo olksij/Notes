@@ -1,5 +1,5 @@
 var FirestoreDB = firebase.firestore(); FirestoreDB.enablePersistence();
-var fromVersion; var notes = new Array(); var data = new Array();
+var fromVersion;
 if (typeof(AppOnline)!='undefined') UpdateConnection(); if (AccountEmail) SyncFData();
 
 async function LoadUserData() {
@@ -63,7 +63,7 @@ function StartRealtimeNotes(){
                     folders: userInfo.folders
                 };   
                 FirestoreDB.collection("data").doc('notes').collection(AccountEmail).doc('#userInfo').set(userInfo)
-                if (notesCounter == notes.length) { print('iNotes Loaded'); AppLoaded(); } else if (userInfo.notesCounter == 0) AppLoaded();
+                if (notesCounter == notes.length) { print('iNotes Loaded'); }
             }
         });
     });    
@@ -81,7 +81,7 @@ async function SyncFData() {
             folders: 0
         }
         AddNote("Welcome to Notes!","It's your private space now. Introdiction is coming soon. Cause of database rebasing progress, you can lose your notes sometimes.",'firestore');
-        print('iAccount Created'); AppLoaded();
+        print('iAccount Created');
     }
 
     if (userInfo.version == undefined) fromVersion = 0; else fromVersion = parseInt(userInfo.version); 
@@ -109,7 +109,6 @@ function DeleteNote() {
     FirestoreDB.collection("data").doc('notes').collection(AccountEmail).doc(OpenedNote).delete().then(()=>{SyncDBNotes('remove',OpenedNote);}).catch(function(error) {
         print('!Error Removing Note',OpenedNote + ": " + error);
     });
-    
 }
 
 function AddNote(title, description,calledby) {

@@ -1,5 +1,4 @@
-self.importScripts('./settingsLoader.js'); self.importScripts('./PrintLite.js');
-const staticElements = [self.location.origin+'/loaderCore.js',self.location.origin+'/splashScreen.css',self.location.origin+'/PrintLite.js',self.location.origin+'/AppView.css']
+self.importScripts('./v.js'); self.importScripts('./PrintLite.js');
 
 self.addEventListener('install', function(event) {
     self.skipWaiting();
@@ -13,14 +12,12 @@ self.addEventListener('install', function(event) {
             './auth.js',
             './bodyHtml.js',
             './ripple.js',
-            './loadDocumentLinks.js',
-            './loaderCore.js',
             './notesLoader.js',
-            './changelog.offline.js',
-            './splashScreen.css',
+            './changelog.js',
             './settingsLoader.js',
             './manifest.webmanifest',
             './Assets/AppIcon.png', 
+            './Assets/favicon.ico', 
             './Assets/AppIcon512.png', 
             './Assets/favicon-16x16.png', 
             './Assets/favicon-32x32.png', 
@@ -83,11 +80,9 @@ self.addEventListener('activate', function(event) {
     clients.get(event.clientId).then(c => { try { c.postMessage({ type: "AppOnline", value: SWOnline })}catch{}});
 });*/
 self.addEventListener('fetch', async function(event) {
-    var dataRespond = caches.match(event.request).then(r => { 
-        return r || fetch(event.request).then(r => { SWOnline = true; return r; })
-        .catch(() => { SWOnline = false; })
-    })
-    event.respondWith(dataRespond);
+    event.respondWith(caches.match(event.request).then(r => { 
+        return r || fetch(event.request).then(r => { SWOnline = true; return r; })})
+        .catch(() => { SWOnline = false; }));
     /*event.respondWith(dataRespond.then(async r => { 
         if ((self.location.origin+'/changelog.js' == event.request.url) && r == undefined) { 
             return await caches.match('./changelog.offline.js');

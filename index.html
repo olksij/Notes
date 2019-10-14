@@ -1,39 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-    <div id="AppView"><div id='AppQuickSettings'></div><div id='AppNotifications'></div><div id="NoteList"></div></div>
-    <head id='head'>
-        <link rel="stylesheet" type="text/css" media="screen" href="splashScreen.css">
-        <script src="loadDocumentLinks.js"></script>
+    <head>
+        <meta name="theme-color" content="#FFFFFF">
+        <script src='v.js'></script>
         <script src='PrintLite.js'></script>
-        <script src='loaderCore.js'></script>
         <script src='settingsLoader.js'></script>
+        <script src='notesLoader.js'></script>
         <link rel="stylesheet" type="text/css" media="screen" href="AppView.css">
-        <script> loadJSLinksA.forEach( e => { var temploader = document.createElement('script'); temploader.setAttribute('src', e); document.getElementsByTagName("head")[0].appendChild(temploader); })</script>
-        <script> loadCSSLinks.forEach( e => { var temploader = document.createElement('link'); temploader.setAttribute('rel', 'stylesheet'); temploader.setAttribute('href', e); document.getElementsByTagName("head")[0].appendChild(temploader); })</script>
-        <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
-        <script>firebase.initializeApp({
-            apiKey: "AIzaSyD5e1BRr6QliCZrUGUyS2HmaS98RoEMhjU",
-            authDomain: "flux-notes.firebaseapp.com",
-            databaseURL: "https://flux-notes.firebaseio.com",
-            projectId: "flux-notes",
-            storageBucket: "flux-notes.appspot.com",
-            messagingSenderId: "423307191915",
-            appId: "1:423307191915:web:bd0eab3a2ff85325"
-        })</script>
-        <script> loadJSLinksB.forEach( e => { var temploader = document.createElement('script'); temploader.setAttribute('src', e); document.getElementsByTagName("head")[0].appendChild(temploader); })</script>
+        <link rel='stylesheet' href='FluxUI.css'>
+        <link rel='stylesheet' href='main.css'>  
+        <script src='bodyHtml.js'></script>  
         <link rel="manifest" href="manifest.webmanifest">
         <link rel="icon" type="image/png" sizes="32x32" href="Assets/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="Assets/favicon-16x16.png">
-        <link rel="icon" href="Assets/favicon.ico">        
+        <link rel="icon" type="image/png" href="./Assets/favicon.ico">        
         <title>AB Notes</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="Description" content="Open Source PWA">
-        <meta name="viewport" content=" width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#FFFFFF">
+        <meta name="Description" content="Lightweight, powerful, well designed PWA by Alex Besida">
+        <meta name="viewport" content=" width=device-width, initial-scale=1">    
     </head>
-    <body id="body"></body>
-    <!--<div id="SplashScreen">Loading data...</div>       --> 
+    <div id="AppView"><div id='AppQuickSettings'></div><div id='AppNotifications'></div><div id="NoteList"></div></div>
+    <body id="body" onload="loadBody()"></body>
 </html>

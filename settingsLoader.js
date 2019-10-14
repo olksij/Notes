@@ -1,8 +1,8 @@
-var FluxAppBuild = '1110'; var SettingsDB; var SettingsStore; var AppOnline = true; var AppOnlineF; var account; var AppTheme; var LoadApp; var LoadUser; var RealtimeNotes; var Themes = ['Light', 'Dark', 'Custom']; var NotesList = []; var g_r_height = 96; var viewDBNotes = true; var NotesFolderOpened = ''; var userInfo; var AccountEmail;
+var SettingsDB; var SettingsStore; var AppOnline = true; var AppOnlineF; var account; var AppTheme; var LoadApp; var LoadUser; var RealtimeNotes; var Themes = ['Light', 'Dark', 'Custom']; var NotesList = []; var g_r_height = 96; var viewDBNotes = true; var NotesFolderOpened = ''; var userInfo; var AccountEmail;  var notes = new Array(); var data = new Array();
 if (typeof(window) == 'object') {
     var DBrequest = indexedDB.open("NotesDB",parseInt(FluxAppBuild))
     DBrequest.onsuccess = function(event) {
-        SettingsDB = event.target.result; 
+        SettingsDB = event.target.result;
         LoadDBSettings();
     };
     DBrequest.onupgradeneeded = function(event) { CreateDB(event) }
@@ -18,7 +18,7 @@ function LoadDBSettings(){
                 LoadApp = r.target.result[2].value; 
                 LoadUser = r.target.result[3].value;
                 RealtimeNotes = r.target.result[4].value;
-                if (typeof(window) == 'object') { colorSplashScreen(); Theme(); try{SyncFData()}catch{}            }
+                if (typeof(window) == 'object') { Theme(); try{SyncFData()}catch{}            }
             } else {/*
                 var SettingsValues = [
                     { name: 'AppTheme', value: 'Light' },
@@ -79,7 +79,50 @@ function UpdateSettings(setting, value){
 
 if (typeof(window) != 'undefined') { navigator.serviceWorker.addEventListener('message', event => { if (event.data.type == 'AppOnline') { AppOnline = event.data.value; try {UpdateConnection(AppOnline);}catch{}}}); }
 
-function colorSplashScreen(){
-    document.documentElement.style.setProperty('--loader-background', AppTheme == 'Dark' ? '#05050A' : '#FFF');
-    document.documentElement.style.setProperty('--loader-test', AppTheme == 'Dark' ? '#FFF' : '#05050A');
+function Theme(UpdateTo) {
+    var metaThemeColor = document.getElementsByTagName('meta')[0];
+    metaThemeColor.remove();
+
+    var temploader = document.createElement('meta'); 
+    temploader.setAttribute('name', 'theme-color'); 
+
+    if (UpdateTo != undefined) AppTheme = UpdateTo;
+    if (AppTheme == 'Custom') {
+        document.documentElement.style.setProperty('--main-color', ColorAccent);
+        document.documentElement.style.setProperty('--main-color-light', ColorAccent+'10');
+        document.documentElement.style.setProperty('--main-shadow-color', ColorAccent+'40');
+        document.documentElement.style.setProperty('--main-contrast-color', '#FFFFFF');
+        document.documentElement.style.setProperty('--secondary-color', ColorAccent+'80');
+        document.documentElement.style.setProperty('--background-color', '#FFFFFF');
+        document.documentElement.style.setProperty('--hover-color', ColorAccent);
+        document.documentElement.style.setProperty('--hover-c-color', '#FFFFFF');
+        document.documentElement.style.setProperty('--secondary-contrast-color', '#FFFFFFA0');
+        temploader.setAttribute('content', '#FFFFFF'); 
+    } else if (AppTheme == 'Dark') {
+        document.documentElement.style.setProperty('--main-color', '#FFFFFF');
+        document.documentElement.style.setProperty('--main-color-light', '#0A0A0A');
+        document.documentElement.style.setProperty('--main-shadow-color', '#000000');
+        document.documentElement.style.setProperty('--main-contrast-color', '#FFFFFF');
+        document.documentElement.style.setProperty('--secondary-color', '#FFFFFF80');
+        document.documentElement.style.setProperty('--background-color', '#050505');
+        document.documentElement.style.setProperty('--hover-color', '#101010');
+        document.documentElement.style.setProperty('--hover-c-color', '#FFFFFF');
+        document.documentElement.style.setProperty('--secondary-contrast-color', '#FFFFFF80');
+        temploader.setAttribute('content', '#000000'); 
+    } else {
+        document.documentElement.style.setProperty('--main-color', '#05050A');
+        document.documentElement.style.setProperty('--main-color-light', '#05050A07');
+        document.documentElement.style.setProperty('--main-shadow-color', '#05050A20');
+        document.documentElement.style.setProperty('--main-contrast-color', '#05050A');
+        document.documentElement.style.setProperty('--secondary-color', '#05050A80');
+        document.documentElement.style.setProperty('--background-color', '#FFFFFF');
+        document.documentElement.style.setProperty('--hover-color', '#FFFFFF');
+        document.documentElement.style.setProperty('--hover-c-color', '#05050A');
+        document.documentElement.style.setProperty('--secondary-contrast-color', '#00000080');
+        temploader.setAttribute('content', '#FFFFFF'); 
+        AppTheme = 'Light';
+    }
+    document.getElementsByTagName("head")[0].appendChild(temploader);
+
+    UpdateSettings('AppTheme', AppTheme);
 }

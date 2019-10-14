@@ -1,7 +1,13 @@
+var loadJSLinksFb = ['app.js','firestore.js','auth.js']
+var loadJSLinksFl = ['firestore.js','auth.js','main.js','ripple.js']
+loadJSLinksFb.forEach( e => { 
+    var temploader = document.createElement('script'); 
+    temploader.setAttribute('src', 'https://www.gstatic.com/firebasejs/6.5.0/firebase-'+e); 
+    document.getElementsByTagName("head")[0].appendChild(temploader); 
+});
+
 function loadBody(){
     document.getElementById('body').innerHTML = document.getElementById('body').innerHTML + `
-    <link rel='stylesheet' href='FluxUI.css'>
-    <link rel='stylesheet' href='main.css'>
     <div id="SearchBarForm">
         <input id="SearchBar" class="FluxAppSearchBar ripple" placeholder="Search"/>
     </div>
@@ -83,4 +89,20 @@ function loadBody(){
         #AppView{ top:76px;}    
     </style>
     `;
+
+    firebase.initializeApp({
+        apiKey: "AIzaSyD5e1BRr6QliCZrUGUyS2HmaS98RoEMhjU",
+        authDomain: "flux-notes.firebaseapp.com",
+        databaseURL: "https://flux-notes.firebaseio.com",
+        projectId: "flux-notes",
+        storageBucket: "flux-notes.appspot.com",
+        messagingSenderId: "423307191915",
+        appId: "1:423307191915:web:bd0eab3a2ff85325"
+    });
+
+    loadJSLinksFl.forEach( e => { 
+        var temploader = document.createElement('script'); 
+        temploader.setAttribute('src', e); 
+        document.getElementsByTagName("head")[0].appendChild(temploader); 
+    });
 }

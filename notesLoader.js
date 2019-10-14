@@ -1,4 +1,5 @@
-if(SettingsDB!=undefined){
+indexedDB.open("NotesDB",parseInt(FluxAppBuild)).onsuccess = (e) => {
+    var SettingsDB = e.target.result;
     if (SettingsDB.objectStoreNames.contains('Notes')) {
         SettingsDB.transaction(['Notes'], 'readwrite').objectStore('Notes').getAll().onsuccess = r => {
             if (r.target.result!=undefined){

@@ -9,5 +9,6 @@ var versions = [
     { v: 1107, t: 1, d: '07.10.19', c: 'Fixed bugs. Improved loading.' },
     { v: 1108, t: 2, d: '11.10.19', c: 'Added ripple effect.' },
     { v: 1109, t: 1, d: '11.10.19', c: 'Improved IndexedDB upgrading.' },
-    { v: 1110, t: 1, d: '12.10.19', c: 'Improved stability, performance.' },
+    { v: 1110, t: 2, d: '12.10.19', c: 'Improved stability, performance.' },
+    { v: 1111, t: 1, d: '14.10.19', c: 'Fixed bugs.' },
 ]
