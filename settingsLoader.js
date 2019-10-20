@@ -18,7 +18,10 @@ function LoadDBSettings(){
                 LoadApp = r.target.result[2].value; 
                 LoadUser = r.target.result[3].value;
                 RealtimeNotes = r.target.result[4].value;
-                if (typeof(window) == 'object') { Theme(); try{SyncFData()}catch{}            }
+                if (typeof(window) == 'object') { 
+                    Theme();
+                    try{SyncFData()}catch{}
+                }
             } else {/*
                 var SettingsValues = [
                     { name: 'AppTheme', value: 'Light' },
@@ -38,6 +41,7 @@ function LoadDBSettings(){
         RealtimeNotes = 'False';
         Theme();
     }
+    setTimeout(()=>document.getElementById('body').style.transition='0.3s',300)
 }
 
 function CreateDB(event) {
@@ -59,7 +63,7 @@ function CreateDB(event) {
         }    
     }
     if (!SettingsDBV.objectStoreNames.contains('Notes')) SettingsDBV.createObjectStore('Notes', { keyPath: "id" });
-    print('iUpdated Database')
+    console.log('[i] Updated Database')
 }
 
 
@@ -67,12 +71,12 @@ function UpdateSettings(setting, value){
     indexedDB.open("NotesDB",FluxAppBuild).onsuccess = function(event) {
         SettingsDBlocal = event.target.result;
         var request = SettingsDBlocal.transaction(["Settings"], "readwrite").objectStore("Settings").get(setting);
-        request.onerror = function(event) { print('!Notes Database Error', event.target.errorCode) };
+        request.onerror = function(event) { console.error('[!] Notes Database Error:', event.target.errorCode) };
         request.onsuccess = function(event) {
             var data = event.target.result
             data.value = value;
             var requestUpdate = SettingsDBlocal.transaction(["Settings"], "readwrite").objectStore("Settings").put(data);
-            requestUpdate.onerror = function(event) { print('!Notes Database Error', event.target.errorCode) };
+            requestUpdate.onerror = function(event) { console.error('[!] Notes Database Error', event.target.errorCode) };
         }
     };
 }
@@ -111,7 +115,7 @@ function Theme(UpdateTo) {
         temploader.setAttribute('content', '#000000'); 
     } else {
         document.documentElement.style.setProperty('--main-color', '#05050A');
-        document.documentElement.style.setProperty('--main-color-light', '#05050A07');
+        document.documentElement.style.setProperty('--main-color-light', '#F5F5Fa');
         document.documentElement.style.setProperty('--main-shadow-color', '#05050A20');
         document.documentElement.style.setProperty('--main-contrast-color', '#05050A');
         document.documentElement.style.setProperty('--secondary-color', '#05050A80');
@@ -125,4 +129,89 @@ function Theme(UpdateTo) {
     document.getElementsByTagName("head")[0].appendChild(temploader);
 
     UpdateSettings('AppTheme', AppTheme);
+}
+
+// ----- notesLoader.js -----
+
+indexedDB.open("NotesDB",parseInt(FluxAppBuild)).onsuccess = (e) => {
+    var SettingsDB = e.target.result;
+    if (SettingsDB.objectStoreNames.contains('Notes')) {
+        SettingsDB.transaction(['Notes'], 'readwrite').objectStore('Notes').getAll().onsuccess = r => {
+            if (r.target.result!=undefined){
+                window.dbnotes = r.target.result;
+                LoadDBNotes(r.target.result,'');
+                ResizeNote(true); setTimeout(function() { ResizeNote(true); }, 300);  
+                console.log('[i] Database notes are loaded');
+                //document.getElementById('body').style.overflowY = 'auto';
+                //document.getElementById('SplashScreen').style.display = 'none';
+            }
+        }
+    }
+}
+
+function SyncDBNotes(type,data){
+    if (SettingsDB != undefined){
+        if (type=='clear') { SettingsDB.transaction(['Notes'], "readwrite").objectStore("Notes").clear(); }
+        else if (type == 'add') { SettingsDB.transaction("Notes", "readwrite").objectStore("Notes").add(data); }
+        else if (type == 'remove') { SettingsDB.transaction("Notes", "readwrite").objectStore("Notes").delete(data); }    
+    }
+}
+
+function ResizeNote(db) {
+    var g_height = 96;
+    if (db){
+        dbnotes.forEach(i=>{
+            document.getElementById(i.id + "-NoteCard").style.height = (38 + document.getElementById(i.id + "-NoteDescription").offsetHeight) + "px";
+            g_height = g_height + 20 + document.getElementById(i.id + "-NoteCard").offsetHeight;
+        })    
+    } else {
+        if (notes){
+            notes.forEach(i=>{
+                document.getElementById(i + "-NoteCard").style.height = (38 + document.getElementById(i + "-NoteDescription").offsetHeight) + "px";
+                g_height = g_height + 20 + document.getElementById(i + "-NoteCard").offsetHeight;
+            })       
+        }
+    }
+    if (document.offsetWidth < 657) { /* MOBILE */
+        document.getElementById("NoteList").style.height = (g_height)+'px';
+    } else {
+        document.getElementById("NoteList").style.height = (g_height-76)+'px';
+    }
+}
+
+function LoadDBNotes(list,folder){
+    list.forEach(n => {
+        if (NotesFolderOpened == folder){
+            var NoteCard = document.createElement("div");
+            NoteCard.setAttribute('class', 'NoteCard ripple');
+            NoteCard.setAttribute('id', n.id + "-NoteCard");
+            NoteCard.setAttribute('onclick', "OpenNote('" + n.id + "')");
+            document.getElementById("NoteList").appendChild(NoteCard);
+        
+            var NoteTitle = document.createElement("p");
+            NoteTitle.innerHTML = n.data.title;
+            NoteTitle.setAttribute('class', 'NoteTitle');
+            NoteTitle.setAttribute('id', n.id + "-NoteTitle");
+            document.getElementById(n.id + "-NoteCard").appendChild(NoteTitle);
+        
+            var NoteDescription = document.createElement("p");
+            NoteDescription.innerHTML = n.data.description;
+            NoteDescription.setAttribute('class', 'NoteDescription');
+            NoteDescription.setAttribute('id', n.id + "-NoteDescription");
+            document.getElementById(n.id + "-NoteCard").appendChild(NoteDescription);
+        
+            var NoteDate = document.createElement("p");
+            NoteDate.innerHTML = n.data.date;
+            NoteDate.setAttribute('class', 'NoteDate');
+            NoteDate.setAttribute('id', n.id + "-NoteDate");
+            document.getElementById(n.id + "-NoteCard").appendChild(NoteDate);
+        
+            var NoteCardC = document.getElementById(n.id + "-NoteCard");
+            NoteCardC.style.height = (38 + NoteDescription.offsetHeight) + "px";
+            //NoteCardC.style.top = g_r_height + "px";
+            g_r_height = g_r_height + 20 + NoteCardC.offsetHeight;
+            //document.getElementById(notes[i - 1] + "-NoteCard").style.top = NoteCardC.style.top;
+            document.getElementById(n.id + "-NoteCard").style.height = NoteCardC.style.height;    
+        }
+    })
 }

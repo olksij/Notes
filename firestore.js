@@ -1,5 +1,5 @@
 var FirestoreDB = firebase.firestore(); FirestoreDB.enablePersistence();
-var fromVersion;
+var fromVersion; var notesCounter;
 if (typeof(AppOnline)!='undefined') UpdateConnection(); if (AccountEmail) SyncFData();
 
 async function LoadUserData() {
@@ -9,21 +9,30 @@ async function LoadUserData() {
         document.getElementById('body').style.overflowY = 'auto';
         //document.getElementById('SplashScreen').style.display = 'none';
         if (userInfo) userInfo.notesCounter = notes.length;
-        if (userInfo) {print('iNotes Loaded');}
+        if (userInfo) {console.log('[i] Notes Loaded'); ANSync(1);}
     } else {
         if (userInfo==undefined)
         var usertInfo = await FirestoreDB.collection("data").doc('notes').collection(AccountEmail).doc('#userInfo').get(); userInfo = usertInfo.data();
-        print('iConnected to Firestore'); 
+        console.log('[i] Connected to Firestore'); ANSync(0.5);
         SyncDBNotes('clear');   
+    }
+}
+
+function ANSync(value){
+    document.getElementById('ANSBarActive').style.width = document.getElementById('ANSBar').offsetWidth*value+'px';
+    if(value==1){
+        document.getElementById('ANS').style.marginTop='-81px';
+        document.getElementById('ANS').style.opacity='0'
     }
 }
 
 async function LoadNotesOnce(){
     await FirestoreDB.collection("data").doc('notes').collection(AccountEmail).get().then(function(querySnapshot) {
-        print('iConnected to Firestore');
+        console.log('[i] Connected to Firestore:'); ANSync(0.5);
+        document.getElementById('ANSBarActive').style.width=document.getElementById('ANSBar').offsetWidth*0.5+'px';
         querySnapshot.forEach(function(doc) {
             if (doc.id != '#userInfo'){
-                print('+Notes', (doc.id + ( userInfo == undefined || userInfo.notesCounter == 0 ? '' : (' - ' + (Math.round((notes.length+1)/userInfo.notesCounter*100) + '%'))) + ' - ' + (querySnapshot.metadata.fromCache ? "cache" : "server")));
+                console.log('[+] Notes:', (doc.id + ( userInfo == undefined || userInfo.notesCounter == 0 ? '' : (' - ' + (Math.round((notes.length+1)/userInfo.notesCounter*100) + '%'))) + ' - ' + (querySnapshot.metadata.fromCache ? "cache" : "server")));
                 notes.push(doc.id);
                 data.push(doc.data());  
                 SyncDBNotes('add',{id: notes[notes.length-1], data: data[data.length-1]}) 
@@ -38,20 +47,21 @@ function StartRealtimeNotes(){
         snapshot.docChanges().forEach(function(change) {
             if (change.doc.id!="#userInfo") {
                 if (change.type === "added") {
-                    print('+Notes', (change.doc.id + ( notesCounter == 0 ? '' : (' - ' + (Math.round((notes.length+1)/notesCounter*100) + '%'))) + ' - ' + (snapshot.metadata.fromCache ? "cache" : "server")));
+                    console.log('[+] Notes:', (change.doc.id + ( notesCounter == 0 ? '' : (' - ' + (Math.round((notes.length+1)/notesCounter*100) + '%'))) + ' - ' + (snapshot.metadata.fromCache ? "cache" : "server")));
+                    ANSync(Math.round((notes.length+1)/notesCounter));
                     notes.push(change.doc.id);
                     data.push(change.doc.data()); 
                     SyncDBNotes('add',{id: notes[notes.length-1], data: data[data.length-1]})
                     RenderNote(notes.length); 
                 } if (change.type === "modified") {
-                    print('/Notes', change.doc.id + " - " + snapshot.metadata.fromCache ? "cache" : "server");
+                    console.log('[/] Notes:', change.doc.id + " - " + snapshot.metadata.fromCache ? "cache" : "server");
                     ClearNote(change.doc.id);
                     notes.push(change.doc.id); data.push(change.doc.data()); 
                     SyncDBNotes('remove',notes[notes.length-1]);
                     SyncDBNotes('add',{id: notes[notes.length-1], data: data[data.length-1]})
                     RenderNote(notes.length); 
                 } if (change.type === "removed") {
-                    print('-Notes', change.doc.id + " - " + snapshot.metadata.fromCache ? "cache" : "server");
+                    console.log('[-] Notes:', change.doc.id + " - " + snapshot.metadata.fromCache ? "cache" : "server");
                     SyncDBNotes('remove',notes[notes.length-1]);
                     ClearNote(change.doc.id);
                 } 
@@ -63,7 +73,7 @@ function StartRealtimeNotes(){
                     folders: userInfo.folders
                 };   
                 FirestoreDB.collection("data").doc('notes').collection(AccountEmail).doc('#userInfo').set(userInfo)
-                if (notesCounter == notes.length) { print('iNotes Loaded'); }
+                if (notesCounter == notes.length) { console.log('[i] Notes Loaded'); ANSync(1); }
             }
         });
     });    
@@ -71,6 +81,7 @@ function StartRealtimeNotes(){
 
 async function SyncFData() {
     if (!AccountEmail) return;
+    ANSync(0.2);
     await LoadUserData();
 
     if (!userInfo) {
@@ -81,7 +92,7 @@ async function SyncFData() {
             folders: 0
         }
         AddNote("Welcome to Notes!","It's your private space now. Introdiction is coming soon. Cause of database rebasing progress, you can lose your notes sometimes.",'firestore');
-        print('iAccount Created');
+        console.log('[i] Account Created');
     }
 
     if (userInfo.version == undefined) fromVersion = 0; else fromVersion = parseInt(userInfo.version); 
@@ -93,9 +104,11 @@ async function SyncFData() {
         version: FluxAppBuild,
         folders: userInfo.folders == undefined ? 0 : userInfo.folders
     }
+    notesCounter = userInfo.notesCounter == undefined ? 0 : userInfo.notesCounter;
+
     FirestoreDB.collection("data").doc('notes').collection(AccountEmail).doc('#userInfo').set(userInfo)
 
-    if (RealtimeNotes == 'True') StartRealtimeNotes();
+    if (RealtimeNotes == 'True') ANSync(0.3), StartRealtimeNotes();
 }
 
 function CreateNote() {
@@ -107,7 +120,7 @@ function CreateNote() {
 
 function DeleteNote() {
     FirestoreDB.collection("data").doc('notes').collection(AccountEmail).doc(OpenedNote).delete().then(()=>{SyncDBNotes('remove',OpenedNote);}).catch(function(error) {
-        print('!Error Removing Note',OpenedNote + ": " + error);
+        console.log('[!] Error Removing Note:',OpenedNote + ": " + error);
     });
 }
 
@@ -171,7 +184,16 @@ function RenderNote(i) {
 function UpdateConnection() {
     if (AppOnline != AppOnlineF) {
         AppOnlineF = AppOnline;
-        AppOnline ? firebase.firestore().enableNetwork() : firebase.firestore().disableNetwork();
-        print('$Status', AppOnline ? 'Online' : 'Offline')    
+        if (AppOnline){
+            firebase.firestore().enableNetwork();
+            console.log('[$] Status:','Online');
+            document.getElementById('ANO').style.marginTop='-76px';
+            document.getElementById('ANO').style.opacity='0';   
+        } else {
+            firebase.firestore().disableNetwork();
+            console.log('[$] Status:','Offline');
+            document.getElementById('ANO').style.marginTop='0px';
+            document.getElementById('ANO').style.opacity='1'; 
+        }
     }
 }

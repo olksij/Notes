@@ -1,18 +1,17 @@
-self.importScripts('./v.js'); self.importScripts('./PrintLite.js');
+var FluxAppBuild = '1113';
 
 self.addEventListener('install', function(event) {
     self.skipWaiting();
     event.waitUntil(caches.open(FluxAppBuild).then(function(cache) {
         return cache.addAll([
             './', './index.html',
-            './FluxUI.css', 
             './main.css', 
             './main.js', 
+            './sw.js', 
             './AppView.css', 
             './auth.js',
             './bodyHtml.js',
             './ripple.js',
-            './notesLoader.js',
             './changelog.js',
             './settingsLoader.js',
             './manifest.webmanifest',
@@ -44,11 +43,9 @@ self.addEventListener('activate', function(event) {
             if (FluxAppBuild != cacheName) { return true;
             } else { return false; }
         }).map(function(cacheName) {
-            print('-Cache',cacheName);
             return caches.delete(cacheName);
         }));
     }));
-    caches.keys().then(function(keyList) { print('iCache',keyList[0] == undefined ? FluxAppBuild+', no cache yet.' : keyList[0]); });
     return self.clients.claim();
 });
 
@@ -79,10 +76,20 @@ self.addEventListener('activate', function(event) {
     }))
     clients.get(event.clientId).then(c => { try { c.postMessage({ type: "AppOnline", value: SWOnline })}catch{}});
 });*/
+
 self.addEventListener('fetch', async function(event) {
-    event.respondWith(caches.match(event.request).then(r => { 
-        return r || fetch(event.request).then(r => { SWOnline = true; return r; })})
-        .catch(() => { SWOnline = false; }));
+    if (event.request.url == self.location.origin+'/changelog.js'){
+        event.respondWith(fetch(event.request).then(r => { 
+            SWOnline = true; return r  
+        }).catch(() => { 
+            SWOnline = false; return caches.match(event.request);
+        }));
+    } else {
+        event.respondWith(caches.match(event.request)
+            .then(r => { return r || fetch(event.request).then(r => { SWOnline = true; return r; })})
+            .catch(() => { SWOnline = false; })
+        );
+    }
     /*event.respondWith(dataRespond.then(async r => { 
         if ((self.location.origin+'/changelog.js' == event.request.url) && r == undefined) { 
             return await caches.match('./changelog.offline.js');

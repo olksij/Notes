@@ -10,4 +10,4 @@ firebase.auth().getRedirectResult().then(function(result) {
         UpdateSettings('AccountEmail',AccountEmail);
         SyncFData();
     }
-}).catch(function(error) { print('!Auth', 'Error (' + error.code + '): ' + error.message); });
+}).catch(function(error) { console.log('[!] Auth:', 'Error (' + error.code + '): ' + error.message); });

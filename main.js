@@ -3,20 +3,13 @@ registerSW(); Resized(); Theme(AppTheme)
 document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth) - 82) + "px";
 document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth) - 82) + "px";
 document.getElementById("AddNoteWindow").style.display = 'none';
-print('iVersion',FluxAppBuild);
+console.log('[i] Version:',FluxAppBuild);
 if (typeof(fromVersion) != 'undefined') CheckUpdates();
 
 window.addEventListener('scroll',Scrolled());
 window.addEventListener('resize',Resized());
 
-function registerSW() {
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js', {
-            scope: window.location.pathname
-        }).then(()=>{ print('iService Worker',"registered");
-        }).catch(error=>{ print('!Service Worker Error', + error); });
-    }
-}
+function registerSW() { if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); } }
 
 function Resized() {
     ResizeNote(); setTimeout(function() { ResizeNote(); }, 300);
@@ -119,7 +112,7 @@ function CloseDialogCreateNote() { document.getElementById("AddNoteWindow").styl
 
 // INSTALL
 
-window.addEventListener('appinstalled', () => { print('iYay!', 'App was intalled by user!'); });
+window.addEventListener('appinstalled', () => { console.log('[i] Yay:', 'App was intalled by user!'); });
 
 // BTN ANIMATIONS
 
@@ -163,15 +156,15 @@ function CheckUpdates(fV) { updateVersion = fV;
             }
         })
         if (Updated) {
-            print('iYou were updated from '+fV+' to '+FluxAppBuild);
-            print('iChangelog: '+updateChangelog)
+            console.log('[i] You were updated from '+fV+' to '+FluxAppBuild);
+            console.log('[i] Changelog: '+updateChangelog)
         }
-        if (newUpdateVersion>FluxAppBuild) {print('iNew version avaiable',newUpdateVersion)}
-    } else print('iUpdater Error', 'You are offline');
+        if (newUpdateVersion>FluxAppBuild) {console.log('iNew version avaiable',newUpdateVersion)}
+    } else console.log('[i] Updater Error:', 'You are offline');
 }
 
 window.addEventListener('load', function(){
-    print('iDocument Loaded');
+    console.log('[i] Document Loaded');
     loadBody();
     Start();    
 })

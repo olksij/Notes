@@ -14,7 +14,7 @@
     height: 100%;
 }
 
-.NoteCard{
+.NoteCard,.ANCard{
     background: var(--main-color-light);
     box-shadow: 0px, 0px, 10px, #00000000;
     border-radius: 10px;
@@ -50,4 +50,52 @@
     right: 0px;
     top: 0px;
     opacity:70%;
+}
+
+#ANS{
+    height: 81px;
+    padding: 0px;
+}
+
+#ANO{
+    padding: 0px;
+    height: 56px;
+}
+
+.ANIcon{
+    top: 16px;
+    left:16px;
+    position: absolute;
+    fill: var(--main-color)
+}
+
+.ANTitle{
+    top: 17px;
+    left:56px;
+    position: absolute;
+    font-family: 'gsans-medium';
+    margin:0px;
+    color: var(--main-color)
+}
+
+#ANSBar{
+    bottom: 20px;
+    right: 20px;
+    left: 20px;
+    width:auto;
+    height: 7px;
+    position:absolute;
+    background:var(--hover-color);
+    box-shadow: 0px 0px 10px var(--main-shadow-color);
+    border-radius: 3.5px;
+}
+
+#ANSBarActive{
+    bottom: 0px;
+    left:0px;
+    width:7px;
+    position: absolute;
+    background: var(--main-color);
+    border-radius: 3.5px;
+    height:7px;
 }
