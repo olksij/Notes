@@ -1,4 +1,4 @@
-var FluxAppBuild = '1113';
+var FluxAppBuild = '1114';
 
 self.addEventListener('install', function(event) {
     self.skipWaiting();
@@ -8,7 +8,6 @@ self.addEventListener('install', function(event) {
             './main.css', 
             './main.js', 
             './sw.js', 
-            './AppView.css', 
             './auth.js',
             './bodyHtml.js',
             './ripple.js',

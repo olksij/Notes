@@ -1,4 +1,4 @@
-var SettingsDB; var SettingsStore; var AppOnline = true; var AppOnlineF; var account; var AppTheme; var LoadApp; var LoadUser; var RealtimeNotes; var Themes = ['Light', 'Dark', 'Custom']; var NotesList = []; var g_r_height = 96; var viewDBNotes = true; var NotesFolderOpened = ''; var userInfo; var AccountEmail;  var notes = new Array(); var data = new Array();
+var SettingsDB; var SettingsStore; var AppOnline = true; var AppOnlineF; var account; var AppTheme; var LoadApp; var LoadUser; var RealtimeNotes; var Themes = ['Light', 'Dark', 'Custom']; var NotesList = []; var g_r_height = 96; var viewDBNotes = true; var NotesFolderOpened = ''; var userSettings; var AccountEmail;  var notes = new Array(); var data = new Array(); var folders = new Array(); var AppLanguage;
 if (typeof(window) == 'object') {
     var DBrequest = indexedDB.open("NotesDB",parseInt(FluxAppBuild))
     DBrequest.onsuccess = function(event) {
@@ -14,12 +14,11 @@ function LoadDBSettings(){
         SettingsStore.getAll().onsuccess = (r) => {
             if (r.target.result.length != 0) {
                 AccountEmail = r.target.result[0].value=='' ? undefined : r.target.result[0].value;
-                AppTheme = r.target.result[1].value;
-                LoadApp = r.target.result[2].value; 
-                LoadUser = r.target.result[3].value;
-                RealtimeNotes = r.target.result[4].value;
+                AppLanguage = r.target.result[1].value;
+                AppTheme = r.target.result[2].value;
+                RealtimeNotes = r.target.result[3].value;
                 if (typeof(window) == 'object') { 
-                    Theme();
+                    Theme(AppTheme,'Code');
                     try{SyncFData()}catch{}
                 }
             } else {/*
@@ -36,10 +35,9 @@ function LoadDBSettings(){
         }
     } else {
         AppTheme = 'Light';  
-        LoadApp = 'Cache'; 
-        LoadUser = 'Cache';
         RealtimeNotes = 'False';
-        Theme();
+        AppLanguage = 'En';
+        Theme(AppTheme,'Code');
     }
     setTimeout(()=>document.getElementById('body').style.transition='0.3s',300)
 }
@@ -53,10 +51,9 @@ function CreateDB(event) {
         objectStore.transaction.oncomplete = () => {
             var SettingsValues = [
                 { name: 'AppTheme', value: 'Light' },
-                { name: 'LoadApp', value: 'Cache' },
-                { name: 'LoadUser', value: 'Cache' },
                 { name: 'AccountEmail', value: '' },
-                { name: 'RealtimeNotes', value: 'False' }
+                { name: 'AppLanguage', value: 'En' },
+                { name: 'RealtimeNotes', value: 'True' }
             ];      
             var ObjectStore = SettingsDBV.transaction("Settings", "readwrite").objectStore("Settings");
             SettingsValues.forEach(function(setting) { ObjectStore.add(setting); });                
@@ -83,7 +80,7 @@ function UpdateSettings(setting, value){
 
 if (typeof(window) != 'undefined') { navigator.serviceWorker.addEventListener('message', event => { if (event.data.type == 'AppOnline') { AppOnline = event.data.value; try {UpdateConnection(AppOnline);}catch{}}}); }
 
-function Theme(UpdateTo) {
+function Theme(UpdateTo,By) {
     var metaThemeColor = document.getElementsByTagName('meta')[0];
     metaThemeColor.remove();
 
@@ -112,8 +109,11 @@ function Theme(UpdateTo) {
         document.documentElement.style.setProperty('--hover-color', '#101010');
         document.documentElement.style.setProperty('--hover-c-color', '#FFFFFF');
         document.documentElement.style.setProperty('--secondary-contrast-color', '#FFFFFF80');
-        temploader.setAttribute('content', '#000000'); 
-    } else {
+        document.documentElement.style.setProperty('--aqs-background', '#080808');
+        document.documentElement.style.setProperty('--aqs-item', '#040404');
+        document.documentElement.style.setProperty('--aqs-shadow-color', '#00000040');
+        temploader.setAttribute('content', '#000000');     
+    } else if (AppTheme == 'LightD') {
         document.documentElement.style.setProperty('--main-color', '#05050A');
         document.documentElement.style.setProperty('--main-color-light', '#F5F5Fa');
         document.documentElement.style.setProperty('--main-shadow-color', '#05050A20');
@@ -124,11 +124,43 @@ function Theme(UpdateTo) {
         document.documentElement.style.setProperty('--hover-c-color', '#05050A');
         document.documentElement.style.setProperty('--secondary-contrast-color', '#00000080');
         temploader.setAttribute('content', '#FFFFFF'); 
+
+    } else if (AppTheme == 'Light2Contrasted') {
+        document.documentElement.style.setProperty('--main-color', '#0A0F23');
+        document.documentElement.style.setProperty('--main-color-light', '#F4F6F8');
+        document.documentElement.style.setProperty('--main-shadow-color', '#0A0F2320');
+        document.documentElement.style.setProperty('--main-contrast-color', '#0A0F23');
+        document.documentElement.style.setProperty('--secondary-color', '#0A0F2380');
+        document.documentElement.style.setProperty('--background-color', '#FFFFFF');
+        document.documentElement.style.setProperty('--hover-color', '#FFFFFF');
+        document.documentElement.style.setProperty('--hover-c-color', '#0A0F23');
+        document.documentElement.style.setProperty('--secondary-contrast-color', '#0A0F2380');
+        temploader.setAttribute('content', '#FFFFFF'); 
+    } else {
+        document.documentElement.style.setProperty('--main-color', '#0A0F23');
+        document.documentElement.style.setProperty('--main-color-light', '#F7F9FB');
+        document.documentElement.style.setProperty('--main-shadow-color', '#0A0F2320');
+        document.documentElement.style.setProperty('--main-contrast-color', '#0A0F23');
+        document.documentElement.style.setProperty('--secondary-color', '#0A0F2380');
+        document.documentElement.style.setProperty('--background-color', '#FFFFFF');
+        document.documentElement.style.setProperty('--hover-color', '#FFFFFF');
+        document.documentElement.style.setProperty('--hover-c-color', '#0A0F23');
+        document.documentElement.style.setProperty('--secondary-contrast-color', '#0A0F2380');
+        document.documentElement.style.setProperty('--aqs-background', '#FFFFFF');
+        document.documentElement.style.setProperty('--aqs-item', '#F7F9FB');
+        document.documentElement.style.setProperty('--aqs-shadow-color', '#0A0F2320');
+
+        temploader.setAttribute('content', '#FFFFFF'); 
         AppTheme = 'Light';
     }
     document.getElementsByTagName("head")[0].appendChild(temploader);
 
     UpdateSettings('AppTheme', AppTheme);
+
+    if(By!='Code'){
+        userSettings.theme = AppTheme;
+        SyncUserSettings();    
+    }
 }
 
 // ----- notesLoader.js -----
@@ -158,7 +190,7 @@ function SyncDBNotes(type,data){
 }
 
 function ResizeNote(db) {
-    var g_height = 96;
+    var g_height = 76;
     if (db){
         dbnotes.forEach(i=>{
             document.getElementById(i.id + "-NoteCard").style.height = (38 + document.getElementById(i.id + "-NoteDescription").offsetHeight) + "px";
@@ -172,7 +204,7 @@ function ResizeNote(db) {
             })       
         }
     }
-    if (document.offsetWidth < 657) { /* MOBILE */
+    if (document.body.offsetWidth < 657) { /* MOBILE */
         document.getElementById("NoteList").style.height = (g_height)+'px';
     } else {
         document.getElementById("NoteList").style.height = (g_height-76)+'px';

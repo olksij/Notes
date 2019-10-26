@@ -13,4 +13,5 @@ var versions = [
     { v: 1111, t: 1, d: '14.10.19', c: 'Fixed bugs.' },
     { v: 1112, t: 2, d: '20.10.19', c: 'Added first Notifications. Fixed Bugs.' },
     { v: 1113, t: 1, d: '20.10.19', c: 'Improved productivity.' },
+    { v: 1114, t: 3, d: '26.10.19', c: 'Added Settings syncing. Changed defaults. Improved themes.' },
 ]
