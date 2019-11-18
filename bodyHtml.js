@@ -1,11 +1,4 @@
-var loadJSLinksFb = ['app.js','firestore.js','auth.js']
-var loadJSLinksFl = ['firestore.js','auth.js','changelog.js','main.js','ripple.js']
-loadJSLinksFb.forEach( e => { 
-    var temploader = document.createElement('script'); 
-    temploader.setAttribute('src', 'https://www.gstatic.com/firebasejs/6.5.0/firebase-'+e); 
-    document.getElementsByTagName("head")[0].appendChild(temploader); 
-});
-
+var loadJSLinksFl = ['firebase.js','changelog.js','main.js','ripple.js']
 function loadBody(){
     document.getElementById('AppNotifications').innerHTML =`
         <div id="ANS" class="ANCard">
@@ -27,19 +20,11 @@ function loadBody(){
     document.getElementById('body').setAttribute('onscroll','Scrolled();')
     document.getElementById('body').setAttribute('onresize','Resized();')
 
-    firebase.initializeApp({
-        apiKey: "AIzaSyD5e1BRr6QliCZrUGUyS2HmaS98RoEMhjU",
-        authDomain: "flux-notes.firebaseapp.com",
-        databaseURL: "https://flux-notes.firebaseio.com",
-        projectId: "flux-notes",
-        storageBucket: "flux-notes.appspot.com",
-        messagingSenderId: "423307191915",
-        appId: "1:423307191915:web:bd0eab3a2ff85325"
-    });
-
     loadJSLinksFl.forEach( e => { 
         var temploader = document.createElement('script'); 
         temploader.setAttribute('src', e); 
         document.getElementsByTagName("head")[0].appendChild(temploader); 
     });
+    var temploader = document.createElement('script'); 
+    document.getElementsByTagName("head")[0].appendChild(temploader); 
 }
