@@ -1,14 +1,13 @@
-var FluxAppBuild = '1114';
+var AppPublicVersion = '1118'; var AppDevVersion = AppPublicVersion+'01';
 
 self.addEventListener('install', function(event) {
     self.skipWaiting();
-    event.waitUntil(caches.open(FluxAppBuild).then(function(cache) {
+    event.waitUntil(caches.open(AppDevVersion).then(function(cache) {
         return cache.addAll([
             './', './index.html',
             './main.css', 
             './main.js', 
             './sw.js', 
-            './auth.js',
             './bodyHtml.js',
             './ripple.js',
             './changelog.js',
@@ -21,8 +20,7 @@ self.addEventListener('install', function(event) {
             './Assets/favicon-32x32.png', 
             './Fonts/RobotoML.woff2',
             './Fonts/RobotoMC.woff2',
-            './firestore.js',
-            './PrintLite.js',
+            './firebase.js',
             './SignIn/index.html',
             './SignIn/firebase.js',
             './SignIn/desktop.css',
@@ -39,7 +37,7 @@ self.addEventListener('install', function(event) {
 self.addEventListener('activate', function(event) {
     event.waitUntil(caches.keys().then(function(cacheNames) {
         return Promise.all(cacheNames.filter(function(cacheName) {
-            if (FluxAppBuild != cacheName) { return true;
+            if (AppPublicVersion != cacheName) { return true;
             } else { return false; }
         }).map(function(cacheName) {
             return caches.delete(cacheName);

@@ -8,8 +8,8 @@ document.onpointerdown = function (event) {
         }, 800);
     }
     let target = event.target;
-    while (target && target.classList && !target.classList.contains("ripple")) target = target.parentNode;
-    if (!target || !target.classList || !target.classList.contains("ripple")) return;
+    while (target && target.classList && !(target.classList.contains("ripple") || target.classList.contains("FA2Button"))) target = target.parentNode;
+    if (!target || !target.classList || !(target.classList.contains("ripple") || target.classList.contains("FA2Button"))) return;
 
     const x = event.x - target.getBoundingClientRect().left;
     const y = event.y - target.getBoundingClientRect().top;
@@ -34,7 +34,7 @@ document.onpointerdown = function (event) {
     effect.style.left = (x - size) + "px";
     effect.style.height = size * 2 + "px";
     effect.style.width = size * 2 + "px";
-    effect.style.background = AppTheme == 'Dark' ? "rgba(0, 0, 0, 0.2)" : "rgba(0, 0, 0, 0.04)";
+    effect.style.background = userSettings.theme == 'Dark' ? "rgba(0, 0, 0, 0.2)" : "rgba(0, 0, 0, 0.04)";
     effect.style.borderRadius = "50%";
     effect.style.transform = "scale(0)";
     effect.style.transition = "opacity 640ms, transform 640ms";

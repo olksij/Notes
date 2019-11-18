@@ -10,9 +10,15 @@
         "src": "../Assets/AppIcon.png",
         "sizes": "192x192",
         "type": "image/png"
-    }, {
-        "src": "../Assets/AppIcon512.png",
-        "sizes": "512x512",
-        "type": "image/png"
-    }]
+        }, {
+            "src": "../Assets/AppIcon512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }, {
+            "src": "../Assets/ANotes.png",
+            "sizes": "196x196",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
 }

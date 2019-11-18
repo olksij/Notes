@@ -14,4 +14,8 @@ var versions = [
     { v: 1112, t: 2, d: '20.10.19', c: 'Added first Notifications. Fixed Bugs.' },
     { v: 1113, t: 1, d: '20.10.19', c: 'Improved productivity.' },
     { v: 1114, t: 3, d: '26.10.19', c: 'Added Settings syncing. Changed defaults. Improved themes.' },
+    { v: 1115, t: 1, d: '27.10.19', c: 'Fixed bugs.' },
+    { v: 1116, t: 2, d: '01.11.19', c: 'Added settings. Fixed theme bugs.' }, // Started upgrading CSS rules to FA2
+    { v: 1117, t: 1, d: '08.11.19', c: 'Fixed bugs. Added animations.' }, // Started changing setting's structure
+    { v: 1118, t: 3, d: '18.11.19', c: 'Added end-to-end encryption. Adaptive icon.' },
 ]

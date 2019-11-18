@@ -1,15 +1,57 @@
+:root{
+    --FA2ButtonRadius: 10px;
+    --FA2ButtonAQSRadius: 7px;
+}
+
 *{
     transition: 0.3s;
+    font-family: 'roboto';
 }
 
 path{
     transition: 0s;
 }
 
-::-webkit-scrollbar {width: 0px;}
+::-webkit-scrollbar {width: 0px;height:0px;}
 ::-webkit-scrollbar-track {background: var(--main-color-light);}
 ::-webkit-scrollbar-thumb {background: #0A0F2320;}
 ::-webkit-scrollbar-thumb:hover {background: #0A0F2340;}
+
+#AppUpdate{
+    opacity:0;
+    visibility: hidden;
+    background:white;
+    position: fixed;
+    left:0px;
+    top:0px;
+    width:100%;
+    height: 100%;
+}
+
+#AppUpdateTextDiv,#AppUpdateLogoDiv{
+    position: fixed;
+    left:0px;
+    top:0px;
+    width:100%;
+    height: 100%;
+    text-align: center;
+}
+
+#AppUpdateLogoDiv{top:-70px;}
+
+#AppUpdateText{
+    display:inline-block;
+    top:50%;
+    margin-top:-95px;
+    position: relative;
+}
+
+#AppUpdateLogo{
+    position: absolute;
+    display: inline-block;
+    bottom: 0px;
+    margin-left: -96px;
+}
 
 #AppView{
     left:20px;
@@ -30,7 +72,7 @@ path{
 .NoteCard,.ANCard{
     background: var(--main-color-light);
     box-shadow: 0px, 0px, 10px, #00000000;
-    border-radius: 10px;
+    border-radius: var(--FA2ButtonRadius);
     width: auto;
     padding:19px;
     position:relative;
@@ -39,14 +81,12 @@ path{
 
 .NoteTitle{
     color: var(--main-color);
-    font-family: 'gsans-medium';
     margin: 0px;
     size: 18px;
 }
 
 .NoteDescription{
     color: var(--secondary-color);
-    font-family: 'gsans-medium';
     font-size: 14px;
     position:absolute;
     height: auto;
@@ -56,7 +96,6 @@ path{
 
 .NoteDate,#ANSText{
     color: var(--secondary-color);
-    font-family: 'gsans-medium';
     margin: 19px;
     font-size: 14px;
     position: absolute;
@@ -88,7 +127,6 @@ path{
     top: 17px;
     left:56px;
     position: absolute;
-    font-family: 'gsans-medium';
     margin:0px;
     color: var(--main-color)
 }
@@ -118,7 +156,7 @@ path{
 #AppQuickSettings{
     box-shadow: 0px 1px 20px var(--main-shadow-color);
     background: var(--aqs-background);
-    border-radius: 10px;
+    border-radius: var(--FA2ButtonRadius);
     left:0px;
     margin-top:0px;
     right:0px;
@@ -129,7 +167,7 @@ path{
     opacity:0;
 }
 
-#AQSAddFolder{
+#AQSAddLabel{
     background: var(--aqs-item);
     box-shadow: 0px, 0px, 10px, #00000000;
     border-radius: 7px;
@@ -141,17 +179,16 @@ path{
     height:56px;
 }
 
-#AQSAddFolder:hover{
+#AQSAddLabel:hover{
     background: var(--hover-color);
     box-shadow: 0px 1px 20px var(--aqs-shadow-color);
 }
 
-#AQSAddFolder:hover> p{
+#AQSAddLabel:hover> p{
     color: var(--hover-c-color)
 }
-#AQSAddFolder p{
+#AQSAddLabel p{
     color: var(--main-contrast-color);
-    font-family: 'gsans-medium';
     font-size: 16px;
     margin-top: 17px;
     margin-left: 25px;
@@ -177,14 +214,45 @@ path{
     height:26px;
 }
 
-.AQSFolder{
-    height:56px;
-    margin: 20px;
-    margin-top: 15px;
-    background: var(--main-color-light);
+#AQSLabel_All_Notes{ top:20px; margin-bottom: 30px; }
+
+.AQSLabel{
+    height: 20px;
+    margin: 10px 20px;
+    background: var(--aqs-background);
+    color: var(--main-color);
     border-radius: 7px;
     width: auto;
-    position:relative;
+    position: relative;
+    top: 0px;
+    padding:18px;
+    box-shadow: 0px 0px 20px #00000000;
+}
+
+.AQSLabel.Active{
+    background: var(--main-color-light);
+}
+
+.AQSLabel:hover{
+    box-shadow: 0px 1px 20px var(--main-shadow-color);
+    background: var(--hover-color);
+    color:var(--hover-c-color);
+    z-index:1;
+}
+
+.AQSLabelName{
+    margin: 0px;
+    size: 18px;
+    position: relative;
+}
+
+.AQSLabelCount{
+    position: absolute;
+    right:19px;
+    top:19px;
+    margin:0px;
+    font-size:16px;
+    opacity:0.6;
 }
 
 #SearchBarForm{
@@ -192,8 +260,71 @@ path{
     position:fixed;
 }
 
+#NewLabelShadow{
+    width:100%;
+    height:100%;
+    left:0px;
+    top:0px;
+    background: var(--main-shadow-color);
+    position:fixed;
+    display:none;
+    opacity:0;
+}
+
+#NewLabelWindow{
+    right:20px;
+    left:20px;
+    height:172px;
+    border-radius: var(--FA2ButtonRadius);
+    box-shadow: 0px 1px 50px var(--main-shadow-color);
+    top:50%;
+    margin-top:-86px;
+    position:fixed;
+    background: var(--aqs-background)
+}
+
+#NewLabelName{
+    position:absolute;
+    right:62px;
+    left:20px;
+    height:56px;
+    width: auto;
+    top:20px;
+}
+
+#NewLabelName input{
+    background: var(--main-color-light);
+    border-radius: 7px;
+    border:0;
+    height: 14px;
+    width: 100%;
+    font-size: 18px;
+    padding: 21px;
+    color: var(--main-color);
+}
+
+#NewLabelCreate{
+    width:112px;
+    bottom:20px;
+    right:20px;
+    position: absolute;
+}
+
+#NewLabelCancel{
+    bottom: 20px;
+    right: 152px;
+    position: absolute;
+}
+
+#NewLabelCancel svg{
+    transform: rotate(45deg);
+    top:18px;
+    left:17px;
+    position:absolute;
+}
+
 body{
-    overflow-x: auto;
+    overflow-x: hidden;
     background: var(--background-color);
     margin: 0px;
     width: 100%;
@@ -215,42 +346,61 @@ html{
 .NoteCard:hover > .NoteDescription, .NoteCard:hover > .NoteDate { color: var(--secondary-contrast-color) }
 .NoteCard:hover > .NoteTitle { color: var(--main-contrast-color) }
 
-#OpenNoteWindow,#AddNoteWindow,#SettingsWindow{
-    width: 100%;
-    height:100%;
-    background: var(--background-color);
-    position: fixed;
-    left: 0px;
-    top:0px;
-    display: none;
+/* -- Settings -- */
+
+#SettingsWindow{opacity:0.5; transform:scale(0.9)}
+
+#SettingsHomeButton{
+    top: 20px;
+    right: 20px;
+    position: absolute;
 }
 
-#OpenNote_ToHomeButtonIcon, #Settings_ToHomeButtonIcon {
-    width: 24px;
-    height: 23px;
-    position: absolute;
-    left: 16px;
-    top: 16px;
+#SettingsHomeButton svg{ margin: 16px 16.5px; }
+
+.SettingsCard{
+    margin-top:20px;
+    position: relative;
 }
 
-#OpenNote_DeleteButtonIcon{
-    width: 24px;
-    fill: var(--main-color);
-    height: 24px;
+.SettingsTitle{
+    font-size: 18px;
+    top:20px;
+    left: 56px;
     position: absolute;
-    left: 15px;
-    top: 16px;
+    margin:0px;
 }
 
-#Settings_ReloadAppIcon{
-    width: 26px;
-    fill: var(--main-color);
-    height: 26px;
-    transform: rotate(45deg);    
-    position: absolute;
-    left: 15px;
-    top: 15px;
+.SettingsDescription{
+    font-size: 14px;
+    left: 34px;
+    opacity: 0.6;
+    margin: 8px 0px 0px 0px;
 }
+
+/* Theme Settings */
+
+#ThemeSettings{transform:scale(0.81)}
+
+#ThemeSettingsBack{
+    top: 20px;
+    right: 20px;
+    position: absolute;
+}
+
+/* -- Open Note -- */
+
+#OpenNoteWindow{transform: scale(0.9);}
+
+#OpenNote_ToHomeButton{
+    position: absolute;
+    bottom:20px;
+    right:20px;
+}
+
+#AddNoteWindow{transform: scale(0.9);}
+
+#AddNoteTitle, #AddNoteDescription{transition: 0s width;}
 
 /* 
 -------------------------------------------
@@ -258,9 +408,9 @@ html{
 ---------------------------------------------
 */
 
-@font-face{ font-family: 'gsans-medium'; src: url(Fonts/RobotoML.woff2) }
+@font-face{ font-family: 'roboto'; src: url(Fonts/RobotoML.woff2) }
 
-@font-face{ font-family: 'gsans-medium'; src: url(Fonts/RobotoMC.woff2) }
+@font-face{ font-family: 'roboto'; src: url(Fonts/RobotoMC.woff2) }
 
 body {width: 100%;}
 
@@ -330,14 +480,7 @@ body {width: 100%;}
         width: 112px;
     }
 
-    #SvgCloseAddIcon{
-        transform: rotate(45deg);    
-        width: 23px;
-        height: 23px;
-        position: absolute;
-        left: 16px;
-        top: 16px;
-    }
+    #SvgCloseAddIcon{transform: rotate(45deg);}
 
     #CloseAddNoteDialogButton{
         position: absolute;
@@ -353,7 +496,7 @@ body {width: 100%;}
     }
     
     #OpenNoteTitle{
-        font-family: 'gsans-medium';
+
         color: var(--main-color);
         size: 18px;
         margin: 19px;
@@ -361,7 +504,7 @@ body {width: 100%;}
     
     #OpenNoteDescription{
         color: var(--secondary-color);
-        font-family: 'gsans-medium';
+
         margin: 19px;
         font-size: 14px;
         position: relative;
@@ -372,20 +515,14 @@ body {width: 100%;}
     
     #OpenNoteDate{
         color: var(--secondary-color);
-        font-family: 'gsans-medium';
+
         margin: 19px;
         font-size: 14px;
         position: absolute;
         right: 0px;
         top: 0px;
     }
-    
-    #OpenNote_ToHomeButton,#Settings_ToHomeButton{
-        bottom: 20px;
-        right: 20px;
-        position: fixed;
-    }
-    
+
     #OpenNote_Delete,#Settings_ReloadApp{
         bottom: 20px;
         right: 96px;
@@ -467,14 +604,7 @@ body {width: 100%;}
         width: 112px;
     }
 
-    #SvgCloseAddIcon{
-        transform: rotate(45deg);    
-        width: 23px;
-        height: 23px;
-        position: absolute;
-        left: 16px;
-        top: 16px;
-    }
+    #SvgCloseAddIcon{transform: rotate(45deg);}
 
     #CloseAddNoteDialogButton{
         position: absolute;
@@ -490,7 +620,7 @@ body {width: 100%;}
     }
     
     #OpenNoteTitle{
-        font-family: 'gsans-medium';
+
         color: var(--main-color);
         size: 18px;
         margin: 19px;
@@ -498,7 +628,7 @@ body {width: 100%;}
     
     #OpenNoteDescription{
         color: var(--secondary-color);
-        font-family: 'gsans-medium';
+
         margin: 19px;
         font-size: 14px;
         position: relative;
@@ -508,18 +638,12 @@ body {width: 100%;}
     
     #OpenNoteDate{
         color: var(--secondary-color);
-        font-family: 'gsans-medium';
+
         margin: 19px;
         font-size: 14px;
         position: absolute;
         right: 0px;
         top: 0px;
-    }
-    
-    #OpenNote_ToHomeButton,#Settings_ToHomeButton{
-        top: 20px;
-        right: 20px;
-        position: fixed;
     }
     
     #OpenNote_Delete,#Settings_ReloadApp{
@@ -529,49 +653,138 @@ body {width: 100%;}
     }
 }
 
-/* ----- FLUX UI ----- */
+/* --- --- FA2 --- --- */
 
-div.FluxAppButton{
-    background-color: var(--main-color-light);
-    box-shadow: 0px 0px 0px #00000000;
-    border-radius: 10px;
-    height: 56px;
-    width: 56px;
-}
-div.FluxAppButton:hover{
+.FA2Button:hover,.FA2CardIcon:hover,.FA2OptionActiveChooser:hover{
     box-shadow: 0px 1px 20px var(--main-shadow-color);
     background-color: var(--hover-color);
 }
 
-.FluxAppButton svg{
-    width: 21px;
-    height: 21px;
-    position: absolute;
-    left: 17px;
-    top: 17px;
-    fill: var(--main-color);
+/* FA2Window */
+
+.FA2Window{
+    width: 100%;
+    height:100%;
+    background: var(--background-color);
+    position: fixed;
+    left: 0px;
+    top:0px;
+    display: none;
+    opacity:0;
+    overflow-y: auto;
 }
 
-div.FluxAppFloatingButton{
-    background-color: var(--hover-color);
-    box-shadow: 0px 1px 10px var(--main-shadow-color);
-    border-radius: 10px;
+.FA2PageContent{
+    position: absolute;
+    width:100%;
+    top:76px; 
+}
+
+/* FA2Button */
+
+.FA2Button:active{ box-shadow: 0px 1px 30px var(--active-shadow-color) !important; }
+
+.FA2Button{ 
+    background: var(--main-color-light);
+    box-shadow: 0px 0.5px 5px #00000000;
+    border-radius: var(--FA2ButtonRadius);
     height: 56px;
     width: 56px;
-    position: fixed;
-}
-div.FluxAppFloatingButton:hover{
-    box-shadow: 0px 1px 25px var(--main-shadow-color);
+    user-select: none;
+    color: var(--main-color)
 }
 
-.FluxAppFloatingButton svg{
-    width: 21px;
-    height: 21px;
-    position: absolute;
-    left: 17px;
-    top: 17px;
-    fill: var(--main-contrast-color);
+.FA2Button svg{margin:16px}
+
+.FA2Button.Floating{
+    background: var(--hover-color);
+    box-shadow: 0px 1px 10px var(--main-shadow-color);
 }
+
+/* FA2NameBar */
+
+.FA2NameBar{
+    background: var(--main-color-light);
+    height:20px;
+    top:20px;
+    left:20px;
+    right:96px;
+    width:auto;
+    position:absolute;
+    border-radius: var(--FA2ButtonRadius);
+    padding:18px;
+    user-select: none;
+    color: var(--main-color)
+}
+
+.FA2NameBar p{
+    margin:0px;
+}
+
+/* FA2CardIcon */
+
+.FA2CardIcon{
+    width: auto;
+    height: auto;
+    right: 0px;
+    left: 0px;
+    border-radius: var(--FA2ButtonRadius);
+    background: var(--main-color-light);
+    padding: 19px;
+    position: relative;
+    margin: 20px;
+    user-select: none;
+    color: var(--main-color)
+}
+
+/* FA2CardChooser */
+
+.FA2CardChooser{
+    width: auto;
+    height: 79px;
+    right: 0px;
+    left: 0px;
+    border-radius: var(--FA2ButtonRadius);
+    background: var(--main-color-light);
+    padding: 19px;
+    position: relative;
+    margin: 20px;
+    user-select: none;
+    color: var(--main-color)
+}
+
+.FA2CardChooser>.FA2OptionScroller>.FA2OptionActiveChooser{
+    background: var(--hover-color);
+    box-shadow: 0px 1px 15px var(--main-shadow-color);
+    width:66px;
+    height:44px;
+    border-radius: var(--FA2ButtonAQSRadius);
+    position: absolute;
+}
+
+.FA2CardChooser>.FA2OptionScroller>.FA2OptionChooser{
+    padding:12.31px 15px;
+    left:0px;
+    position:relative;
+    height:19.4px;
+    width:min-content;
+    font-size:16px;
+}
+
+.FA2CardChooser p{margin:0px}
+
+.FA2CardChooser>.FA2OptionScroller{
+    height: 44px;
+    padding: 20px;
+    position: absolute;
+    top: 33px;
+    left: 0px;
+    right: 0px;
+    overflow-x: scroll;
+    display: flex;
+}
+
+/* ----- FLUX UI ----- */
 
 .FluxAppTextButton{
     height: 32px;
@@ -587,32 +800,9 @@ div.FluxAppFloatingButton:hover{
     box-shadow: 0px 1px 9px var(--main-shadow-color);
     background-color: var(--hover-color);    
 }
-@keyframes FluxAppTextButtonHover{
-    from{
-        box-shadow: 0px 0px 0px var(--main-shadow-color);
-        background-color: var(--main-color-light);    
-    }
-    to{
-        box-shadow: 0px 1px 9px var(--main-shadow-color);
-        background-color: var(--main-color);    
-    }
-}
-
-@keyframes FluxAppTextButtonUnHover{
-    from{
-        box-shadow: 0px 1px 9px var(--main-shadow-color);
-        background-color: var(--main-color);    
-    }
-    to{
-        box-shadow: 0px 0px 0px var(--main-shadow-color);
-        background-color: var(--main-color-light);    
-    }
-}
-
 
 .FluxAppTextButtonText{
     color: var(--main-color);
-    font-family: 'gsans-medium';
     font-size:13px;
     margin-top:7px;
 }
@@ -620,38 +810,19 @@ div.FluxAppFloatingButton:hover{
 .FluxAppFloatingTextButton{
     height: 56px;
     position: absolute;
-    border-radius: 10px;
-    animation: FluxAppFloatingTextButtonUnHover linear 0.3s;
+    border-radius: var(--FA2ButtonRadius);
     box-shadow: 0px 0px 10px var(--main-shadow-color);
     background-color: var(--hover-color);  
+
 }
 
 .FluxAppFloatingTextButton:hover{
-    animation: FluxAppFloatingTextButtonHover linear 0.3s;
     box-shadow: 0px 1px 20px var(--main-shadow-color);
 }
-@keyframes FluxAppFloatingTextButtonHover{
-    from{
-        box-shadow: 0px 0px 10px var(--main-shadow-color);
-    }
-    to{
-        box-shadow: 0px 1px 20px var(--main-shadow-color);
-    }
-}
-
-@keyframes FluxAppFloatingTextButtonUnHover{
-    from{
-        box-shadow: 0px 1px 20px var(--main-shadow-color);
-    }
-    to{
-        box-shadow: 0px 0px 10px var(--main-shadow-color);
-    }
-}
 
 
-.FluxAppFloatingTextButtonText{
+.FluxAppFloatingTextButton p{
     color: var(--main-contrast-color);
-    font-family: 'gsans-medium';
     font-size: 18px;
     margin-top: 17px;
     margin-left: 27px;
@@ -659,36 +830,20 @@ div.FluxAppFloatingButton:hover{
 
 .FluxAppLiteCard{
     background: var(--main-color-light);
-    border-radius: 10px;
+    border-radius: var(--FA2ButtonRadius);
     width: auto;
     right: 20px;
     left: 20px;
 }
 
-input:focus, textarea:focus {
-    outline-width: 0;
-}
-
-::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color: var(--secondary-color);
-    vertical-align: top;
-}
-::-moz-placeholder { /* Firefox 19+ */
-    color: var(--secondary-color);
-    vertical-align: top;
-}
-:-ms-input-placeholder { /* IE 10+ */
-    color: var(--secondary-color);
-    vertical-align: top;
-}
-:-moz-placeholder { /* Firefox 18- */
-    color: var(--secondary-color);
-    vertical-align: top;
-}
+::-webkit-input-placeholder { color: var(--secondary-color); vertical-align: top; }
+::-moz-placeholder { color: var(--secondary-color); vertical-align: top; }
+:-ms-input-placeholder { color: var(--secondary-color); vertical-align: top; }
+:-moz-placeholder { color: var(--secondary-color); vertical-align: top; }
 
 .FluxAppSearchBar{
     background-color: var(--main-color-light );
-    border-radius: 10px;
+    border-radius: var(--FA2ButtonRadius);
     height: 14px;
     width: auto;
     border-style: solid;
@@ -698,17 +853,11 @@ input:focus, textarea:focus {
     border: #00000000;
     text-align:left;
     color: var(--main-color);
-    font-family: 'gsans-medium';
 }
 
 .FluxAppSearchBar:hover{
     background-color: var(--hover-color);
     box-shadow: 0px 1px 20px var(--main-shadow-color);
-}
-
-.FluxAppFloating{
-    background-color: var(--hover-color);
-    box-shadow: 0px 1px 10px var(--main-shadow-color);
 }
 
 .FluxAppSearchBarIcon{
@@ -722,7 +871,7 @@ input:focus, textarea:focus {
 
 .FluxAppCardTextBox{
     background-color: var(--main-color-light);
-    border-radius: 10px;
+    border-radius: var(--FA2ButtonRadius);
     height: 14px;
     border-style: solid;
     font-size: 18px;
@@ -730,19 +879,17 @@ input:focus, textarea:focus {
     border: #00000000;
     text-align: left;
     color: var(--main-color);
-    font-family: 'gsans-medium';
 }
 
 .FluxAppLargeCardTextBox{
     background-color: var(--main-color-light);
-    border-radius: 10px;
+    border-radius: var(--FA2ButtonRadius);
     border-style: solid;
     font-size: 18px;
     padding: 21px;
     border: #00000000;
     text-align: left;
     color: var(--main-color);
-    font-family: 'gsans-medium';
 }
 
 div#FluxAppTitle{
@@ -751,7 +898,7 @@ div#FluxAppTitle{
     top:20px;
     background-color: var(--hover-color);
     height: 56px;
-    border-radius: 10px;
+    border-radius: var(--FA2ButtonRadius);
     box-shadow: 0px 0px 15px var(--main-shadow-color);
 }
 div#FluxAppTitle:hover{
@@ -768,7 +915,6 @@ p.FluxAppTitleP{
     left: 58px;
     top: -1px;
     position: absolute;
-    font-family: 'gsans-medium';
     font-size: 18px;
     color: var(--hover-c-color);
 }
