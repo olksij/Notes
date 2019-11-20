@@ -16,7 +16,7 @@
             "type": "image/png"
         }, {
             "src": "../Assets/ANotes.png",
-            "sizes": "196x196",
+            "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"
         }

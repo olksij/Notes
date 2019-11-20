@@ -1,4 +1,4 @@
-var SettingsDB; var AppLoaded=false; var SettingsDBR = false; var SettingsStore; var AppOnline = true; var AppOnlineF; var NotesList = []; var g_r_height = 96; var viewDBNotes = true; var NotesLabelOpened = ''; var notes = new Array(); var data = new Array();     NoteList = document.createElement("div"); NoteList.setAttribute("id","NoteList");
+var SettingsDB; var AppLoaded=false; var FirebaseLoaded=false; var SettingsDBR = false; var SettingsStore; var AppOnline = true; var AppOnlineF; var NotesList = []; var g_r_height = 96; var viewDBNotes = true; var NotesLabelOpened = ''; var notes = new Array(); var data = new Array();     NoteList = document.createElement("div"); NoteList.setAttribute("id","NoteList");
 userSettings = {
     email: undefined,
     version: AppPublicVersion,
@@ -95,7 +95,7 @@ if (typeof(window) != 'undefined') { navigator.serviceWorker.addEventListener('m
 
 function Theme(UpdateTo,By) {
     if (UpdateTo != undefined) userSettings.theme = UpdateTo;
-    if ((userSettings.theme=='System'|| userSettings.theme==undefined) && window.matchMedia('(prefers-color-scheme)').media !== 'not all'){
+    if ((userSettings.theme=='System' || userSettings.theme==undefined) && window.matchMedia('(prefers-color-scheme)').media !== 'not all'){
         var cfTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'Dark' : 'Light';
     } else { if (userSettings.theme=='Dark' || userSettings.theme=='Light') var cfTheme = userSettings.theme; else var cfTheme='Light'; }
 
@@ -133,7 +133,7 @@ function Theme(UpdateTo,By) {
 
     UpdateSettings();
 
-    if(By!='Code'){ SyncUserSettings(); }
+    if(By!='Code' && FirebaseLoaded){ SyncUserSettings(); }
 }
 
 // ----- notesLoader.js -----
@@ -163,7 +163,7 @@ function SyncDBNotes(type,data){
         else if (type == 'add') { SettingsDB.transaction("Notes", "readwrite").objectStore("Notes").add(data); }
         else if (type == 'remove') { SettingsDB.transaction("Notes", "readwrite").objectStore("Notes").delete(data); }        
     } else {
-        setTimeout(SyncDBNotes(), 50);
+        setTimeout(SyncDBNotes(), 200);
     }
 }
 
@@ -186,9 +186,9 @@ function ResizeNote(db) {
             }
         }
         if (document.body.offsetWidth < 657) { /* MOBILE */
-            document.getElementById("NoteList").style.height = (g_height)+'px';
+            NoteList.style.height = (g_height)+'px';
         } else {
-            document.getElementById("NoteList").style.height = (g_height-76)+'px';
+            NoteList.style.height = (g_height-76)+'px';
         }    
     }
 }
@@ -259,5 +259,5 @@ function AppUpdate(){
 
 // ---
 
-function documentLoaded(){ loadBody(); console.log('[i] Document loaded'); 
+function documentLoaded(){ loadBody(); Theme(userSettings.theme); console.log('[i] Document loaded'); 
 document.getElementById('AppView').appendChild(NoteList); AppLoaded = true; }

@@ -65,6 +65,7 @@ function StartRealtimeNotes(){
 
 async function SyncFData() { if (!userSettings.email) return;
     FirestoreDirectory = FirestoreDB.collection(userSettings.email);
+    FirebaseLoaded = true; SyncUserSettings();
     ANSync(0.3);
     var usertInfo = await FirestoreDirectory.doc('#userInfo').get(); userInfot=usertInfo.data(); userSettings = userInfot || userSettings;
     console.log('[i] Connected to Firestore'); ANSync(0.4);
@@ -120,7 +121,7 @@ function ClearNote(a) {
 }
 
 function RenderNote(i) {
-    if (viewDBNotes == true) {document.getElementById('NoteList').innerHTML = ''; viewDBNotes = false}
+    if (viewDBNotes == true) {NoteList.innerHTML = ''; viewDBNotes = false}
     if ((NotesLabelOpened == data[i - 1].label && NotesLabelOpened!='') || NotesLabelOpened=='') {
         var NoteCard = document.createElement("div");
         NoteCard.setAttribute('class', 'NoteCard ripple');

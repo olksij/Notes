@@ -1,4 +1,4 @@
-var AppPublicVersion = '1118'; var AppDevVersion = AppPublicVersion+'01';
+var AppPublicVersion = '1118'; var AppDevVersion = AppPublicVersion+'03';
 
 self.addEventListener('install', function(event) {
     self.skipWaiting();
@@ -13,6 +13,7 @@ self.addEventListener('install', function(event) {
             './changelog.js',
             './settingsLoader.js',
             './manifest.webmanifest',
+            './Assets/ANotes.png', 
             './Assets/AppIcon.png', 
             './Assets/favicon.ico', 
             './Assets/AppIcon512.png', 
@@ -37,7 +38,7 @@ self.addEventListener('install', function(event) {
 self.addEventListener('activate', function(event) {
     event.waitUntil(caches.keys().then(function(cacheNames) {
         return Promise.all(cacheNames.filter(function(cacheName) {
-            if (AppPublicVersion != cacheName) { return true;
+            if (AppDevVersion != cacheName) { return true;
             } else { return false; }
         }).map(function(cacheName) {
             return caches.delete(cacheName);
