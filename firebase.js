@@ -167,6 +167,7 @@ function UpdateConnection() {
             console.log('[$] Status:','Offline');
             document.getElementById('ANO').style.marginTop='0px';
             document.getElementById('ANO').style.opacity='1'; 
+            ANSync(1);
         }
     }
 }
