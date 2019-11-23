@@ -1,4 +1,4 @@
-var AppPublicVersion = '1119'; var AppDevVersion = AppPublicVersion+'14';
+var AppPublicVersion = '1120'; var AppDevVersion = AppPublicVersion+'01';
 
 self.addEventListener('install', function(event) {
     self.skipWaiting();
@@ -6,7 +6,7 @@ self.addEventListener('install', function(event) {
         return cache.addAll([
             './', './index.html',
             './main.css', 
-            './main.js', 
+            './document.js', 
             './sw.js', 
             './bodyHtml.js',
             './ripple.js',

@@ -696,7 +696,7 @@ body,#Homepage {width: 100%;}
     margin-top: 17px;
     margin-left: 27px;
 }
-input{outline: none !important;}
+input,textarea{outline: none !important;}
 ::-webkit-input-placeholder,::-moz-placeholder,:-ms-input-placeholder,:-ms-input-placeholder,:-moz-placeholder { color: var(--ContentColor); opacity: 0.4; }
 
 .FluxAppSearchBar{

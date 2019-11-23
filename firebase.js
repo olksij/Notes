@@ -1,7 +1,6 @@
 var FirestoreDB = firebase.firestore(); FirestoreDB.enablePersistence();
 var fromVersion; ANSync(0.1)
 if (typeof(AppOnline)!='undefined') UpdateConnection();
-NoteMetadata=['title','description','date','time','url','email','varsion','label']
 
 function ANSync(value){
     document.getElementById('ANSBarActive').style.width = document.getElementById('ANSBar').offsetWidth*value+'px';
@@ -27,6 +26,7 @@ function StartRealtimeNotes(){
                     notes.push(change.doc.id);
                     var tmpntd1=change.doc.data();
                     var tmpntd2 = {
+                        id: change.doc.id,
                         title: await e3kit.decrypt(tmpntd1.title,UserPublicKey),
                         description: await e3kit.decrypt(tmpntd1.description,UserPublicKey),
                         date: await e3kit.decrypt(tmpntd1.date,UserPublicKey),

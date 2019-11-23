@@ -1,24 +1,28 @@
-var ColorAccent = '#0075FF';
-registerSW(); Resized();
-document.getElementById("AddNoteTitle").style.width = ((document.getElementById('body').offsetWidth) - 82) + "px";
-document.getElementById("AddNoteDescription").style.width = ((document.getElementById('body').offsetWidth) - 82) + "px";
-document.getElementById("AddNoteWindow").style.display = 'none';
-console.log('[i] Version:',AppPublicVersion);
-if (typeof(fromVersion) != 'undefined') CheckUpdates();
+registerSW(); Resized(); console.log('[i] Version:',AppPublicVersion);
 
-window.addEventListener('scroll',Scrolled());
-window.addEventListener('resize',Resized());
+window.addEventListener('scroll',Scrolled()); window.addEventListener('resize',Resized()); document.getElementById('SearchBar').addEventListener('input',SearchChange)
 
 function registerSW() { if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); } }
 
 function Resized() {
     ResizeNote(); setTimeout(function() { ResizeNote(); }, 300);
-
     if (document.getElementById("AddNoteButton")){
         document.getElementById("AddNoteTitle").style.width = (document.body.offsetWidth - 82) + "px";
         document.getElementById("AddNoteDescription").style.width = (document.body.offsetWidth - 62 - 20) + "px";
-
         setTimeout(function() { Scrolled(); }, 300);
+    }
+}
+
+function SearchChange(e){
+    var SearchKey = document.getElementById('SearchBar').value;
+    if (SearchKey!=''){
+        data.forEach(n=>{
+            if (n.title.includes(SearchKey) || n.description.includes(SearchKey) || n.date.includes(SearchKey)) {
+                document.getElementById(n.id+'-NoteCard').style.display = 'block';
+            } else {document.getElementById(n.id+'-NoteCard').style.display = 'none';}
+        })    
+    } else {
+        data.forEach(n=>{document.getElementById(n.id+'-NoteCard').style.display = 'block'});
     }
 }
 
@@ -56,14 +60,6 @@ function OpenNote(id) {
     document.getElementById("OpenNoteDate").innerHTML = data[idl].date;
     FA2Animation('+','OpenNoteWindow');
 }
-
-function OpenSettings(){document.getElementById('SettingsWindow').style.display = 'block';  AppMenuButtonClick(false);}
-
-function CloseSettings(){document.getElementById('SettingsWindow').style.display = 'none';}
-
-function OpenNote_Delete() { DeleteNote(); FA2Animation('-','OpenNoteWindow'); }
-
-function Settings_ReloadApp() { location.reload(true); }
 
 var quickSettingsOpened = false;
 function AppMenuButtonClick(refresh) {
@@ -109,7 +105,6 @@ function AppMenuButtonClick(refresh) {
         document.getElementById('AppQuickSettings').style.opacity = '0';
         setTimeout(()=>{document.getElementById('AppQuickSettings').innerHTML = ''; document.getElementById('AppQuickSettings').style.visibility = 'hidden'; },200)
     }
-
     Resized();
 }
 
@@ -140,7 +135,6 @@ function CreateNewLabel(){
 var PageScaleNumber1=['1','0.9','0.81']
 var PageScaleNumber2=['1.111','1.233','1.233']
 function FA2Animation(s,id){
-    console.log('g')
     window.navigator.vibrate(25);
     qwer='all 0.3s cubic-bezier(0.9, 0, 0, 1)';
     document.getElementById(id).parentNode.style.transition = qwer;
@@ -161,8 +155,7 @@ function FA2Animation(s,id){
 function OpenThemeSettings(){document.getElementById("ThemeSettings").style.display = 'block';}
 
 function ThemeSettingsTheme(theme){
-    userSettings.theme=theme;
-    Theme();
+    userSettings.theme=theme; Theme();
     document.getElementById('STSTchooser').childNodes.forEach(n => { if(n.nodeName == 'DIV') n.setAttribute('class','FA2OptionChooser'+(('STST'+userSettings.theme)==n.getAttribute('id') ? ' Active' : '')); })
 }
 
@@ -175,35 +168,9 @@ function OpenSettings(Page){
     FA2Animation('+',Page); 
 }
 
-function MobileDialogCreateNote() { document.getElementById("AddNoteWindow").style.display = 'block'; }
-
-function CreateNoteMobile() { /*document.getElementById("AddNoteWindow").style.display = 'none'; AddNote(document.getElementById("AddNoteTitle").value, document.getElementById("AddNoteDescription").value); */}
-
-function CloseDialogCreateNote() { document.getElementById("AddNoteWindow").style.display = 'none'; }
-
 // INSTALL
 
 window.addEventListener('appinstalled', () => { console.log('[i] Yay:', 'App was intalled by user!'); });
-
-function /* Add Note icon */ 
-AddButtonHover() {
-    if (document.getElementById('body').offsetWidth >= 640) {
-        document.getElementById("SvgAddIcon").style.fill = "var(--main-contrast-color)";
-    }
-}
-function AddButtonUnHover() {
-    if (document.getElementById('body').offsetWidth >= 640) {
-        document.getElementById("SvgAddIcon").style.fill = "var(--main-color)";
-    }
-}
-
-function /* Add Note Close Icon */
-AddNoteCloseButtonHover() {
-    document.getElementById("OpenNote_ToHomeButtonIcon").style.fill = "var(--main-contrast-color)";
-}
-function AddNoteCloseButtonOut() {
-    document.getElementById("OpenNote_ToHomeButtonIcon").style.fill = "var(--main-color)";
-}
 
 // FUNCTIONS
 

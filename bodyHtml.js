@@ -1,4 +1,4 @@
-var loadJSLinksFl = ['firebase.js','changelog.js','main.js','ripple.js']
+var loadJSLinksFl = ['firebase.js','changelog.js','document.js','ripple.js']
 function loadBody(){
     document.getElementById('AppNotifications').innerHTML =`
         <div id="ANS" class="ANCard">
