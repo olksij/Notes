@@ -24,7 +24,7 @@ function Resized() {
 
 function Scrolled() {
     if (document.getElementById("AddNoteButton")){
-        if (document.body.offsetWidth < 657) {
+        if (document.body.offsetWidth < 632) {
             if (Math.round(document.scrollingElement.scrollTop) == (document.scrollingElement.scrollHeight - document.getElementById('body').offsetHeight)) 
             { document.getElementById("AddNoteButton").setAttribute('class', 'ripple FA2Button');
             } else { document.getElementById("AddNoteButton").setAttribute('class', 'ripple FA2Button Floating'); }
@@ -54,7 +54,6 @@ function OpenNote(id) {
     document.getElementById("OpenNoteTitle").innerHTML = data[idl].title;
     document.getElementById("OpenNoteDescription").innerHTML = data[idl].description;
     document.getElementById("OpenNoteDate").innerHTML = data[idl].date;
-    document.getElementById("OpenNoteCard").style.height = (76 + document.getElementById("OpenNoteDescription").offsetHeight) + "px";
     FA2Animation('+','OpenNoteWindow');
 }
 
@@ -69,8 +68,9 @@ function Settings_ReloadApp() { location.reload(true); }
 var quickSettingsOpened = false;
 function AppMenuButtonClick(refresh) {
     if ((!quickSettingsOpened && !refresh) || (quickSettingsOpened && refresh)) {
-        document.getElementById('AppQuickSettings').innerHTML = '';
         quickSettingsOpened = true;
+        document.getElementById('AppQuickSettings').style.visibility = 'visible';
+        document.getElementById('AppQuickSettings').animate([{opacity: 0},{opacity: 1}],{ easing:'cubic-bezier(1, 0, 0, 0.25)', duration: 300 });
         document.getElementById('AppQuickSettings').style.height = userSettings.labels.length==0 ? '96px' : (162+userSettings.labels.length*66)+'px';
         document.getElementById('AppQuickSettings').style.opacity = '1';
         document.getElementById('AppQuickSettings').style.marginTop = '20px';
@@ -90,12 +90,12 @@ function AppMenuButtonClick(refresh) {
 
         AQSLabels+=`
         <div id="AQSFooter">
-            <div id="AQSAddLabel" class="FA2Button ripple" onclick="AQSAddLabel()">
+            <div id="AQSAddLabel" class="FA2InnerButton ripple" onclick="AQSAddLabel()">
                 <p>Add Label</p>
             </div>
-            <div id="AQSSettings" class='FluxAppButton FA2Button ripple' onclick="FA2Animation('+','SettingsWindow')">
+            <div id="AQSSettings" class='FA2InnerButton ripple' onclick="FA2Animation('+','SettingsWindow')">
                 <svg id="AQSSIcon" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21.0493 14.0562C21.0926 13.7096 21.1251 13.3575 21.1251 13C21.1251 12.6425 21.0926 12.2904 21.0493 11.9437L23.3405 10.1508C23.5464 9.98833 23.606 9.69583 23.4705 9.4575L21.3039 5.70375C21.1685 5.47083 20.8868 5.37333 20.643 5.47083L17.9455 6.55958C17.3876 6.13166 16.7755 5.76875 16.1147 5.4925L15.7085 2.62166C15.6597 2.36708 15.4376 2.16666 15.1668 2.16666H10.8335C10.5626 2.16666 10.3405 2.36708 10.2972 2.62166L9.89095 5.4925C9.23012 5.76875 8.61803 6.12625 8.06012 6.55958L5.36262 5.47083C5.11887 5.37875 4.8372 5.47083 4.70179 5.70375L2.53512 9.4575C2.3997 9.69041 2.45929 9.98291 2.66512 10.1508L4.95095 11.9437C4.90762 12.2904 4.87512 12.6425 4.87512 13C4.87512 13.3575 4.90762 13.7096 4.95095 14.0562L2.66512 15.8492C2.45929 16.0117 2.3997 16.3042 2.53512 16.5425L4.70179 20.2962C4.8372 20.5292 5.11887 20.6267 5.36262 20.5292L8.06012 19.4404C8.61803 19.8683 9.23012 20.2312 9.89095 20.5075L10.2972 23.3783C10.3405 23.6329 10.5626 23.8333 10.8335 23.8333H15.1668C15.4376 23.8333 15.6597 23.6329 15.703 23.3783L16.1093 20.5075C16.7701 20.2312 17.3822 19.8737 17.9401 19.4404L20.6376 20.5292C20.8814 20.6212 21.163 20.5292 21.2985 20.2962L23.4651 16.5425C23.6005 16.3096 23.541 16.0171 23.3351 15.8492L21.0493 14.0562ZM13.0001 16.7917C10.9039 16.7917 9.20845 15.0962 9.20845 13C9.20845 10.9037 10.9039 9.20833 13.0001 9.20833C15.0964 9.20833 16.7918 10.9037 16.7918 13C16.7918 15.0962 15.0964 16.7917 13.0001 16.7917Z" stroke="var(--main-color)" stroke-width="2.5"/>
+                    <path d="M21.0493 14.0562C21.0926 13.7096 21.1251 13.3575 21.1251 13C21.1251 12.6425 21.0926 12.2904 21.0493 11.9437L23.3405 10.1508C23.5464 9.98833 23.606 9.69583 23.4705 9.4575L21.3039 5.70375C21.1685 5.47083 20.8868 5.37333 20.643 5.47083L17.9455 6.55958C17.3876 6.13166 16.7755 5.76875 16.1147 5.4925L15.7085 2.62166C15.6597 2.36708 15.4376 2.16666 15.1668 2.16666H10.8335C10.5626 2.16666 10.3405 2.36708 10.2972 2.62166L9.89095 5.4925C9.23012 5.76875 8.61803 6.12625 8.06012 6.55958L5.36262 5.47083C5.11887 5.37875 4.8372 5.47083 4.70179 5.70375L2.53512 9.4575C2.3997 9.69041 2.45929 9.98291 2.66512 10.1508L4.95095 11.9437C4.90762 12.2904 4.87512 12.6425 4.87512 13C4.87512 13.3575 4.90762 13.7096 4.95095 14.0562L2.66512 15.8492C2.45929 16.0117 2.3997 16.3042 2.53512 16.5425L4.70179 20.2962C4.8372 20.5292 5.11887 20.6267 5.36262 20.5292L8.06012 19.4404C8.61803 19.8683 9.23012 20.2312 9.89095 20.5075L10.2972 23.3783C10.3405 23.6329 10.5626 23.8333 10.8335 23.8333H15.1668C15.4376 23.8333 15.6597 23.6329 15.703 23.3783L16.1093 20.5075C16.7701 20.2312 17.3822 19.8737 17.9401 19.4404L20.6376 20.5292C20.8814 20.6212 21.163 20.5292 21.2985 20.2962L23.4651 16.5425C23.6005 16.3096 23.541 16.0171 23.3351 15.8492L21.0493 14.0562ZM13.0001 16.7917C10.9039 16.7917 9.20845 15.0962 9.20845 13C9.20845 10.9037 10.9039 9.20833 13.0001 9.20833C15.0964 9.20833 16.7918 10.9037 16.7918 13C16.7918 15.0962 15.0964 16.7917 13.0001 16.7917Z" stroke="var(--ContentColor)" stroke-width="2.5"/>
                 </svg>
             </div>
         </div>`      
@@ -104,8 +104,10 @@ function AppMenuButtonClick(refresh) {
         quickSettingsOpened = false;
         var t = document.getElementById('AppQuickSettings').offsetHeight;
         document.getElementById('AppQuickSettings').style.height = t/2+'px';
-        document.getElementById('AppQuickSettings').style.marginTop = '-'+t/2-20+'px';
+        document.getElementById('AppQuickSettings').style.marginTop = '-'+t/2-0+'px';
+        document.getElementById('AppQuickSettings').animate([{opacity: 1},{opacity: 0}],{easing:'cubic-bezier(0, 0, 0, 1)',duration:200});
         document.getElementById('AppQuickSettings').style.opacity = '0';
+        setTimeout(()=>{document.getElementById('AppQuickSettings').innerHTML = ''; document.getElementById('AppQuickSettings').style.visibility = 'hidden'; },200)
     }
 
     Resized();
@@ -138,10 +140,13 @@ function CreateNewLabel(){
 var PageScaleNumber1=['1','0.9','0.81']
 var PageScaleNumber2=['1.111','1.233','1.233']
 function FA2Animation(s,id){
+    console.log('g')
+    window.navigator.vibrate(25);
     qwer='all 0.3s cubic-bezier(0.9, 0, 0, 1)';
     document.getElementById(id).parentNode.style.transition = qwer;
     document.getElementById(id).style.transition = qwer;
     var prntcls = document.getElementById(id).parentNode.classList;
+    
     if (s=='-'){
         document.getElementById(id).animate([{opacity: 1},{opacity: 0}],{easing:'cubic-bezier(0.9, 0, 0, 1)',duration:300});
         document.getElementById(id).parentNode.style.transform = 'scale('+PageScaleNumber1[parseInt(prntcls[prntcls.length-1].slice(4,5))-1]+')';
@@ -155,7 +160,20 @@ function FA2Animation(s,id){
 }
 function OpenThemeSettings(){document.getElementById("ThemeSettings").style.display = 'block';}
 
-function ThemeSettingsTheme(){}
+function ThemeSettingsTheme(theme){
+    userSettings.theme=theme;
+    Theme();
+    document.getElementById('STSTchooser').childNodes.forEach(n => { if(n.nodeName == 'DIV') n.setAttribute('class','FA2OptionChooser'+(('STST'+userSettings.theme)==n.getAttribute('id') ? ' Active' : '')); })
+}
+
+function OpenSettings(Page){
+    if (Page=='ThemeSettings'){
+        document.getElementById('STSTchooser').childNodes.forEach(n => {
+            if(n.nodeName == 'DIV') n.setAttribute('class','FA2OptionChooser'+(('STST'+userSettings.theme)==n.getAttribute('id') ? ' Active' : ''));
+        })
+    }
+    FA2Animation('+',Page); 
+}
 
 function MobileDialogCreateNote() { document.getElementById("AddNoteWindow").style.display = 'block'; }
 

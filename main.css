@@ -1,10 +1,11 @@
 :root{
     --FA2ButtonRadius: 10px;
     --FA2ButtonAQSRadius: 7px;
+    --SettingsTheme: var(--InnerCardColor);
 }
 
 *{
-    transition: 0.3s;
+    transition: all 0.3s, box-shadow 0.6s;
     font-family: 'roboto';
 }
 
@@ -13,19 +14,20 @@ path{
 }
 
 ::-webkit-scrollbar {width: 0px;height:0px;}
-::-webkit-scrollbar-track {background: var(--main-color-light);}
+::-webkit-scrollbar-track {background: var(--CardColor);}
 ::-webkit-scrollbar-thumb {background: #0A0F2320;}
 ::-webkit-scrollbar-thumb:hover {background: #0A0F2340;}
 
 #AppUpdate{
     opacity:0;
     visibility: hidden;
-    background:white;
+    background:var(--BackgroundColor);
     position: fixed;
     left:0px;
     top:0px;
     width:100%;
     height: 100%;
+    z-index:5;
 }
 
 #AppUpdateTextDiv,#AppUpdateLogoDiv{
@@ -70,8 +72,8 @@ path{
 }
 
 .NoteCard,.ANCard{
-    background: var(--main-color-light);
-    box-shadow: 0px, 0px, 10px, #00000000;
+    background: var(--CardColor);
+    box-shadow: 0px 1px 30px var(--ShadowColor);
     border-radius: var(--FA2ButtonRadius);
     width: auto;
     padding:19px;
@@ -80,22 +82,24 @@ path{
 }
 
 .NoteTitle{
-    color: var(--main-color);
+    color: var(--ContentColor);
     margin: 0px;
     size: 18px;
 }
 
 .NoteDescription{
-    color: var(--secondary-color);
+    color: var(--ContentColor);
+    opacity: 0.7;
     font-size: 14px;
-    position:absolute;
     height: auto;
     word-break: break-all;
     margin-right:20px;
+    margin-bottom: 0;
 }
 
 .NoteDate,#ANSText{
-    color: var(--secondary-color);
+    color: var(--ContentColor);
+    opacity: 0.4;
     margin: 19px;
     font-size: 14px;
     position: absolute;
@@ -106,6 +110,7 @@ path{
 
 #ANS{
     height: 81px;
+    z-index: -1;
     padding: 0px;
 }
 
@@ -114,13 +119,14 @@ path{
     height: 56px;
     margin-top:-76px;
     opacity:0;
+    z-index: -1;
 }
 
 .ANIcon{
     top: 16px;
     left:16px;
     position: absolute;
-    fill: var(--main-color)
+    fill: var(--ContentColor)
 }
 
 .ANTitle{
@@ -128,7 +134,7 @@ path{
     left:56px;
     position: absolute;
     margin:0px;
-    color: var(--main-color)
+    color: var(--ContentColor)
 }
 
 #ANSBar{
@@ -138,7 +144,7 @@ path{
     width:auto;
     height: 7px;
     position:absolute;
-    background:var(--hover-color);
+    background:var(--InnerCardColor);
     box-shadow: 0px 0px 10px var(--aqs-shadow-color);
     border-radius: 3.5px;
 }
@@ -148,14 +154,14 @@ path{
     left:0px;
     width:7px;
     position: absolute;
-    background: var(--main-color);
+    background: var(--ContentColor);
     border-radius: 3.5px;
     height:7px;
 }
 
 #AppQuickSettings{
-    box-shadow: 0px 1px 20px var(--main-shadow-color);
-    background: var(--aqs-background);
+    box-shadow: 0px 1px 30px var(--ShadowColor);
+    background: var(--CardColor);
     border-radius: var(--FA2ButtonRadius);
     left:0px;
     margin-top:0px;
@@ -165,13 +171,9 @@ path{
     position: relative;
     padding-top: 0px;
     opacity:0;
-    z-index:1;
 }
 
 #AQSAddLabel{
-    background: var(--aqs-item);
-    box-shadow: 0px, 0px, 10px, #00000000;
-    border-radius: 7px;
     width: auto;
     position:absolute;
     left:20px;
@@ -180,16 +182,11 @@ path{
     height:56px;
 }
 
-#AQSAddLabel:hover{
-    background: var(--hover-color);
-    box-shadow: 0px 1px 20px var(--aqs-shadow-color);
-}
-
 #AQSAddLabel:hover> p{
     color: var(--hover-c-color)
 }
 #AQSAddLabel p{
-    color: var(--main-contrast-color);
+    color: var(--ContentColor);
     font-size: 16px;
     margin-top: 17px;
     margin-left: 25px;
@@ -200,10 +197,7 @@ path{
     position:absolute;
     right:20px;
     bottom:20px;
-    background: var(--aqs-item);
 }
-
-#AQSSettings:hover{ background: var(--hover-color); box-shadow: 0px 1px 20px var(--aqs-shadow-color); }
 
 #AQSSIcon{
     position:relative;
@@ -221,7 +215,7 @@ path{
     height: 20px;
     margin: 10px 20px;
     background: var(--aqs-background);
-    color: var(--main-color);
+    color: var(--ContentColor);
     border-radius: 7px;
     width: auto;
     position: relative;
@@ -231,7 +225,7 @@ path{
 }
 
 .AQSLabel.Active{
-    background: var(--main-color-light);
+    background: var(--CardColor);
 }
 
 .AQSLabel:hover{
@@ -294,14 +288,14 @@ path{
 }
 
 #NewLabelName input{
-    background: var(--main-color-light);
+    background: var(--CardColor);
     border-radius: 7px;
     border:0;
     height: 14px;
     width: 100%;
     font-size: 18px;
     padding: 21px;
-    color: var(--main-color);
+    color: var(--ContentColor);
 }
 
 #NewLabelCreate{
@@ -324,9 +318,9 @@ path{
     position:absolute;
 }
 
-body{
+body,#Homepage{
     overflow-x: hidden;
-    background: var(--background-color);
+    background: var(--BackgroundColor);
     margin: 0px;
     width: 100%;
     height: 100%;
@@ -339,13 +333,7 @@ html{
 }
 
 
-.NoteCard:hover{
-    background: var(--hover-color);
-    box-shadow: 0px 3px 20px var(--main-shadow-color);
-}
-
-.NoteCard:hover > .NoteDescription, .NoteCard:hover > .NoteDate { color: var(--secondary-contrast-color) }
-.NoteCard:hover > .NoteTitle { color: var(--main-contrast-color) }
+.NoteCard:hover{ box-shadow: 0px 1px 20px var(--HoverShadowColor); }
 
 /* -- Settings -- */
 
@@ -413,7 +401,10 @@ html{
 
 @font-face{ font-family: 'roboto'; src: url(Fonts/RobotoMC.woff2) }
 
-body {width: 100%;}
+body,#Homepage {width: 100%;}
+
+#OpenNoteCard{margin:20px; height:auto;}
+#OpenNoteDescription{position:relative;margin-bottom:5px;}
 
 /* 
 -------------------------------------------
@@ -421,7 +412,7 @@ body {width: 100%;}
 ---------------------------------------------
 */
 
-@media only screen and (max-width: 656px) {
+@media only screen and (max-width: 632px) {
     div#FluxAppTitle{
         display: none;
     }
@@ -441,96 +432,59 @@ body {width: 100%;}
     #SearchBarForm{
         position: fixed;
         top: 20px;
-        right: 173px;
+        right: 170px;
         left: 20px;
         width: auto;
     }
 
-    #SearchBar{
-        width: 100%;
-    }
+    #SearchBar{ width: 100%; }
 
     #AddNoteButton{
         right: 20px;
         bottom:20px;
         position: fixed;
     }
+}
 
-    #AddNoteTitle{
-        position: absolute;
-        left: 20px;
-        top: 20px;
-        right: 20px;
-        width: auto;
-    }
+#AddNoteTitle{
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    right: 20px;
+    width: auto;
+}
 
-    #AddNoteDescription{
-        position: absolute;
-        left: 20px;
-        top: 96px;
-        right: 20px;
-        width: auto;
-        resize: none;
-        bottom:96px;
-        height:auto;
-    }
+#AddNoteDescription{
+    position: absolute;
+    left: 20px;
+    top: 96px;
+    right: 20px;
+    width: auto;
+    resize: none;
+    bottom:96px;
+    height:auto;
+}
 
-    #CreateNoteAcceptButton{
-        right: 20px;
-        bottom: 20px;
-        width: 112px;
-    }
+#CreateNoteAcceptButton{
+    right: 20px;
+    bottom: 20px;
+    width: 112px;
+}
 
-    #SvgCloseAddIcon{transform: rotate(45deg);}
+#CloseAddNoteDialogButton{
+    position: absolute;
+    right: 152px;
+    bottom: 20px;
+}
 
-    #CloseAddNoteDialogButton{
-        position: absolute;
-        right: 152px;
-        bottom: 20px;
-    }
-
-    #OpenNoteCard{
-        height: 56px;
-        top: 20px;
-        right: 20px;
-        position: absolute;
-    }
-    
-    #OpenNoteTitle{
-
-        color: var(--main-color);
-        size: 18px;
-        margin: 19px;
-    }
-    
-    #OpenNoteDescription{
-        color: var(--secondary-color);
-
-        margin: 19px;
-        font-size: 14px;
-        position: relative;
-        height: auto;
-        top: -5px;
-        word-break: break-all;
-    }
-    
-    #OpenNoteDate{
-        color: var(--secondary-color);
-
-        margin: 19px;
-        font-size: 14px;
-        position: absolute;
-        right: 0px;
-        top: 0px;
-    }
-
-    #OpenNote_Delete,#Settings_ReloadApp{
-        bottom: 20px;
-        right: 96px;
-        position: fixed;
-    }
+#OpenNote_Delete{
+    bottom: 20px;
+    right: 96px;
+    position: fixed;
 
 }
+
+#SvgCloseAddIcon{transform: rotate(45deg);}
 
 /* 
 -------------------------------------------
@@ -538,7 +492,7 @@ body {width: 100%;}
 ---------------------------------------------
 */
 
-@media only screen and (min-width: 657px) {
+@media only screen and (min-width: 633px) {
     #SearchBar{
         position: fixed;
         top: 20px;
@@ -546,25 +500,12 @@ body {width: 100%;}
         left: 180px;
         width: 205px;    
     }
-
     
-    #SearchIcon{
-        left: 200px;  
-    }
+    #SearchIcon{left: 200px;}
 
     div#FluxAppTitle{
         width: 140px;
         display: block;
-    }
-
-    #SvgAddIcon{
-        fill: var(--main-color);
-    }
-
-    div#FluxAppButton{
-        position: absolute;
-        right: 20px;
-        top: 20px;
     }
 
     #AddNoteButton{
@@ -578,95 +519,18 @@ body {width: 100%;}
         top: 20px;
         position: fixed;
     }
-
-    #AddNoteTitle{
-        position: absolute;
-        left: 20px;
-        top: 96px;
-        right: 20px;
-        width: auto;
-    }
-
-    #AddNoteDescription{
-        position: absolute;
-        left: 20px;
-        top: 172px;
-        right: 20px;
-        width: auto;
-        resize: none;
-        bottom:20px;
-        height:auto;
-
-    }
-
-    #CreateNoteAcceptButton{
-        right: 20px;
-        top: 20px;
-        width: 112px;
-    }
-
-    #SvgCloseAddIcon{transform: rotate(45deg);}
-
-    #CloseAddNoteDialogButton{
-        position: absolute;
-        right: 152px;
-        top: 20px;
-    }
-
-    #OpenNoteCard{
-        height: 56px;
-        top: 96px;
-        right: 20px;
-        position: absolute;
-    }
-    
-    #OpenNoteTitle{
-
-        color: var(--main-color);
-        size: 18px;
-        margin: 19px;
-    }
-    
-    #OpenNoteDescription{
-        color: var(--secondary-color);
-
-        margin: 19px;
-        font-size: 14px;
-        position: relative;
-        height: auto;
-        top: -5px;
-    }
-    
-    #OpenNoteDate{
-        color: var(--secondary-color);
-
-        margin: 19px;
-        font-size: 14px;
-        position: absolute;
-        right: 0px;
-        top: 0px;
-    }
-    
-    #OpenNote_Delete,#Settings_ReloadApp{
-        top: 20px;
-        right: 96px;
-        position: fixed;
-    }
 }
 
 /* --- --- FA2 --- --- */
 
-.FA2Button:hover,.FA2CardIcon:hover,.FA2OptionActiveChooser:hover{
-    box-shadow: 0px 1px 20px var(--main-shadow-color);
-    background-color: var(--hover-color);
-}
+.FA2Button:hover,.FA2CardIcon:hover,.FA2OptionActiveChooser:hover{ box-shadow: 0px 1px 20px var(--HoverShadowColor); }
 
 /* FA2Window */
 
 .FA2Window{
     width: 100%;
     height:100%;
-    background: var(--background-color);
+    background: var(--BackgroundColor);
     position: fixed;
     left: 0px;
     top:0px;
@@ -683,29 +547,38 @@ body {width: 100%;}
 
 /* FA2Button */
 
-.FA2Button:active{ box-shadow: 0px 1px 30px var(--active-shadow-color) !important; }
+.FA2Button:active{ box-shadow: 0px 1px 30px var(--ActiveShadowColor) !important; }
 
 .FA2Button{ 
-    background: var(--main-color-light);
-    box-shadow: 0px 0.5px 5px #00000000;
+    background: var(--CardColor);
+    box-shadow: 0px 1px 30px var(--ShadowColor);
     border-radius: var(--FA2ButtonRadius);
     height: 56px;
     width: 56px;
     user-select: none;
-    color: var(--main-color)
+    color: var(--ContentColor)
 }
 
-.FA2Button svg{margin:16px}
+.FA2Button svg{ margin:16px }
 
-.FA2Button.Floating{
-    background: var(--hover-color);
-    box-shadow: 0px 1px 10px var(--main-shadow-color);
+/* FA2InnerButton */
+
+.FA2InnerButton{
+    background: var(--InnerCardColor);
+    border-radius: var(--FA2ButtonAQSRadius);
+    height: 56px;
+    width: 56px;
+    user-select: none;
+    color: var(--ContentColor)
 }
+
+.FA2InnerButton:hover{ background:var(--CardColor); box-shadow: 0px 1px 20px var(--ShadowColor); }
 
 /* FA2NameBar */
 
 .FA2NameBar{
-    background: var(--main-color-light);
+    background: var(--CardColor);
+    box-shadow: 0px 1px 30px var(--ShadowColor);
     height:20px;
     top:20px;
     left:20px;
@@ -715,11 +588,11 @@ body {width: 100%;}
     border-radius: var(--FA2ButtonRadius);
     padding:18px;
     user-select: none;
-    color: var(--main-color)
 }
 
 .FA2NameBar p{
     margin:0px;
+    color: var(--ContentColor);
 }
 
 /* FA2CardIcon */
@@ -730,12 +603,13 @@ body {width: 100%;}
     right: 0px;
     left: 0px;
     border-radius: var(--FA2ButtonRadius);
-    background: var(--main-color-light);
+    background: var(--CardColor);
     padding: 19px;
     position: relative;
     margin: 20px;
     user-select: none;
-    color: var(--main-color)
+    box-shadow: 0px 1px 30px var(--ShadowColor);
+    color: var(--ContentColor)
 }
 
 /* FA2CardChooser */
@@ -745,26 +619,20 @@ body {width: 100%;}
     height: 79px;
     right: 0px;
     left: 0px;
+    box-shadow: 0px 1px 30px var(--ShadowColor);
     border-radius: var(--FA2ButtonRadius);
-    background: var(--main-color-light);
+    background: var(--CardColor);
     padding: 19px;
     position: relative;
     margin: 20px;
     user-select: none;
-    color: var(--main-color)
 }
 
-.FA2CardChooser>.FA2OptionScroller>.FA2OptionActiveChooser{
-    background: var(--hover-color);
-    box-shadow: 0px 1px 15px var(--main-shadow-color);
-    width:66px;
-    height:44px;
-    border-radius: var(--FA2ButtonAQSRadius);
-    position: absolute;
-}
+.FA2CardChooser>.FA2OptionScroller>.FA2OptionChooser.Active{ background: var(--InnerCardColor); padding:12.31px 15px; }
 
 .FA2CardChooser>.FA2OptionScroller>.FA2OptionChooser{
     padding:12.31px 15px;
+    border-radius: var(--FA2ButtonAQSRadius);
     left:0px;
     position:relative;
     height:19.4px;
@@ -772,7 +640,7 @@ body {width: 100%;}
     font-size:16px;
 }
 
-.FA2CardChooser p{margin:0px}
+.FA2CardChooser p { margin:0px; color: var(--ContentColor) }
 
 .FA2CardChooser>.FA2OptionScroller{
     height: 44px;
@@ -792,18 +660,18 @@ body {width: 100%;}
     position: absolute;
     border-radius: 5px;
     animation: FluxAppTextButtonUnHover linear 0.3s;
-    box-shadow: 0px 0px 0px var(--main-shadow-color);
-    background-color: var(--main-color-light);    
+    box-shadow: 0px 0px 0px var(--ShadowColor);
+    background-color: var(--CardColor);    
 }
 
 .FluxAppTextButton:hover{
     animation: FluxAppTextButtonHover linear 0.3s;
-    box-shadow: 0px 1px 9px var(--main-shadow-color);
+    box-shadow: 0px 1px 9px var(--ShadowColor);
     background-color: var(--hover-color);    
 }
 
 .FluxAppTextButtonText{
-    color: var(--main-color);
+    color: var(--ContentColor);
     font-size:13px;
     margin-top:7px;
 }
@@ -812,38 +680,26 @@ body {width: 100%;}
     height: 56px;
     position: absolute;
     border-radius: var(--FA2ButtonRadius);
-    box-shadow: 0px 0px 10px var(--main-shadow-color);
-    background-color: var(--hover-color);  
+    box-shadow: 0px 1px 30px var(--ShadowColor);
+    background-color: var(--CardColor);  
 
 }
 
 .FluxAppFloatingTextButton:hover{
-    box-shadow: 0px 1px 20px var(--main-shadow-color);
+    box-shadow: 0px 1px 20px var(--HoverShadowColor);
 }
 
 
 .FluxAppFloatingTextButton p{
-    color: var(--main-contrast-color);
+    color: var(--ContentColor);
     font-size: 18px;
     margin-top: 17px;
     margin-left: 27px;
 }
-
-.FluxAppLiteCard{
-    background: var(--main-color-light);
-    border-radius: var(--FA2ButtonRadius);
-    width: auto;
-    right: 20px;
-    left: 20px;
-}
-
-::-webkit-input-placeholder { color: var(--secondary-color); vertical-align: top; }
-::-moz-placeholder { color: var(--secondary-color); vertical-align: top; }
-:-ms-input-placeholder { color: var(--secondary-color); vertical-align: top; }
-:-moz-placeholder { color: var(--secondary-color); vertical-align: top; }
+input{outline: none !important;}
+::-webkit-input-placeholder,::-moz-placeholder,:-ms-input-placeholder,:-ms-input-placeholder,:-moz-placeholder { color: var(--ContentColor); opacity: 0.4; }
 
 .FluxAppSearchBar{
-    background-color: var(--main-color-light );
     border-radius: var(--FA2ButtonRadius);
     height: 14px;
     width: auto;
@@ -853,12 +709,7 @@ body {width: 100%;}
     padding-left: 57px;
     border: #00000000;
     text-align:left;
-    color: var(--main-color);
-}
-
-.FluxAppSearchBar:hover{
-    background-color: var(--hover-color);
-    box-shadow: 0px 1px 20px var(--main-shadow-color);
+    color: var(--ContentColor);
 }
 
 .FluxAppSearchBarIcon{
@@ -867,11 +718,11 @@ body {width: 100%;}
     position: fixed;
     left: 38px;
     top: 38px;
-    fill: var(--main-color);
+    fill: var(--ContentColor);
 }
 
 .FluxAppCardTextBox{
-    background-color: var(--main-color-light);
+    background-color: var(--CardColor);
     border-radius: var(--FA2ButtonRadius);
     height: 14px;
     border-style: solid;
@@ -879,28 +730,28 @@ body {width: 100%;}
     padding: 21px;
     border: #00000000;
     text-align: left;
-    color: var(--main-color);
+    color: var(--ContentColor);
 }
 
 .FluxAppLargeCardTextBox{
-    background-color: var(--main-color-light);
+    background-color: var(--CardColor);
     border-radius: var(--FA2ButtonRadius);
     border-style: solid;
     font-size: 18px;
     padding: 21px;
     border: #00000000;
     text-align: left;
-    color: var(--main-color);
+    color: var(--ContentColor);
 }
 
 div#FluxAppTitle{
     position: fixed;
     left: 20px;
     top:20px;
-    background-color: var(--hover-color);
+    background-color: var(--CardColor);
     height: 56px;
     border-radius: var(--FA2ButtonRadius);
-    box-shadow: 0px 0px 15px var(--main-shadow-color);
+    box-shadow: 0px 1px 30px var(--ShadowColor);
 }
 div#FluxAppTitle:hover{
     box-shadow: 0px 1px 20px var(--main-shadow-color);
@@ -910,14 +761,14 @@ div#FluxAppTitle:hover{
     position: absolute;
     left: 19px;
     top: 16px;
-    fill: var(--hover-c-color);
+    fill: var(--ContentColor);
 }
 p.FluxAppTitleP{
     left: 58px;
     top: -1px;
     position: absolute;
     font-size: 18px;
-    color: var(--hover-c-color);
+    color: var(--ContentColor);
 }
 
 .FluxAppWindowArea{
@@ -946,5 +797,5 @@ p.FluxAppTitleP{
     margin: 20px;
     position: fixed;
     font-size: 18px;
-    color: var(--main-color);
+    color: var(--ContentColor);
 }

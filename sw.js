@@ -1,4 +1,4 @@
-var AppPublicVersion = '1118'; var AppDevVersion = AppPublicVersion+'03';
+var AppPublicVersion = '1119'; var AppDevVersion = AppPublicVersion+'14';
 
 self.addEventListener('install', function(event) {
     self.skipWaiting();
@@ -13,7 +13,9 @@ self.addEventListener('install', function(event) {
             './changelog.js',
             './settingsLoader.js',
             './manifest.webmanifest',
-            './Assets/ANotes.png', 
+            './Assets/ANotesStable.png', 
+            './Assets/ANotesDev.png', 
+            './Assets/ANotesAlpha.png', 
             './Assets/AppIcon.png', 
             './Assets/favicon.ico', 
             './Assets/AppIcon512.png', 
@@ -22,15 +24,6 @@ self.addEventListener('install', function(event) {
             './Fonts/RobotoML.woff2',
             './Fonts/RobotoMC.woff2',
             './firebase.js',
-            './SignIn/index.html',
-            './SignIn/firebase.js',
-            './SignIn/desktop.css',
-            './SignIn/main.css',
-            './SignIn/Assets/BackgroundLogo.svg',
-            './SignIn/Assets/Next.svg',
-            './SignIn/Assets/SimpleLogo.svg',
-            './SignIn/Assets/WelcomeText.svg',
-            './SignIn/main.js'
         ]);
     }));
 });

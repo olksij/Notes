@@ -18,4 +18,5 @@ var versions = [
     { v: 1116, t: 2, d: '01.11.19', c: 'Added settings. Fixed theme bugs.' }, // Started upgrading CSS rules to FA2
     { v: 1117, t: 1, d: '08.11.19', c: 'Fixed bugs. Added animations.' }, // Started changing setting's structure
     { v: 1118, t: 3, d: '18.11.19', c: 'Added end-to-end encryption. Adaptive icon.' },
+    { v: 1119, t: 2, d: '22.11.19', c: 'Redesigned icon and UI. Improved animations. Fixed bugs.' }, // Started renaming color variables
 ]

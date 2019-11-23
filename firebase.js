@@ -13,10 +13,10 @@ function ANSync(value){
 }
 
 function StartRealtimeNotes(){
-    document.getElementById('AppUpdate').style.visibility = 'hidden'; 
-    document.getElementById('AppUpdate').style.opacity = '0'; 
-    document.getElementById('AppView').style.zIndex = '0';
-    document.getElementById('AppUpdate').style.transition = '0s';
+    AppUpdateD.style.visibility = 'hidden'; 
+    AppUpdateD.style.opacity = '0'; 
+    AppUpdateD.style.zIndex = '0';
+    AppUpdateD.style.transition = '0s';
     SyncDBNotes('clear');   
     FirestoreDirectory.onSnapshot({ includeMetadataChanges: true }, function(snapshot) {
         snapshot.docChanges().forEach(async function(change) {
@@ -147,8 +147,8 @@ function RenderNote(i) {
         NoteDate.setAttribute('id', notes[i - 1] + "-NoteDate");
         NoteCard.appendChild(NoteDate);
 
-        NoteCard.style.height = (38 + NoteDescription.offsetHeight) + "px";
-        g_r_height = g_r_height + 20 + NoteCard.offsetHeight;
+        //NoteCard.style.height = (38 + NoteDescription.offsetHeight) + "px";
+        //g_r_height = g_r_height + 20 + NoteCard.offsetHeight;
 
         setTimeout(function() { ResizeNote(); }, 300);  
     } 
