@@ -19,5 +19,6 @@ var versions = [
     { v: 1117, t: 1, d: '08.11.19', c: 'Fixed bugs. Added animations.' }, // Started changing setting's structure
     { v: 1118, t: 3, d: '18.11.19', c: 'Added end-to-end encryption. Adaptive icon.' },
     { v: 1119, t: 2, d: '22.11.19', c: 'Redesigned icon and UI. Improved animations. Fixed bugs.' }, // Started renaming color variables
-    { v: 1120, t: 1, d: '23.11.19', c: 'Added search' },
+    { v: 1120, t: 1, d: '23.11.19', c: 'Added search.' },
+    { v: 1121, t: 1, d: '30.11.19', c: 'Improved animations. Added contrast slider.' }, // Chnaged DB structure a bit // Added "Safe execution"
 ]

@@ -3,7 +3,7 @@ var fromVersion; ANSync(0.1)
 if (typeof(AppOnline)!='undefined') UpdateConnection();
 
 function ANSync(value){
-    document.getElementById('ANSBarActive').style.width = document.getElementById('ANSBar').offsetWidth*value+'px';
+    document.getElementById('ANSBarActive').style.width = /*document.getElementById('ANSBar').offsetWidth*value+'px'*/ (value*100)+'%';
     document.getElementById('ANSText').innerHTML=(value*100)+'%';
     if(value>=1){
         document.getElementById('ANS').style.marginTop='-81px';
@@ -16,15 +16,15 @@ function StartRealtimeNotes(){
     AppUpdateD.style.opacity = '0'; 
     AppUpdateD.style.zIndex = '0';
     AppUpdateD.style.transition = '0s';
-    SyncDBNotes('clear');   
+    Function(SyncDBNotes,['clear'],'SettingsDBR');   
     FirestoreDirectory.onSnapshot({ includeMetadataChanges: true }, function(snapshot) {
         snapshot.docChanges().forEach(async function(change) {
             if (change.doc.id!="#userInfo") {
                 if (change.type === "added") {
                     console.log('[+] Notes:', (change.doc.id + ' - ' + (snapshot.metadata.fromCache ? "cache" : "server")));
-                    ANSync(1);
+                    notes = []; data = [];
                     notes.push(change.doc.id);
-                    var tmpntd1=change.doc.data();
+                    var tmpntd1 = change.doc.data();
                     var tmpntd2 = {
                         id: change.doc.id,
                         title: await e3kit.decrypt(tmpntd1.title,UserPublicKey),
@@ -37,18 +37,19 @@ function StartRealtimeNotes(){
                         label: await e3kit.decrypt(tmpntd1.label,UserPublicKey)
                     }
                     data.push(tmpntd2); 
-                    SyncDBNotes('add',{id: change.doc.id, data: data[data.length-1]})
+                    ANSync(1);
+                    Function(SyncDBNotes,['add',data[data.length-1]],'SettingsDBR');
                     RenderNote(data.length); 
                 } if (change.type === "modified") {
                     console.log('[/] Notes:', change.doc.id + " - " + snapshot.metadata.fromCache ? "cache" : "server");
                     ClearNote(change.doc.id);
                     notes.push(change.doc.id); data.push(change.doc.data()); 
-                    SyncDBNotes('remove',notes[notes.length-1]);
-                    SyncDBNotes('add',{id: notes[notes.length-1], data: data[data.length-1]})
+                    Function(SyncDBNotes,['remove',notes[notes.length-1]],'SettingsDBR');
+                    Function(SyncDBNotes,['add',{id: notes[notes.length-1], data: data[data.length-1]}],'SettingsDBR');
                     RenderNote(notes.length); 
                 } if (change.type === "removed") {
                     console.log('[-] Notes:', change.doc.id + " - " + snapshot.metadata.fromCache ? "cache" : "server");
-                    SyncDBNotes('remove',notes[notes.length-1]);
+                    Function(SyncDBNotes,['remove',notes[notes.length-1]],'SettingsDBR');
                     ClearNote(change.doc.id);
                 } 
                 ResizeNote(); setTimeout(function() { ResizeNote(); }, 300);   
@@ -63,15 +64,15 @@ function StartRealtimeNotes(){
     });    
 }
 
-async function SyncFData() { if (!userSettings.email) return;
+async function SyncFData() { if (!userSettings.email || !AppOnline) return;
     FirestoreDirectory = FirestoreDB.collection(userSettings.email);
-    FirebaseLoaded = true; SyncUserSettings();
+    FirebaseLoaded = true; SyncUserSettings(); Function();
     ANSync(0.3);
     var usertInfo = await FirestoreDirectory.doc('#userInfo').get(); userInfot=usertInfo.data(); userSettings = userInfot || userSettings;
     console.log('[i] Connected to Firestore'); ANSync(0.4);
 
     console.log(userInfot)
-    if(userInfot){ UpdateSettings(); Theme(userSettings.theme,'Code'); } else UploadNote("Welcome to Notes!","It's your private space now. Introduction is coming soon. Cause of database rebasing progress, you can lose your notes sometimes.",'firestore');
+    if(userInfot){ Theme(userSettings.theme,'Code'); } else UploadNote("Welcome to Notes!","It's your private space now. Introduction is coming soon. Cause of database rebasing progress, you can lose your notes sometimes.",'firestore');
 
     if (userSettings.version == undefined) fromVersion = 0; else fromVersion = parseInt(userSettings.version); 
     CheckUpdates(fromVersion);
@@ -81,7 +82,7 @@ async function SyncFData() { if (!userSettings.email) return;
         labels: userSettings.labels || [],
         theme: userSettings.theme || 'Light',
         email: userSettings.email,
-        language: userSettings.language || 'En',
+        language: userSettings.language || 'en',
         screenContrast: userSettings.screenContrast || '0',
     }
     FirestoreDirectory.doc('#userInfo').set(userSettings)
@@ -93,7 +94,11 @@ function CreateNote() {
     var title = document.getElementById("AddNoteTitle").value;
     var description = document.getElementById("AddNoteDescription").value;
     FA2Animation('-','AddNoteWindow');
-    if (title!=''&&description!='') UploadNote(title, description);
+    if (title!=''&&description!='') Function(SyncDBNotes,['create',{ title: title, description: description,
+        date: new Date().getDate() + "." + (new Date().getMonth() + 1) + "." + new Date().getFullYear(),
+        time: new Date().getHours() + ":" + new Date().getMinutes(), url: window.location.hostname,
+        email: userSettings.email, version: AppDevVersion, label: NotesLabelOpened
+    }],'SettingsDBR');
 }
 
 function DeleteNote() {
@@ -102,16 +107,16 @@ function DeleteNote() {
     });
 }
 
-async function UploadNote(title, description,calledby) {
+async function UploadNote(data) {
     FirestoreDirectory.add({
-        title: await e3kit.encrypt(title,UserPublicKey),
-        description: await e3kit.encrypt(description,UserPublicKey),
-        date: await e3kit.encrypt(new Date().getDate() + "." + (new Date().getMonth() + 1) + "." + new Date().getFullYear(),UserPublicKey),
-        time: await e3kit.encrypt(new Date().getHours() + ":" + new Date().getMinutes(),UserPublicKey),
-        url: await e3kit.encrypt(window.location.hostname,UserPublicKey),
-        email: await e3kit.encrypt(userSettings.email,UserPublicKey),
-        version: await e3kit.encrypt(AppDevVersion,UserPublicKey),
-        label: await e3kit.encrypt(NotesLabelOpened,UserPublicKey)
+        title: await e3kit.encrypt(data.title,UserPublicKey),
+        description: await e3kit.encrypt(data.description,UserPublicKey),
+        date: await e3kit.encrypt(data.date,UserPublicKey),
+        time: await e3kit.encrypt(data.time,UserPublicKey),
+        url: await e3kit.encrypt(data.url,UserPublicKey),
+        email: await e3kit.encrypt(data.email,UserPublicKey),
+        version: await e3kit.encrypt(data.version,UserPublicKey),
+        label: await e3kit.encrypt(data.label,UserPublicKey)
     });
 }
 
@@ -179,7 +184,7 @@ firebase.auth().onAuthStateChanged(function(user) { var shldpss = false; ANSync(
         if (userSettings.email != user.email) firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider()); 
         else userSettings.email = user.email, shldpss=true, AccountToken = user; }
     else { 
-        if (user) userSettings.email = user.email, UpdateSettings(), AccountToken = user, console.log('[i] User:',userSettings.email), shldpss=true; 
+        if (user) userSettings.email = user.email, Function(UpdateSettings,[],'SettingsDBR'), AccountToken = user, console.log('[i] User:',userSettings.email), shldpss=true; 
         else firebase.auth().signInWithRedirect(new firebase.auth.GoogleAuthProvider()); }
     if (shldpss){
         const getToken = firebase.functions().httpsCallable('getVirgilJwt');
@@ -192,5 +197,5 @@ firebase.auth().onAuthStateChanged(function(user) { var shldpss = false; ANSync(
     }
 });
 
-firebase.auth().getRedirectResult().then(function(result) { if (result.user) { userSettings.email = result.user.email; UpdateSettings(); SyncFData(); }
+firebase.auth().getRedirectResult().then(function(result) { if (result.user) { userSettings.email = result.user.email; Function(UpdateSettings,[],'SettingsDBR'); SyncFData(); }
 }).catch(function(error) { console.log('[!] Auth:', 'Error (' + error.code + '): ' + error.message); });

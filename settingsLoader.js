@@ -1,11 +1,26 @@
-var SettingsDB; var AppLoaded=false; var FirebaseLoaded=false; AppUpdateD = document.createElement('div'); AppUpdateD.setAttribute("id","AppUpdate"); var SettingsDBR = false; var SettingsStore; var AppOnline = true; var AppOnlineF; var NotesList = []; var g_r_height = 96; var viewDBNotes = true; var NotesLabelOpened = ''; var notes = new Array(); var data = new Array();     NoteList = document.createElement("div"); NoteList.setAttribute("id","NoteList");
+var SettingsDB; FunctionsToDo = []; AppLoaded=false; FirebaseLoaded=false; AppUpdateD = document.createElement('div'); AppUpdateD.setAttribute("id","AppUpdate"); SettingsDBR = false; var SettingsStore; AppOnline = true; var AppOnlineF; NotesList = []; g_r_height = 96; viewDBNotes = true; NotesLabelOpened = ''; NoteList = document.createElement("div"); NoteList.setAttribute("id","NoteList");
 userSettings = {
     email: undefined,
     version: AppPublicVersion,
     labels: [],
     theme: 'System',
-    language: 'En',
+    language: 'en',
     screenContrast: '0',
+}
+
+function Function(f,a,i){
+    if (f==undefined){
+        var TmpFnctTD = [];
+        FunctionsToDo.forEach(q=>{
+            if(window[q[2]]==true) q[0](q[1]);
+            else TmpFnctTD.push(q);
+            console.log(q,window[q[2]]==true)
+        })
+        FunctionsToDo = TmpFnctTD;
+    } else {
+        if (window[i]==true) f(a);
+        else FunctionsToDo.push([f,a,i]);  
+    }
 }
 
 if (typeof(window) == 'object') {
@@ -19,7 +34,7 @@ if (typeof(window) == 'object') {
 
 function LoadDBSettings(){
     if (SettingsDB.objectStoreNames.length != 0) {
-        SettingsDBR = true;
+        SettingsDBR = true; Function();
         SettingsStore = SettingsDB.transaction(["Settings"], 'readwrite').objectStore("Settings");
         SettingsStore.getAll().onsuccess = (r) => {
             if (r.target.result.length != 0) {
@@ -40,12 +55,11 @@ function LoadDBSettings(){
             version: AppPublicVersion,
             labels: [],
             theme: 'System',
-            language: 'En',
+            language: 'en',
             screenContrast: '0',
         }
         Theme(userSettings.theme,'Code');
     }
-    setTimeout(()=>document.getElementById('body').style.transition='0.3s',300)
 }
 
 function CreateDB(event) {
@@ -60,7 +74,7 @@ function CreateDB(event) {
                     version: AppPublicVersion,
                     labels: [],
                     theme: 'System',
-                    language: 'En',
+                    language: 'en',
                     screenContrast: '0',
                 }  
                 event.target.result.transaction("Settings", "readwrite").objectStore("Settings").add({name:'userSettings',value:userSettings});    
@@ -70,151 +84,86 @@ function CreateDB(event) {
     if (!SettingsDBV.objectStoreNames.contains('Notes')) SettingsDBV.createObjectStore('Notes', { keyPath: "id" });
     console.log('[i] Updated Database');
     AppUpdate();
-    SettingsDBR = true;
+    SettingsDBR = true; Function();
 }
 
 function UpdateSettings(){
-    if (SettingsDBR) {
-        indexedDB.open("NotesDB",AppDevVersion).onsuccess = function(event) {
-            SettingsDBlocal = event.target.result;
-            var request = SettingsDBlocal.transaction(["Settings"], "readwrite").objectStore("Settings").get('userSettings');
-            request.onerror = function(event) { console.error('[!] Notes Database Error:', event.target.errorCode) };
-            request.onsuccess = function(event) {
-                var data = event.target.result;
-                data.value = userSettings;
-                var requestUpdate = SettingsDBlocal.transaction(["Settings"], "readwrite").objectStore("Settings").put(data);
-                requestUpdate.onerror = function(event) { console.error('[!] Notes Database Error', event.target.errorCode) };
-            };
-        }
-    } else {
-        setTimeout(UpdateSettings, 50);
+    indexedDB.open("NotesDB",AppDevVersion).onsuccess = function(event) {
+        SettingsDBlocal = event.target.result;
+        var request = SettingsDBlocal.transaction(["Settings"], "readwrite").objectStore("Settings").get('userSettings');
+        request.onerror = function(event) { console.error('[!] Notes Database Error:', event.target.errorCode) };
+        request.onsuccess = function(event) {
+            var dbdata = event.target.result;
+            dbdata.value = userSettings;
+            var requestUpdate = SettingsDBlocal.transaction(["Settings"], "readwrite").objectStore("Settings").put(dbdata);
+            requestUpdate.onerror = function(event) { console.error('[!] Notes Database Error', event.target.errorCode) };
+        };
     }
 }
 
 if (typeof(window) != 'undefined') { navigator.serviceWorker.addEventListener('message', event => { if (event.data.type == 'AppOnline') { AppOnline = event.data.value; try {UpdateConnection(AppOnline);}catch{}}}); }
 
-function Theme(UpdateTo,By) {
-    if (UpdateTo != undefined) userSettings.theme = UpdateTo;
+function Theme(By) {
     if ((userSettings.theme=='System' || userSettings.theme==undefined) && window.matchMedia('(prefers-color-scheme)').media !== 'not all'){
         var cfTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'Dark' : 'Light';
     } else { if (userSettings.theme=='Dark' || userSettings.theme=='Light') var cfTheme = userSettings.theme; else var cfTheme='Light'; }
-    
-        /*
-        var ContrastF = parseInt(247-(247/10*parseFloat(userSettings.screenContrast)));
-        document.documentElement.style.setProperty('--main-color', '#0A0F23');
-        document.documentElement.style.setProperty('--main-color-light', '#'+ContrastF.toString(16)+(ContrastF+2).toString(16)+(ContrastF+4).toString(16));
-        document.documentElement.style.setProperty('--main-shadow-color', '#0A0F2320');
-        document.documentElement.style.setProperty('--active-shadow-color', '#0A0F2330');
-        document.documentElement.style.setProperty('--main-contrast-color', '#0A0F23');
-        document.documentElement.style.setProperty('--secondary-color', '#0A0F2380');
-        document.documentElement.style.setProperty('--background-color', '#FFFFFF');
-        document.documentElement.style.setProperty('--hover-color', '#FFFFFF');
-        document.documentElement.style.setProperty('--hover-c-color', '#0A0F23');
-        document.documentElement.style.setProperty('--secondary-contrast-color', '#0A0F2380');
-        document.documentElement.style.setProperty('--aqs-background', '#FFFFFF');
-        document.documentElement.style.setProperty('--aqs-item', '#'+ContrastF.toString(16)+(ContrastF+2).toString(16)+(ContrastF+4).toString(16));
-        document.documentElement.style.setProperty('--aqs-shadow-color', '#0A0F2320');
-    
-        document.documentElement.style.setProperty('--main-color', '#FFFFFF');
-        document.documentElement.style.setProperty('--main-color-light', '#0A0A0A');
-        document.documentElement.style.setProperty('--main-shadow-color', '#000000');
-        document.documentElement.style.setProperty('--active-shadow-color', '#000000');
-        document.documentElement.style.setProperty('--main-contrast-color', '#FFFFFF');
-        document.documentElement.style.setProperty('--secondary-color', '#FFFFFF80');
-        document.documentElement.style.setProperty('--background-color', '#050505');
-        document.documentElement.style.setProperty('--hover-color', '#101010');
-        document.documentElement.style.setProperty('--hover-c-color', '#FFFFFF');
-        document.documentElement.style.setProperty('--secondary-contrast-color', '#FFFFFF80');
-        document.documentElement.style.setProperty('--aqs-background', '#080808');
-        document.documentElement.style.setProperty('--aqs-item', '#040404');
-        document.documentElement.style.setProperty('--aqs-shadow-color', '#00000040');
-        */
-
     if (cfTheme == 'Dark') {
-       var thBG = 32-(32/10*parseFloat(userSettings.screenContrast));
-       var thIC = 37-(37/10*parseFloat(userSettings.screenContrast));
-       document.documentElement.style.setProperty('--ContentColor', '#FFFFFF');
-       document.documentElement.style.setProperty('--CardColor', '#2A2B2F');
-       document.documentElement.style.setProperty('--ShadowColor', '#101115'+(100+(parseFloat(userSettings.screenContrast)*40)).toString(16));
-       document.documentElement.style.setProperty('--HoverShadowColor', '#0B0C10'+(200+(parseFloat(userSettings.screenContrast)*45)).toString(16));
-       document.documentElement.style.setProperty('--ActiveShadowColor', '#0B0C10'+(220+(parseFloat(userSettings.screenContrast)*35)).toString(16));
-       document.documentElement.style.setProperty('--BackgroundColor', '#'+thBG.toString(16)+(thBG+1).toString(16)+(thBG+5).toString(16));
-       document.documentElement.style.setProperty('--InnerCardColor', '#'+thIC.toString(16)+(thIC+1).toString(16)+(thIC+5).toString(16));
-
+        var thCC = parseInt(42+(5*parseFloat(userSettings.screenContrast)));
+        var thBG = parseInt(32-(6*parseFloat(userSettings.screenContrast)));
+        var thIC = parseInt(37-(6*parseFloat(userSettings.screenContrast)));
+        document.documentElement.style.setProperty('--ContentColor', '#FFFFFF');
+        document.documentElement.style.setProperty('--ScrollbarColor', '#FFFFFF30');
+        document.documentElement.style.setProperty('--CardColor', '#'+thCC.toString(16)+(thCC+1).toString(16)+(thCC+5).toString(16));
+        document.documentElement.style.setProperty('--ShadowColor', '#101115'+(100+(parseInt(parseFloat(userSettings.screenContrast)*100))).toString(16));
+        document.documentElement.style.setProperty('--HoverShadowColor', '#000000'+(120+(parseInt(parseFloat(userSettings.screenContrast)*150))).toString(16));
+        document.documentElement.style.setProperty('--ActiveShadowColor', '#000000'+(150+(parseInt(parseFloat(userSettings.screenContrast)*100))).toString(16));
+        document.documentElement.style.setProperty('--BackgroundColor', '#'+thBG.toString(16)+(thBG+1).toString(16)+(thBG+5).toString(16));
+        document.documentElement.style.setProperty('--InnerCardColor', '#'+thIC.toString(16)+(thIC+1).toString(16)+(thIC+5).toString(16));
     } else {
-        var thBG = 251-(251/10*parseFloat(userSettings.screenContrast));
-        var thIC = 247-(247/10*parseFloat(userSettings.screenContrast));
+        var thBG = parseInt(251-(251/10*parseFloat(userSettings.screenContrast)));
+        var thIC = parseInt(247-(247/10*parseFloat(userSettings.screenContrast)));
         document.documentElement.style.setProperty('--ContentColor', '#0A0F23');
+        document.documentElement.style.setProperty('--ScrollbarColor', '#0A0F2330');
         document.documentElement.style.setProperty('--CardColor', '#FFFFFF');
-        document.documentElement.style.setProperty('--ShadowColor', '#000000'+(10+(parseFloat(userSettings.screenContrast)*20)).toString());
-        document.documentElement.style.setProperty('--HoverShadowColor', '#000000'+(30+(parseFloat(userSettings.screenContrast)*20)).toString());
-        document.documentElement.style.setProperty('--ActiveShadowColor', '#000000'+(40+(parseFloat(userSettings.screenContrast)*20)).toString());
+        document.documentElement.style.setProperty('--ShadowColor', '#000000'+(15+(parseInt(parseFloat(userSettings.screenContrast)*20))).toString());
+        document.documentElement.style.setProperty('--HoverShadowColor', '#000000'+(30+(parseInt(parseFloat(userSettings.screenContrast)*30))).toString());
+        document.documentElement.style.setProperty('--ActiveShadowColor', '#000000'+(40+(parseInt(parseFloat(userSettings.screenContrast)*30))).toString());
         document.documentElement.style.setProperty('--BackgroundColor', '#'+thBG.toString(16)+(thBG+3).toString(16)+(thBG+4).toString(16));
         document.documentElement.style.setProperty('--InnerCardColor', '#'+thIC.toString(16)+(thIC+1).toString(16)+(thIC+3).toString(16));
     }
     document.querySelector("meta[name=theme-color]").setAttribute('content', "#000000");
     document.querySelector("meta[name=theme-color]").setAttribute('content', document.documentElement.style.getPropertyValue('--BackgroundColor'));
 
-    UpdateSettings();
+    Function(UpdateSettings,[],'SettingsDBR');
 
-    if(By!='Code' && FirebaseLoaded){ SyncUserSettings(); }
+    //if(!By){ SyncUserSettings(); }
 }
 
 // ----- notesLoader.js -----
 
-DBNotesCore();
+Function(DBNotesCore,[],'SettingsDBR')
 function DBNotesCore(){
-    if (SettingsDBR) {
-        indexedDB.open("NotesDB",parseInt(AppDevVersion)).onsuccess = (e) => {
-            var SettingsDB = e.target.result;
-            SettingsDB.transaction(['Notes'], 'readwrite').objectStore('Notes').getAll().onsuccess = r => {
-                if (r.target.result!=undefined){
-                    window.dbnotes = r.target.result;
-                    LoadDBNotes(r.target.result,'');
-                    ResizeNote(true); setTimeout(function() { ResizeNote(true); }, 300);  
-                    console.log('[i] Database notes are loaded');
-                }
+    indexedDB.open("NotesDB",parseInt(AppDevVersion)).onsuccess = (e) => {
+        var SettingsDB = e.target.result;
+        SettingsDB.transaction(['Notes'], 'readwrite').objectStore('Notes').getAll().onsuccess = r => {
+            if (r.target.result!=undefined){
+                window.dbnotes = r.target.result;
+                LoadDBNotes(r.target.result,'');
+                ResizeNote(true); setTimeout(function() { ResizeNote(true); }, 300);  
+                console.log('[i] Database notes are loaded');
             }
         }
-    } else {
-        setTimeout(()=>{DBNotesCore()}, 100);
-    }    
+    }  
 }
 
-function SyncDBNotes(type,data){
-    if (SettingsDBR) {
-        if (type=='clear') { SettingsDB.transaction(['Notes'], "readwrite").objectStore("Notes").clear(); notes=[] }
-        else if (type == 'add') { SettingsDB.transaction("Notes", "readwrite").objectStore("Notes").add(data); }
-        else if (type == 'remove') { SettingsDB.transaction("Notes", "readwrite").objectStore("Notes").delete(data); }        
-    } else {
-        //setTimeout(SyncDBNotes(), 200);
-    }
-}
+function ResizeNote(){}
 
-function ResizeNote(db) {
-/*    if (AppLoaded){
-        var g_height = 76;
-        if (db){
-            dbnotes.forEach(i=>{
-                document.getElementById(i.id + "-NoteCard").style.height = (38 + document.getElementById(i.id + "-NoteDescription").offsetHeight) + "px";
-                g_height = g_height + 20 + document.getElementById(i.id + "-NoteCard").offsetHeight;
-            })    
-        } else {
-            if (notes){
-                notes.forEach(i=>{
-                    if(document.getElementById(i + "-NoteCard")){
-                        document.getElementById(i + "-NoteCard").style.height = (38 + document.getElementById(i + "-NoteDescription").offsetHeight) + "px";
-                        g_height = g_height + 20 + document.getElementById(i + "-NoteCard").offsetHeight;    
-                    }
-                })       
-            }
-        }
-        if (document.body.offsetWidth < 657) { /* MOBILE 
-            NoteList.style.height = (g_height)+'px';
-        } else {
-            NoteList.style.height = (g_height-76)+'px';
-        }    
-    }*/
+function SyncDBNotes(d){
+    var type=d[0]; var data=d[1];
+    if (type=='clear') { SettingsDB.transaction(['Notes'], "readwrite").objectStore("Notes").clear(); notes=[] }
+    else if (type == 'add') { SettingsDB.transaction("Notes", "readwrite").objectStore("Notes").add(data); }
+    else if (type == 'remove') { SettingsDB.transaction("Notes", "readwrite").objectStore("Notes").delete(data); }        
+    else if (type == 'create') { SettingsDB.transaction("Notes", "readwrite").objectStore("Notes").add(data); Function(UploadNote,data,'FirebaseLoaded') }        
 }
 
 function LoadDBNotes(list,label){
@@ -227,24 +176,22 @@ function LoadDBNotes(list,label){
             NoteList.appendChild(NoteCard);
         
             var NoteTitle = document.createElement("p");
-            NoteTitle.innerHTML = n.data.title;
+            NoteTitle.innerHTML = n.title;
             NoteTitle.setAttribute('class', 'NoteTitle');
             NoteTitle.setAttribute('id', n.id + "-NoteTitle");
             NoteCard.appendChild(NoteTitle);
         
             var NoteDescription = document.createElement("p");
-            NoteDescription.innerHTML = n.data.description;
+            NoteDescription.innerHTML = n.description;
             NoteDescription.setAttribute('class', 'NoteDescription');
             NoteDescription.setAttribute('id', n.id + "-NoteDescription");
             NoteCard.appendChild(NoteDescription);
         
             var NoteDate = document.createElement("p");
-            NoteDate.innerHTML = n.data.date;
+            NoteDate.innerHTML = n.date;
             NoteDate.setAttribute('class', 'NoteDate');
             NoteDate.setAttribute('id', n.id + "-NoteDate");
             NoteCard.appendChild(NoteDate);
-        
-            //NoteCard.style.height = (38 + NoteDescription.offsetHeight) + "px";
             g_r_height = g_r_height + 20 + NoteCard.offsetHeight;
         }
     })
@@ -283,5 +230,5 @@ function AppUpdate(){
 
 // ---
 
-function documentLoaded(){ loadBody(); Theme(userSettings.theme); console.log('[i] Document loaded'); 
+function documentLoaded(){ loadBody(); Theme(userSettings.theme); console.log('[i] Document loaded'); Translate(); 
 document.getElementById('AppView').appendChild(NoteList); document.getElementById('AppView').appendChild(AppUpdateD); document.getElementById('AppUpdate').innerHTML = AppUpdateD.innerHTML; AppLoaded = true; }

@@ -1,7 +1,8 @@
 registerSW(); Resized(); console.log('[i] Version:',AppPublicVersion);
 
-window.addEventListener('scroll',Scrolled()); window.addEventListener('resize',Resized()); document.getElementById('SearchBar').addEventListener('input',SearchChange)
-
+document.getElementById('SearchBar').addEventListener('input',SearchChange)
+document.getElementById('ScreenContrastSlider').addEventListener('input',()=>{userSettings.screenContrast=(parseInt(document.getElementById('ScreenContrastSlider').value)/1000).toString(); Theme(true)})
+document.getElementById('ScreenContrastSlider').addEventListener('change',()=>{userSettings.screenContrast=(parseInt(document.getElementById('ScreenContrastSlider').value)/1000).toString(); Theme()})
 function registerSW() { if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); } }
 
 function Resized() {
@@ -9,7 +10,6 @@ function Resized() {
     if (document.getElementById("AddNoteButton")){
         document.getElementById("AddNoteTitle").style.width = (document.body.offsetWidth - 82) + "px";
         document.getElementById("AddNoteDescription").style.width = (document.body.offsetWidth - 62 - 20) + "px";
-        setTimeout(function() { Scrolled(); }, 300);
     }
 }
 
@@ -23,28 +23,6 @@ function SearchChange(e){
         })    
     } else {
         data.forEach(n=>{document.getElementById(n.id+'-NoteCard').style.display = 'block'});
-    }
-}
-
-function Scrolled() {
-    if (document.getElementById("AddNoteButton")){
-        if (document.body.offsetWidth < 632) {
-            if (Math.round(document.scrollingElement.scrollTop) == (document.scrollingElement.scrollHeight - document.getElementById('body').offsetHeight)) 
-            { document.getElementById("AddNoteButton").setAttribute('class', 'ripple FA2Button');
-            } else { document.getElementById("AddNoteButton").setAttribute('class', 'ripple FA2Button Floating'); }
-        } else {
-            if (document.scrollingElement.scrollTop == 0) 
-            { document.getElementById("AddNoteButton").setAttribute('class', 'ripple FA2Button');
-            } else { document.getElementById("AddNoteButton").setAttribute('class', 'ripple FA2Button Floating'); }
-        }
-    
-        if (document.scrollingElement.scrollTop == 0) {
-            document.getElementById("SearchBar").setAttribute('class', 'FluxAppSearchBar ripple FA2Button');
-            document.getElementById("AppMenuButton").setAttribute('class', 'FluxAppButton ripple FA2Button');
-        } else {
-            document.getElementById("SearchBar").setAttribute('class', 'FluxAppSearchBar ripple FA2Button Floating');
-            document.getElementById("AppMenuButton").setAttribute('class', 'ripple FA2Button Floating');
-        }    
     }
 }
 
@@ -63,6 +41,7 @@ function OpenNote(id) {
 
 var quickSettingsOpened = false;
 function AppMenuButtonClick(refresh) {
+    navigator.vibrate(25);
     if ((!quickSettingsOpened && !refresh) || (quickSettingsOpened && refresh)) {
         quickSettingsOpened = true;
         document.getElementById('AppQuickSettings').style.visibility = 'visible';
@@ -73,7 +52,7 @@ function AppMenuButtonClick(refresh) {
 
         var AQSLabels = userSettings.labels.length==0 ? '' : `
         <div id="AQSLabel_All_Notes" class="AQSLabel`+(NotesLabelOpened==''?' Active':'')+`">
-            <p id="AQSLabelName_All Notes" class="AQSLabelName">All Notes</p>
+            <p id="AQSLabelName_All Notes" data-str="all-notes" class="AQSLabelName">All Notes</p>
             <p id="AQSLabelCount_All Notes" class="AQSLabelCount">`+notes.length+`</p>
         </div>`;
         userSettings.labels.forEach((f)=>{
@@ -87,7 +66,7 @@ function AppMenuButtonClick(refresh) {
         AQSLabels+=`
         <div id="AQSFooter">
             <div id="AQSAddLabel" class="FA2InnerButton ripple" onclick="AQSAddLabel()">
-                <p>Add Label</p>
+                <p data-str="add-label">Add Label</p>
             </div>
             <div id="AQSSettings" class='FA2InnerButton ripple' onclick="FA2Animation('+','SettingsWindow')">
                 <svg id="AQSSIcon" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -96,6 +75,7 @@ function AppMenuButtonClick(refresh) {
             </div>
         </div>`      
         document.getElementById('AppQuickSettings').innerHTML = AQSLabels;
+        Translate();
     } else {
         quickSettingsOpened = false;
         var t = document.getElementById('AppQuickSettings').offsetHeight;
@@ -126,7 +106,7 @@ function CreateNewLabel(){
         var labelid = label.replace(' ','_');
         console.log(labelid);
         userSettings.labels.push({name: label, count: 0, id:labelid});
-        UpdateSettings();
+        Function(UpdateSettings,[],'SettingsDBR');
         CancelNewLabel();
         AppMenuButtonClick(true);
     }
@@ -136,20 +116,36 @@ var PageScaleNumber1=['1','0.9','0.81']
 var PageScaleNumber2=['1.111','1.233','1.233']
 function FA2Animation(s,id){
     window.navigator.vibrate(25);
-    qwer='all 0.3s cubic-bezier(0.9, 0, 0, 1)';
-    document.getElementById(id).parentNode.style.transition = qwer;
-    document.getElementById(id).style.transition = qwer;
+    document.getElementById(id).style.transition = 'transform 0s';
+    document.getElementById(id).parentNode.style.transition = 'transform 0s';
     var prntcls = document.getElementById(id).parentNode.classList;
-    
     if (s=='-'){
+        document.getElementById(id).style.transform = 'scale(0.9)';
+        document.getElementById(id).parentNode.style.transform = 'scale(1.111)';
+
         document.getElementById(id).animate([{opacity: 1},{opacity: 0}],{easing:'cubic-bezier(0.9, 0, 0, 1)',duration:300});
-        document.getElementById(id).parentNode.style.transform = 'scale('+PageScaleNumber1[parseInt(prntcls[prntcls.length-1].slice(4,5))-1]+')';
+        document.getElementById(id).parentNode.firstElementChild.animate([{opacity: 0},{opacity: 1}],{easing:'cubic-bezier(0.9, 0, 0, 1)',duration:300});
+        document.getElementById(id).parentNode.animate([{transform: 'scale(1.111)'},{transform: 'scale(1)'}],{easing:'cubic-bezier(0.9, 0, 0, 1)',duration:300});
+
+        document.getElementById(id).parentNode.style.transform = 'scale(1)';
+        document.getElementById(id).parentNode.firstElementChild.style.opacity = 1;
+        document.getElementById(id).style.opacity = 0;
         setTimeout(()=>{document.getElementById(id).style.display = 'none';},300)
     } else {
         document.getElementById(id).style.display = 'block';
+        document.getElementById(id).style.transform = 'scale(0.9)';
+
         document.getElementById(id).animate([{opacity: 0},{opacity: 1}],{easing:'cubic-bezier(0.9, 0, 0, 1)',duration:300});
-        document.getElementById(id).style.opacity = 1;
+        document.getElementById(id).parentNode.firstElementChild.animate([{opacity: 1},{opacity: 0}],{easing:'cubic-bezier(0.9, 0, 0, 1)',duration:300});
+        document.getElementById(id).parentNode.animate([{transform: 'scale(1)'},{transform: 'scale(1.111)'}],{easing:'cubic-bezier(0.9, 0, 0, 1)',duration:300});
+
         document.getElementById(id).parentNode.style.transform = 'scale(1.111)';
+        document.getElementById(id).parentNode.firstElementChild.style.opacity = 0;
+        document.getElementById(id).style.opacity = 1;
+        setTimeout(()=>{
+            document.getElementById(id).style.transform = 'scale(1)';
+            document.getElementById(id).parentNode.style.transform = 'scale(1)';
+        },350)
     }
 }
 function OpenThemeSettings(){document.getElementById("ThemeSettings").style.display = 'block';}
@@ -193,6 +189,6 @@ function CheckUpdates(fV) { updateVersion = fV;
             console.log('[i] You were updated from '+fV+' to '+AppPublicVersion);
             console.log('[i] Changelog: '+updateChangelog)
         }
-        if (newUpdateVersion>AppPublicVersion) {console.log('iNew version avaiable',newUpdateVersion)}
+        if (newUpdateVersion>AppPublicVersion) {console.log('[i] New version avaiable:',newUpdateVersion)}
     } else console.log('[i] Updater Error:', 'You are offline');
 }

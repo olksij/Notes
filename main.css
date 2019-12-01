@@ -14,9 +14,6 @@ path{
 }
 
 ::-webkit-scrollbar {width: 0px;height:0px;}
-::-webkit-scrollbar-track {background: var(--CardColor);}
-::-webkit-scrollbar-thumb {background: #0A0F2320;}
-::-webkit-scrollbar-thumb:hover {background: #0A0F2340;}
 
 #AppUpdate{
     opacity:0;
@@ -69,6 +66,7 @@ path{
     left: 0px;
     width: 100%;
     height: 100%;
+    vertical-align: bottom;
 }
 
 .NoteCard,.ANCard{
@@ -110,7 +108,6 @@ path{
 
 #ANS{
     height: 81px;
-    z-index: -1;
     padding: 0px;
 }
 
@@ -171,6 +168,7 @@ path{
     position: relative;
     padding-top: 0px;
     opacity:0;
+    z-index:1;
 }
 
 #AQSAddLabel{
@@ -260,7 +258,7 @@ path{
     height:100%;
     left:0px;
     top:0px;
-    background: var(--main-shadow-color);
+    background: var(--ShadowColor);
     position:fixed;
     display:none;
     opacity:0;
@@ -271,11 +269,11 @@ path{
     left:20px;
     height:172px;
     border-radius: var(--FA2ButtonRadius);
-    box-shadow: 0px 1px 50px var(--main-shadow-color);
+    box-shadow: 0px 1px 50px var(--ShadowColor);
     top:50%;
     margin-top:-86px;
     position:fixed;
-    background: var(--aqs-background)
+    background: var(--CardColor)
 }
 
 #NewLabelName{
@@ -295,7 +293,7 @@ path{
     width: 100%;
     font-size: 18px;
     padding: 21px;
-    color: var(--ContentColor);
+    color: var(--InnerContentColor);
 }
 
 #NewLabelCreate{
@@ -325,6 +323,7 @@ body,#Homepage{
     width: 100%;
     height: 100%;
     transition: 0s;
+    overflow: overlay;
 }
     
 html{
@@ -337,7 +336,7 @@ html{
 
 /* -- Settings -- */
 
-#SettingsWindow{opacity:0.5; transform:scale(0.9)}
+#SettingsWindow{opacity:0.5;}
 
 #SettingsHomeButton{
     top: 20px;
@@ -369,7 +368,7 @@ html{
 
 /* Theme Settings */
 
-#ThemeSettings{transform:scale(0.81)}
+#ThemeSettings{}
 
 #ThemeSettingsBack{
     top: 20px;
@@ -379,7 +378,7 @@ html{
 
 /* -- Open Note -- */
 
-#OpenNoteWindow{transform: scale(0.9);}
+#OpenNoteWindow{}
 
 #OpenNote_ToHomeButton{
     position: absolute;
@@ -387,7 +386,7 @@ html{
     right:20px;
 }
 
-#AddNoteWindow{transform: scale(0.9);}
+#AddNoteWindow{}
 
 #AddNoteTitle, #AddNoteDescription{transition: 0s width;}
 
@@ -427,6 +426,7 @@ body,#Homepage {width: 100%;}
         right: 20px;
         top: 20px;
         position: fixed;
+        z-index:1;
     }
 
     #SearchBarForm{
@@ -523,14 +523,14 @@ body,#Homepage {width: 100%;}
 
 /* --- --- FA2 --- --- */
 
-.FA2Button:hover,.FA2CardIcon:hover,.FA2OptionActiveChooser:hover{ box-shadow: 0px 1px 20px var(--HoverShadowColor); }
+.FA2Button:hover,.NoteCard:hover,.FA2CardIcon:hover,.FA2OptionActiveChooser:hover{ box-shadow: 0px 1px 20px var(--HoverShadowColor);}
 
 /* FA2Window */
 
 .FA2Window{
     width: 100%;
     height:100%;
-    background: var(--BackgroundColor);
+    /*background: var(--BackgroundColor);*/
     position: fixed;
     left: 0px;
     top:0px;
@@ -547,7 +547,7 @@ body,#Homepage {width: 100%;}
 
 /* FA2Button */
 
-.FA2Button:active{ box-shadow: 0px 1px 30px var(--ActiveShadowColor) !important; }
+.FA2Button:active{ box-shadow: 0px 1px 15px var(--ActiveShadowColor) !important; }
 
 .FA2Button{ 
     background: var(--CardColor);
@@ -649,8 +649,88 @@ body,#Homepage {width: 100%;}
     top: 33px;
     left: 0px;
     right: 0px;
-    overflow-x: scroll;
+    overflow-x: auto;
     display: flex;
+}
+
+/* FA2Slider */
+
+.FA2SliderCard{
+    width: auto;
+    height: 56px;
+    right: 0px;
+    left: 0px;
+    box-shadow: 0px 1px 30px var(--ShadowColor);
+    border-radius: var(--FA2ButtonRadius);
+    background: var(--CardColor);
+    padding: 19px;
+    position: relative;
+    margin: 20px;
+    user-select: none;
+}
+
+.FA2SliderCard p{color:var(--ContentColor); margin:0px;}
+
+#STSCSliderBox{
+    margin-top:12px;
+}
+
+.FA2Slider{
+    height:20px;
+    width:100%;
+    -webkit-appearance: none; /*remove the line*/
+    outline: none;
+    border: 0; /*for firefox on android*/
+    background: transparent;
+}
+
+/*chrome and opera*/
+.FA2Slider::-webkit-slider-runnable-track{
+    background: var(--InnerCardColor);
+    height: 7px;
+    border-radius: 4px;
+}
+
+.FA2Slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: var(--ContentColor);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-top: -7px;
+    border: 4px solid var(--CardColor);
+    box-shadow: 0px 0px 7px var(--ShadowColor);
+}
+
+.FA2Slider:hover::-webkit-slider-thumb{box-shadow: 0px 0px 10px var(--HoverShadowColor);}
+.FA2Slider:active::-webkit-slider-thumb{box-shadow: 0px 0px 10px var(--ActiveShadowColor);}
+
+/*firefox*/
+.FA2Slider::-moz-focus-outer {border: 0;}
+
+.FA2Slider::-moz-range-track {
+    background: var(--InnerCardColor);
+    height: 7px;
+    border-radius: 4px;
+}
+
+.FA2Slider:hover::-moz-range-thumb{box-shadow: 0px 0px 10px var(--HoverShadowColor);}
+.FA2Slider:active::-moz-range-thumb{box-shadow: 0px 0px 10px var(--ActiveShadowColor);}
+
+.FA2Slider::-moz-range-thumb {
+    background: var(--ContentColor);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-top: -7px;
+    border: 4px solid var(--CardColor);
+    box-shadow: 0px 0px 7px var(--ShadowColor);
+}
+
+.FA2Slider::-moz-range-progress {
+    background: var(--ContentColor);
+    border-radius: 4px;
+    height: 7px;
 }
 
 /* ----- FLUX UI ----- */
@@ -731,10 +811,12 @@ input,textarea{outline: none !important;}
     border: #00000000;
     text-align: left;
     color: var(--ContentColor);
+    box-shadow: 0px 1px 30px var(--ShadowColor);
 }
 
 .FluxAppLargeCardTextBox{
     background-color: var(--CardColor);
+    box-shadow: 0px 1px 30px var(--ShadowColor);
     border-radius: var(--FA2ButtonRadius);
     border-style: solid;
     font-size: 18px;
