@@ -21,6 +21,7 @@ EnLanguage = {
     "add-label":"Add label",
     "syncing":"Syncing..",
     "u-re-offline":"You are offline",
+    "create-new":"Create New",
 }
 
 UaLanguage = {
@@ -43,9 +44,10 @@ UaLanguage = {
     "title":"Заголовок",
     "description":"Опис",
     "all-notes":"Всі нотатки",
-    "add-label":"Додати нотатки",
+    "add-label":"Додати бірку",
     "syncing":"Синхронізація...",
     "u-re-offline":"Автономний режим",
+    "create-new":"Створити",
 }
 
 function Translate(){

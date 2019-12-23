@@ -1,16 +1,13 @@
 registerSW(); Resized(); console.log('[i] Version:',AppPublicVersion);
 
-document.getElementById('SearchBar').addEventListener('input',SearchChange)
+document.getElementById('SearchBar').addEventListener('input',SearchChange); 
 document.getElementById('ScreenContrastSlider').addEventListener('input',()=>{userSettings.screenContrast=(parseInt(document.getElementById('ScreenContrastSlider').value)/1000).toString(); Theme(true)})
 document.getElementById('ScreenContrastSlider').addEventListener('change',()=>{userSettings.screenContrast=(parseInt(document.getElementById('ScreenContrastSlider').value)/1000).toString(); Theme()})
 function registerSW() { if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); } }
 
 function Resized() {
     ResizeNote(); setTimeout(function() { ResizeNote(); }, 300);
-    if (document.getElementById("AddNoteButton")){
-        document.getElementById("AddNoteTitle").style.width = (document.body.offsetWidth - 82) + "px";
-        document.getElementById("AddNoteDescription").style.width = (document.body.offsetWidth - 62 - 20) + "px";
-    }
+    document.getElementById('LMLabels').style.height=document.body.offsetHeight-248+'px';
 }
 
 function SearchChange(e){
@@ -30,6 +27,7 @@ function SearchChange(e){
 
 var OpenedNote;
 function OpenNote(id) {
+    console.log(data)
     var idl = notes.indexOf(id);
     OpenedNote = id;
     document.getElementById("OpenNoteWindow").style.display = "block";

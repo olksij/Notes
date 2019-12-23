@@ -9,11 +9,17 @@
     font-family: 'roboto';
 }
 
+p{
+    color:var(--ContentColor)
+}
+
 path{
     transition: 0s;
 }
 
-::-webkit-scrollbar {width: 0px;height:0px;}
+::-webkit-scrollbar {width: 5px;height:5px;}
+
+/* --- AppView --- */
 
 #AppUpdate{
     opacity:0;
@@ -52,14 +58,6 @@ path{
     margin-left: -96px;
 }
 
-#AppView{
-    left:20px;
-    right:20px;
-    position:absolute;
-    top:0px;
-    width:auto;
-}
-
 #NoteList{
     position: relative;
     margin-top: 20px;
@@ -77,6 +75,7 @@ path{
     padding:19px;
     position:relative;
     margin:20px 0px;
+    top:20px;
 }
 
 .NoteTitle{
@@ -248,11 +247,6 @@ path{
     opacity:0.6;
 }
 
-#SearchBarForm{
-    width:100%;
-    position:fixed;
-}
-
 #NewLabelShadow{
     width:100%;
     height:100%;
@@ -323,16 +317,46 @@ body,#Homepage{
     width: 100%;
     height: 100%;
     transition: 0s;
-    overflow: overlay;
 }
     
 html{
     width: 100%;
     height: 100%;
+    overflow:hidden;
 }
 
-
 .NoteCard:hover{ box-shadow: 0px 1px 20px var(--HoverShadowColor); }
+
+/* --- Modern --- */
+
+#Top{margin-top:20px;}
+#HomepageContent{width: 100%; height: 100%; display:flex;}
+#AppControl,#AppView{ position:relative; height:100%; padding:0px 20px; }
+#SearchBarForm{ padding-right:78px; margin:20px 0px;}
+#SearchBar{ width:100% }
+#SearchBarForm>svg{ 
+    position: fixed;
+    margin:16px;
+    margin-top:-40px;
+}
+@media only screen and (min-width: 560px) {
+    #AppControl{ width:250px; padding-right:10px; }
+    #AppView{ position:absolute; left:280px; right:0px; padding-left:10px; top:-20px; }
+    #AddNote{ display:none; }
+    #CreateNote{margin-right:20px; width:100%;}
+    #AppControl>#Top,#CreateNote,#LMFooter{display:flex;}
+    #CreateNote>p{margin-top:18px}
+    #LMLabels{ width:100%; height:76px; transition: none; } #LMFooter{transition: none;}
+    #LMAddLabel{ width:100%; margin-left:20px; height:20px; padding:18px 20px;}
+    #LMAddLabel p { margin:0px }
+}
+
+@media only screen and ( max-width: 560px ) {
+    #AppControl{ width:100%; }
+    #AppView{ width:100%; }
+    #CreateNote{ display:none; }
+    #LabelPanel{ display:none; }
+}
 
 /* -- Settings -- */
 
@@ -368,8 +392,6 @@ html{
 
 /* Theme Settings */
 
-#ThemeSettings{}
-
 #ThemeSettingsBack{
     top: 20px;
     right: 20px;
@@ -378,7 +400,6 @@ html{
 
 /* -- Open Note -- */
 
-#OpenNoteWindow{}
 
 #OpenNote_ToHomeButton{
     position: absolute;
@@ -386,15 +407,8 @@ html{
     right:20px;
 }
 
-#AddNoteWindow{}
 
 #AddNoteTitle, #AddNoteDescription{transition: 0s width;}
-
-/* 
--------------------------------------------
-         FONTS
----------------------------------------------
-*/
 
 @font-face{ font-family: 'roboto'; src: url(Fonts/RobotoML.woff2) }
 
@@ -403,48 +417,8 @@ html{
 body,#Homepage {width: 100%;}
 
 #OpenNoteCard{margin:20px; height:auto;}
+
 #OpenNoteDescription{position:relative;margin-bottom:5px;}
-
-/* 
--------------------------------------------
-         MOBILE
----------------------------------------------
-*/
-
-@media only screen and (max-width: 632px) {
-    div#FluxAppTitle{
-        display: none;
-    }
-
-    div#FluxAppButton{
-        position: absolute;
-        right: 20px;
-        top: 20px;
-    }
-    
-    #AppMenuButton{
-        right: 20px;
-        top: 20px;
-        position: fixed;
-        z-index:1;
-    }
-
-    #SearchBarForm{
-        position: fixed;
-        top: 20px;
-        right: 170px;
-        left: 20px;
-        width: auto;
-    }
-
-    #SearchBar{ width: 100%; }
-
-    #AddNoteButton{
-        right: 20px;
-        bottom:20px;
-        position: fixed;
-    }
-}
 
 #AddNoteTitle{
     position: absolute;
@@ -485,41 +459,6 @@ body,#Homepage {width: 100%;}
 }
 
 #SvgCloseAddIcon{transform: rotate(45deg);}
-
-/* 
--------------------------------------------
-         DESKTOP
----------------------------------------------
-*/
-
-@media only screen and (min-width: 633px) {
-    #SearchBar{
-        position: fixed;
-        top: 20px;
-        right: 117px;
-        left: 180px;
-        width: 205px;    
-    }
-    
-    #SearchIcon{left: 200px;}
-
-    div#FluxAppTitle{
-        width: 140px;
-        display: block;
-    }
-
-    #AddNoteButton{
-        right: 20px;
-        top:20px;
-        position: fixed;
-    }
-
-    #AppMenuButton{
-        right: 96px;
-        top: 20px;
-        position: fixed;
-    }
-}
 
 /* --- --- FA2 --- --- */
 
@@ -790,15 +729,6 @@ input,textarea{outline: none !important;}
     border: #00000000;
     text-align:left;
     color: var(--ContentColor);
-}
-
-.FluxAppSearchBarIcon{
-    width: 19px;
-    height: 19px;
-    position: fixed;
-    left: 38px;
-    top: 38px;
-    fill: var(--ContentColor);
 }
 
 .FluxAppCardTextBox{

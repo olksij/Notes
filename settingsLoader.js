@@ -159,11 +159,13 @@ function DBNotesCore(){
 function ResizeNote(){}
 
 function SyncDBNotes(d){
-    var type=d[0]; var data=d[1];
+    var type=d[0]; var data=d[1]; var update=d[2];
+    console.log(d)
     if (type=='clear') { SettingsDB.transaction(['Notes'], "readwrite").objectStore("Notes").clear(); notes=[] }
     else if (type == 'add') { SettingsDB.transaction("Notes", "readwrite").objectStore("Notes").add(data); }
     else if (type == 'remove') { SettingsDB.transaction("Notes", "readwrite").objectStore("Notes").delete(data); }        
     else if (type == 'create') { SettingsDB.transaction("Notes", "readwrite").objectStore("Notes").add(data); Function(UploadNote,data,'FirebaseLoaded') }        
+    else if (type == 'update') { SettingsDB.transaction("Notes", "readwrite").objectStore("Notes").delete(data); SettingsDB.transaction("Notes", "readwrite").objectStore("Notes").add(update); }        
 }
 
 function LoadDBNotes(list,label){

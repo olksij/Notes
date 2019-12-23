@@ -34,7 +34,7 @@ document.onpointerdown = function (event) {
     effect.style.left = (x - size) + "px";
     effect.style.height = size * 2 + "px";
     effect.style.width = size * 2 + "px";
-    effect.style.background = userSettings.theme == 'Dark' ? "rgba(0, 0, 0, 0.2)" : "rgba(0, 0, 0, 0.04)";
+    effect.style.background = userSettings.theme == 'Dark' ? "rgba(255, 255, 255, 0.02)" : "rgba(0, 0, 0, 0.04)";
     effect.style.borderRadius = "50%";
     effect.style.transform = "scale(0)";
     effect.style.transition = "opacity 640ms, transform 640ms";

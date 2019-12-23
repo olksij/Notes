@@ -94,9 +94,13 @@ function CreateNote() {
     var title = document.getElementById("AddNoteTitle").value;
     var description = document.getElementById("AddNoteDescription").value;
     FA2Animation('-','AddNoteWindow');
-    if (title!=''&&description!='') Function(SyncDBNotes,['create',{ title: title, description: description,
-        date: new Date().getDate() + "." + (new Date().getMonth() + 1) + "." + new Date().getFullYear(),
-        time: new Date().getHours() + ":" + new Date().getMinutes(), url: window.location.hostname,
+    var tm=new Date;
+    if (title!=''&&description!='') 
+        Function(SyncDBNotes,['create',{
+        id:tm.getDate().toString()+tm.getMonth().toString()+tm.getFullYear().toString()+tm.getHours().toString()+tm.getMinutes().toString()+Math.round(Math.random()*10000).toString(),
+        title: title, description: description,
+        date: tm.getDate() + "." + (tm.getMonth() + 1) + "." + tm.getFullYear(),
+        time: tm.getHours() + ":" + tm.getMinutes(), url: window.location.hostname,
         email: userSettings.email, version: AppDevVersion, label: NotesLabelOpened
     }],'SettingsDBR');
 }
@@ -108,6 +112,7 @@ function DeleteNote() {
 }
 
 async function UploadNote(data) {
+    console.log(data)
     FirestoreDirectory.add({
         title: await e3kit.encrypt(data.title,UserPublicKey),
         description: await e3kit.encrypt(data.description,UserPublicKey),

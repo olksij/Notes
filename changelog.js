@@ -20,5 +20,6 @@ var versions = [
     { v: 1118, t: 3, d: '18.11.19', c: 'Added end-to-end encryption. Adaptive icon.' },
     { v: 1119, t: 2, d: '22.11.19', c: 'Redesigned icon and UI. Improved animations. Fixed bugs.' }, // Started renaming color variables
     { v: 1120, t: 1, d: '23.11.19', c: 'Added search.' },
-    { v: 1121, t: 1, d: '30.11.19', c: 'Improved animations. Added contrast slider.' }, // Chnaged DB structure a bit // Added "Safe execution"
+    { v: 1121, t: 1, d: '30.11.19', c: 'Improved animations. Added contrast slider.' }, // Changed DB structure a bit // Added "Safe execution"
+    { v: 1122, t: 1, d: '01.12.19', c: 'Started improving desktop view and stopped supporting PWA version.' }, // PWA version support was stopped. I am already working on at crossplatform version.
 ]

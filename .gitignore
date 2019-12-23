@@ -5,3 +5,4 @@ config.json
 .env
 functions/src/lib/*
 firebase-debug.log
+key.txt
