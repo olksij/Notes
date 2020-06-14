@@ -1,4 +1,4 @@
-var AppPublicVersion = '1121'; var AppDevVersion = AppPublicVersion+'09';
+var AppPublicVersion = '1122'; var AppDevVersion = AppPublicVersion+'00';
 
 self.addEventListener('install', function(event) {
     self.skipWaiting();
